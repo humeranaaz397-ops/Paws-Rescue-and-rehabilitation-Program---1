@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registered NGOs</title>
+
+<link rel="stylesheet" href="/static/New-admin/Header and nav.css">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#1e4fa1,#4b7bec);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ===== MAIN ===== */
+
+.main{
+  padding:20px;
+  margin-left:260px;
+  width:calc(100% - 260px);
+  transition:0.3s ease;
+}
+
+.main.full{
+  margin-left:0;
+  width:100%;
+}
+
+/* ===== TOP ===== */
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px 0;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.top h1{
+  color:white;
+  font-size:30px;
+  font-weight:700;
+}
+
+.top-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* ===== SEARCH ===== */
+
+#searchInput{
+  padding:12px 15px;
+  border:none;
+  border-radius:12px;
+  width:250px;
+  outline:none;
+  font-size:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.15);
+  transition:0.3s ease;
+}
+
+#searchInput:focus{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* ===== BUTTON ===== */
+
+.add-btn{
+  background:#27ae60;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s ease;
+  box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+.add-btn:hover{
+  transform:translateY(-2px);
+  background:#219150;
+}
+
+/* ===== CARDS ===== */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:18px;
+  margin-bottom:20px;
+}
+
+.card{
+  color:white;
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  transition:0.3s ease;
+  animation:fadeUp 0.5s ease;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card h2{
+  margin-top:10px;
+  font-size:28px;
+  font-weight:700;
+}
+
+.blue{
+  background:#3498db;
+}
+
+.red{
+  background:#e74c3c;
+}
+
+.teal{
+  background:#16a085;
+}
+
+/* ===== TABLE ===== */
+
+.table{
+  background:white;
+  border-radius:18px;
+  overflow:auto;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  animation:fadeUp 0.6s ease;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#f5f7fb;
+  color:#1e4fa1;
+  font-weight:700;
+}
+
+th,td{
+  padding:15px;
+  text-align:center;
+  border-bottom:1px solid #eef2f7;
+}
+
+td:first-child,
+th:first-child{
+  text-align:left;
+}
+
+tr{
+  transition:0.3s ease;
+}
+
+tr:hover{
+  background:#f9fbff;
+}
+
+td:last-child{
+  min-width:180px;
+}
+
+/* ===== STATUS ===== */
+
+.ngo-status{
+  padding:6px 14px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.active-status{
+  background:#d4f8e8;
+  color:#27ae60;
+}
+
+/* ===== BUTTONS ===== */
+
+.status-btn{
+  border:none;
+  padding:8px 12px;
+  border-radius:10px;
+  color:white;
+  cursor:pointer;
+  margin:2px;
+  transition:0.3s ease;
+  font-weight:600;
+}
+
+.status-btn:hover{
+  transform:scale(1.05);
+}
+
+.view{
+  background:#3498db;
+}
+
+.edit{
+  background:#2ecc71;
+}
+
+.delete{
+  background:#e74c3c;
+}
+
+/* ===== ADD NGO MODAL ===== */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:3000;
+  padding:20px;
+}
+
+.modal-content{
+  background:white;
+  max-width:500px;
+  width:100%;
+  margin:40px auto;
+  border-radius:18px;
+  padding:22px;
+  animation:fadeUp 0.3s ease;
+  box-shadow:0 20px 50px rgba(0,0,0,0.2);
+}
+
+.modal-header{
+  font-size:24px;
+  color:#1e4fa1;
+  margin-bottom:20px;
+  font-weight:700;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:600;
+  color:#444;
+}
+
+.form-group input{
+  width:100%;
+  padding:12px;
+  border:1px solid #dce3ec;
+  border-radius:10px;
+  outline:none;
+  transition:0.3s ease;
+}
+
+.form-group input:focus{
+  border-color:#3498db;
+  box-shadow:0 0 0 3px rgba(52,152,219,0.15);
+}
+
+.modal-buttons{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:20px;
+}
+
+.btn-submit{
+  background:#27ae60;
+}
+
+.btn-cancel{
+  background:#95a5a6;
+}
+
+/* ===== HEADER ===== */
+
+.notification{
+  font-size:22px;
+  cursor:pointer;
+}
+
+#clock{
+  font-weight:700;
+  color:#333;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar{
+  transition:0.4s ease;
+}
+
+.sidebar.closed{
+  transform:translateX(-100%);
+}
+
+/* ===== HIGHLIGHT ===== */
+
+.highlight{
+  background:#ffeaa7 !important;
+  animation:blink 1s infinite alternate;
+}
+
+@keyframes blink{
+
+  from{
+    transform:scale(1);
+  }
+
+  to{
+    transform:scale(1.01);
+  }
+
+}
+
+/* ===== TOAST ===== */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#27ae60;
+  color:white;
+  padding:14px 20px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:0.4s;
+  z-index:5000;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.toast.show{
+  opacity:1;
+  bottom:40px;
+}
+
+/* ===== MODERN VIEW MODAL ===== */
+
+.view-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(8px);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:5000;
+  padding:20px;
+  overflow-y:auto;
+}
+
+/* ===== VIEW BOX ===== */
+
+.view-box{
+  width:100%;
+  max-width:620px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:white;
+  border-radius:22px;
+  overflow-x:hidden;
+  animation:viewPopup 0.35s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  position:relative;
+}
+
+.view-box::-webkit-scrollbar{
+  width:6px;
+}
+
+.view-box::-webkit-scrollbar-thumb{
+  background:#c7d2e2;
+  border-radius:20px;
+}
+
+/* ===== POPUP ANIMATION ===== */
+
+@keyframes viewPopup{
+
+  from{
+    opacity:0;
+    transform:translateY(30px) scale(0.95);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+
+}
+
+/* ===== TOP IMAGE ===== */
+
+.view-top{
+  position:relative;
+  height:190px;
+  overflow:hidden;
+}
+
+.ngo-cover{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* ===== IMAGE OVERLAY ===== */
+
+.overlay-dark{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,0.8),
+    rgba(0,0,0,0.2)
+  );
+}
+
+/* ===== TITLE ===== */
+
+.view-title{
+  position:absolute;
+  left:20px;
+  bottom:20px;
+  z-index:2;
+  color:white;
+  width:calc(100% - 90px);
+}
+
+.view-title h2{
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:10px;
+  line-height:1.3;
+  word-break:break-word;
+}
+
+/* ===== VERIFIED BADGE ===== */
+
+.verified-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#2ecc71;
+  color:white;
+  padding:6px 14px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:600;
+}
+
+/* ===== CLOSE BUTTON ===== */
+
+.close-view{
+  position:absolute;
+  top:15px;
+  right:15px;
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#333;
+  font-size:17px;
+  cursor:pointer;
+  z-index:5;
+  transition:0.3s ease;
+  box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+.close-view:hover{
+  transform:rotate(90deg);
+  background:#f5f5f5;
+}
+
+/* ===== VIEW BODY ===== */
+
+.view-body{
+  padding:18px;
+}
+
+/* ===== INFO GRID ===== */
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  margin-bottom:18px;
+}
+
+/* ===== INFO CARD ===== */
+
+.info-card{
+  background:#f8fbff;
+  border:1px solid #e7eef7;
+  border-radius:16px;
+  padding:12px;
+  transition:0.3s ease;
+}
+
+.info-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.06);
+}
+
+.info-card span{
+  display:block;
+  font-size:12px;
+  color:#6c757d;
+  margin-bottom:7px;
+  font-weight:500;
+}
+
+.info-card h4{
+  color:#1e4fa1;
+  font-size:15px;
+  font-weight:600;
+  line-height:1.5;
+  word-break:break-word;
+}
+
+/* ===== MAP SECTION ===== */
+
+.map-section{
+  background:#f8fbff;
+  border:1px solid #e7eef7;
+  border-radius:18px;
+  padding:14px;
+}
+
+.map-title{
+  font-size:16px;
+  font-weight:600;
+  color:#1e4fa1;
+  margin-bottom:12px;
+}
+
+/* ===== MAP ===== */
+
+.map-frame{
+  width:100%;
+  height:160px;
+  border:none;
+  border-radius:14px;
+  display:block;
+}
+
+/* ===== ANIMATION ===== */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+  .sidebar{
+    width:220px;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .top-right{
+    width:100%;
+  }
+
+  #searchInput{
+    width:100%;
+  }
+
+  .view-modal{
+    padding:14px;
+  }
+
+  .view-box{
+    border-radius:18px;
+  }
+
+  .view-top{
+    height:170px;
+  }
+
+  .view-title{
+    left:16px;
+    bottom:16px;
+    width:calc(100% - 70px);
+  }
+
+  .view-title h2{
+    font-size:20px;
+  }
+
+  .verified-badge{
+    font-size:11px;
+    padding:5px 12px;
+  }
+
+  .close-view{
+    width:34px;
+    height:34px;
+    font-size:15px;
+  }
+
+  .view-body{
+    padding:15px;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .map-frame{
+    height:150px;
+  }
+
+}
+
+/* ===== PAST NGO TABLE ===== */
+
+.past-table{
+  margin-top:30px;
+}
+
+.past-header{
+  padding:18px 20px;
+  border-bottom:1px solid #eef2f7;
+}
+
+.past-header h2{
+  color:#1e4fa1;
+  margin-bottom:5px;
+}
+
+.past-header span{
+  color:#6c757d;
+  font-size:14px;
+}
+
+/* ===== RESTORE BUTTON ===== */
+
+.restore-btn{
+  background:#f39c12;
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s ease;
+}
+
+.restore-btn:hover{
+  background:#d68910;
+  transform:scale(1.05);
+}
+
+/* ===== EMPTY TEXT ===== */
+
+.empty-row td{
+  color:#888;
+  padding:20px;
+  font-style:italic;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+
+<div class="sidebar" id="sidebar">
+
+  <h2 class="logo">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg">
+    PAWS
+  </h2>
+
+  <a href="/admin/dashboard">Dashboard</a>
+  <a href="/admin/rescue">Rescue Cases</a>
+  <a href="/admin/add-ngo" class="active">NGOs</a>
+  <a href="/admin/medical-care">Medical Care</a>
+  <a href="/admin/adoption">Adoption</a>
+  <a href="/admin/shelters">Shelters</a>
+  <a href="/admin/users">Manage Users</a>
+
+  <div class="sidebar-bottom">
+    <a href="/logout">
+      <button class="logout-btn" id="logoutBtn">
+        🚪 Logout
+      </button>
+    </a>
+  </div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- ===== MAIN ===== -->
+
+<div class="main">
+
+<!-- ===== HEADER ===== -->
+
+<div class="header">
+
+  <div class="header-left">
+
+    <span class="menu" id="menu">☰</span>
+
+    <div class="logo-image">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg">
+      PAWS RESCUE
+    </div>
+
+  </div>
+
+  <div class="header-right">
+
+    <div id="clock"></div>
+
+    <!-- <div class="notification">🔔</div> -->
+
+    <img src="https://i.postimg.cc/13R6TS5d/4th-hokage-PNG.webp" class="profile-img">
+
+  </div>
+
+</div>
+
+<!-- ===== TOP ===== -->
+
+<div class="top">
+
+  <h1>Registered NGOs</h1>
+
+  <div class="top-right">
+
+    <input type="text" id="searchInput" placeholder="Search NGO...">
+
+    <button class="add-btn">
+      + Add NGO
+    </button>
+
+  </div>
+
+</div>
+
+<!-- ===== CARDS ===== -->
+
+<div class="cards">
+
+  <div class="card blue">
+    Animals Rescued
+    <h2>{{ animals_rescued }}</h2>
+  </div>
+
+  <div class="card red">
+    Active Cases
+    <h2>{{ active_cases }}</h2>
+  </div>
+
+  <div class="card teal">
+    Total Capacity
+    <h2>{{ total_capacity }}</h2>
+  </div>
+
+  <div class="card blue">
+    Adoptions
+    <h2>{{ adoptions }}</h2>
+  </div>
+
+</div>
+
+<!-- ===== TABLE ===== -->
+
+<div class="table">
+
+<table id="ngoTable">
+
+<tr>
+<th>NGO Name</th>
+<th>Location</th>
+<th>Total Cases</th>
+<th>Capacity</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for ngo in active_ngos %}
+<tr>
+<td>{{ ngo.name }}</td>
+<td>{{ ngo.location }}</td>
+<td>{{ ngo.cases }}</td>
+<td>{{ ngo.capacity }}</td>
+<td>
+<span class="ngo-status active-status">
+Active
+</span>
+</td>
+<td>
+<button class="status-btn view" 
+        data-id="{{ ngo.id }}" 
+        data-name="{{ ngo.name }}" 
+        data-location="{{ ngo.location }}" 
+        data-cases="{{ ngo.cases }}" 
+        data-capacity="{{ ngo.capacity }}" 
+        data-image="{% if ngo.profile_img and (ngo.profile_img[:4] == 'http' or ngo.profile_img[0] == '/') %}{{ ngo.profile_img }}{% else %}{{ url_for('static', filename='uploads/' + (ngo.profile_img or 'default_pet.png')) }}{% endif %}">View</button>
+<button class="status-btn edit" 
+        data-id="{{ ngo.id }}" 
+        data-name="{{ ngo.name }}" 
+        data-location="{{ ngo.location }}" 
+        data-cases="{{ ngo.cases }}" 
+        data-capacity="{{ ngo.capacity }}">Edit</button>
+<button class="status-btn delete" 
+        data-id="{{ ngo.id }}" 
+        data-name="{{ ngo.name }}">Delete</button>
+</td>
+</tr>
+{% else %}
+<tr class="empty-row">
+<td colspan="6">No Active NGOs</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+<!-- ===== PAST NGOs ===== -->
+
+<div class="table past-table">
+
+  <div class="past-header">
+
+    <h2>Past NGOs</h2>
+
+    <span>
+      Deleted NGO Records
+    </span>
+
+  </div>
+
+  <table id="pastNgoTable">
+
+    <tr>
+
+      <th>NGO Name</th>
+
+      <th>Location</th>
+
+      <th>Delete Reason</th>
+
+      <th>Restore</th>
+
+    </tr>
+
+    {% for ngo in deleted_ngos %}
+    <tr>
+      <td>{{ ngo.name }}</td>
+      <td>{{ ngo.location }}</td>
+      <td>{{ ngo.delete_reason }}</td>
+      <td>
+        <button class="restore-btn" data-id="{{ ngo.id }}" data-name="{{ ngo.name }}">Add Again</button>
+      </td>
+    </tr>
+    {% else %}
+    <tr class="empty-row">
+      <td colspan="4">No Deleted NGOs</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+
+</div>
+
+
+<!-- ===== MODAL ===== -->
+
+<div class="modal" id="addNGOModal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+Add New NGO
+</div>
+
+<form id="ngoForm" method="POST" action="{{ url_for('admin_add_ngo') }}" enctype="multipart/form-data">
+<input type="hidden" name="action" value="add">
+
+<div class="form-group">
+<label>NGO Name</label>
+<input type="text" id="ngoName" name="name" required>
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" name="email" required>
+</div>
+
+<div class="form-group">
+<label>Phone</label>
+<input type="text" name="phone" required>
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input type="password" name="password" required>
+</div>
+
+<div class="form-group">
+<label>Location</label>
+<input type="text" id="ngoLocation" name="location" required>
+</div>
+
+<div class="form-group">
+<label>Total Cases</label>
+<input type="number" id="ngoCases" name="cases" required>
+</div>
+
+<div class="form-group">
+<label>Capacity</label>
+<input type="number" id="ngoCapacity" name="capacity" required>
+</div>
+
+<div class="form-group">
+<label>NGO Image</label>
+<input type="file" id="ngoImageInput" name="image" accept="image/*">
+</div>
+
+<div class="modal-buttons">
+
+<button type="button" class="status-btn btn-cancel" id="cancelBtn">
+Cancel
+</button>
+
+<button type="submit" class="status-btn btn-submit">
+Add NGO
+</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+<!-- ===== TOAST ===== -->
+
+<div class="toast" id="toast">
+Success
+</div>
+
+</div>
+
+<!-- ===== MODERN VIEW MODAL ===== -->
+
+<div class="view-modal" id="viewModal">
+
+  <div class="view-box">
+
+    <div class="view-top">
+
+      <img id="ngoImage" class="ngo-cover">
+
+      <div class="overlay-dark"></div>
+
+      <div class="view-title">
+
+        <h2 id="ngoTitle">Hope Shelter</h2>
+
+        <span class="verified-badge">
+          ✔ Verified NGO
+        </span>
+
+      </div>
+
+      <button class="close-view" id="closeViewModal">
+        ✕
+      </button>
+
+    </div>
+
+    <div class="view-body">
+
+      <div class="info-grid">
+
+        <div class="info-card">
+
+          <span>📍 Address</span>
+
+          <h4 id="ngoAddress">
+            Madhapur, Hyderabad
+          </h4>
+
+        </div>
+
+        <div class="info-card">
+
+          <span>🌍 Location</span>
+
+          <h4 id="ngoLocationView">
+            Hyderabad
+          </h4>
+
+        </div>
+
+        <div class="info-card">
+
+          <span>🐾 Rescue Cases</span>
+
+          <h4 id="ngoCasesView">
+            134
+          </h4>
+
+        </div>
+
+        <div class="info-card">
+
+          <span>🏠 Capacity</span>
+
+          <h4 id="ngoCapacityView">
+            50 Animals
+          </h4>
+
+        </div>
+
+      </div>
+
+      <div class="map-section">
+
+        <div class="map-title">
+          📌 NGO Live Location
+        </div>
+
+        <iframe
+        id="ngoMap"
+        class="map-frame"
+        loading="lazy">
+        </iframe>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ===== EDIT NGO MODAL ===== -->
+
+<div class="modal" id="editNGOModal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      Edit NGO
+    </div>
+
+    <form id="editNgoForm" method="POST" action="{{ url_for('admin_add_ngo') }}" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="edit">
+      <input type="hidden" name="user_id" id="editNgoId">
+
+      <div class="form-group">
+
+        <label>NGO Name</label>
+
+        <input
+        type="text"
+        id="editNgoName"
+        name="name"
+        required>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Location</label>
+
+        <input
+        type="text"
+        id="editNgoLocation"
+        name="location"
+        required>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Total Cases</label>
+
+        <input
+        type="number"
+        id="editNgoCases"
+        name="cases"
+        required>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Capacity</label>
+
+        <input
+        type="number"
+        id="editNgoCapacity"
+        name="capacity"
+        required>
+
+      </div>
+
+      <div class="form-group">
+
+<label>Update NGO Image</label>
+
+<input
+type="file"
+id="editNgoImage"
+name="image"
+accept="image/*">
+
+</div>
+
+      <div class="modal-buttons">
+
+        <button
+        type="button"
+        class="status-btn btn-cancel"
+        id="editCancelBtn">
+
+          Cancel
+
+        </button>
+
+        <button
+        type="submit"
+        class="status-btn btn-submit">
+
+          Save Changes
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script>
+
+const menu = document.getElementById("menu");
+const sidebar = document.getElementById("sidebar");
+const main = document.querySelector(".main");
+
+menu.onclick = (e)=>{
+  e.stopPropagation();
+  sidebar.classList.toggle("closed");
+  main.classList.toggle("full");
+};
+
+document.addEventListener("click",(e)=>{
+  const insideSidebar = sidebar.contains(e.target);
+  const isMenu = menu.contains(e.target);
+  if(!insideSidebar && !isMenu){
+    sidebar.classList.add("closed");
+    main.classList.add("full");
+  }
+});
+
+sidebar.onclick = (e)=>{
+  e.stopPropagation();
+};
+
+function showToast(message){
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.classList.add("show");
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },3000);
+}
+
+function submitPost(action, params) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = "{{ url_for('admin_add_ngo') }}";
+  
+  const actionInput = document.createElement('input');
+  actionInput.type = 'hidden';
+  actionInput.name = 'action';
+  actionInput.value = action;
+  form.appendChild(actionInput);
+  
+  for (const key in params) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = params[key];
+    form.appendChild(input);
+  }
+  
+  document.body.appendChild(form);
+  form.submit();
+}
+
+const viewModal = document.getElementById("viewModal");
+const closeViewModal = document.getElementById("closeViewModal");
+
+closeViewModal.onclick = ()=>{
+  viewModal.style.display = "none";
+};
+
+viewModal.onclick = (e)=>{
+  if(e.target === viewModal){
+    viewModal.style.display = "none";
+  }
+};
+
+const editModal = document.getElementById("editNGOModal");
+const editCancelBtn = document.getElementById("editCancelBtn");
+
+editCancelBtn.onclick = ()=>{
+  editModal.style.display = "none";
+};
+
+editModal.onclick = (e)=>{
+  if(e.target === editModal){
+    editModal.style.display = "none";
+  }
+};
+
+function setupNGOButtons(){
+  document.querySelectorAll(".view").forEach(btn => {
+    btn.onclick = () => {
+      const name = btn.getAttribute("data-name");
+      const location = btn.getAttribute("data-location");
+      const cases = btn.getAttribute("data-cases");
+      const capacity = btn.getAttribute("data-capacity");
+      const image = btn.getAttribute("data-image");
+
+      document.getElementById("ngoTitle").innerText = name;
+      document.getElementById("ngoAddress").innerText = location;
+      document.getElementById("ngoLocationView").innerText = location;
+      document.getElementById("ngoCasesView").innerText = cases;
+      document.getElementById("ngoCapacityView").innerText = capacity + " Animals";
+      document.getElementById("ngoImage").src = image;
+      document.getElementById("ngoMap").src = `https://maps.google.com/maps?q=${location}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+
+      viewModal.style.display = "flex";
+    };
+  });
+
+  document.querySelectorAll(".edit").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.getAttribute("data-id");
+      const name = btn.getAttribute("data-name");
+      const location = btn.getAttribute("data-location");
+      const cases = btn.getAttribute("data-cases");
+      const capacity = btn.getAttribute("data-capacity");
+
+      document.getElementById("editNgoId").value = id;
+      document.getElementById("editNgoName").value = name;
+      document.getElementById("editNgoLocation").value = location;
+      document.getElementById("editNgoCases").value = cases;
+      document.getElementById("editNgoCapacity").value = capacity;
+
+      editModal.style.display = "block";
+    };
+  });
+
+  document.querySelectorAll(".delete").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.getAttribute("data-id");
+      const name = btn.getAttribute("data-name");
+      const reason = prompt(`Enter reason for deleting "${name}"`);
+      if (reason !== null && reason.trim() !== "") {
+        submitPost('delete', { user_id: id, reason: reason });
+      }
+    };
+  });
+
+  document.querySelectorAll(".restore-btn").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.getAttribute("data-id");
+      const name = btn.getAttribute("data-name");
+      const confirmRestore = confirm(`Do you want to add "${name}" again?`);
+      if (confirmRestore) {
+        submitPost('restore', { user_id: id });
+      }
+    };
+  });
+}
+
+function setupAddNGO(){
+  const addBtn = document.querySelector(".add-btn");
+  const modal = document.getElementById("addNGOModal");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const form = document.getElementById("ngoForm");
+
+  addBtn.onclick = ()=>{
+    modal.style.display = "block";
+  };
+
+  cancelBtn.onclick = ()=>{
+    modal.style.display = "none";
+    form.reset();
+  };
+
+  modal.onclick = (e)=>{
+    if(e.target === modal){
+      modal.style.display = "none";
+      form.reset();
+    }
+  };
+}
+
+const searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("keyup",()=>{
+  const value = searchInput.value.toLowerCase();
+  document.querySelectorAll("#ngoTable tr").forEach((row,index)=>{
+    if(index === 0) return;
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(value) ? "" : "none";
+  });
+});
+
+function updateClock(){
+  const now = new Date();
+  document.getElementById("clock").innerHTML = now.toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  setupNGOButtons();
+  setupAddNGO();
+});
+
+</script>
+
+</body>
+</html>

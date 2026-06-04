@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program/Pets-for-Adoption</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/visitor/adoption-home.css">
+  <link rel="stylesheet" href="/static/User/nav-bar.css">
+  <link rel="stylesheet" href="/static/User/footer.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+</head>
+<body>
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot"></span>
+    </a>
+    {% if session.get('user_profile_img') and (session.get('user_profile_img')[:4] == 'http' or session.get('user_profile_img')[0] == '/') %}
+    <a href="/user/profile"><img src="{{ session.user_profile_img }}" alt="" width="10%"></a>
+    {% else %}
+    <a href="/user/profile"><img src="{{ url_for('static', filename='uploads/' + (session.get('user_profile_img') or 'default_user.png')) }}" alt="" width="10%"></a>
+    {% endif %}
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot">notifications</span>
+    </a>
+    {% if session.get('user_profile_img') and (session.get('user_profile_img')[:4] == 'http' or session.get('user_profile_img')[0] == '/') %}
+    <a href="/user/profile" style="display: flex;"><img src="{{ session.user_profile_img }}" alt="" width="10%" >{{ session.user_email }}</a>
+    {% else %}
+    <a href="/user/profile" style="display: flex;"><img src="{{ url_for('static', filename='uploads/' + (session.get('user_profile_img') or 'default_user.png')) }}" alt="" width="10%" >{{ session.user_email }}</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="pets-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Available Pets for Adoption</h1>
+    <p>Give a loving home to animals who need you</p>
+  </div>
+</section>
+
+<!-- ===== INTRO ===== -->
+<section class="pets-info">
+  <h2>Meet Our Lovely Friends</h2>
+  <p>
+    These rescued animals are healthy, vaccinated, and ready to be adopted.
+    Each adoption gives a street animal a second chance at a safe and happy life.
+  </p>
+</section>
+
+<!-- ===== PET CARDS ===== -->
+<section class="pets-list">
+  {% for pet in pets %}
+  <div class="pet-card">
+  {% if pet.image_filename and (pet.image_filename[:4] == 'http' or pet.image_filename[0] == '/') %}
+  <img src="{{ pet.image_filename }}" alt="{{ pet.name }}">
+  {% else %}
+  <img src="{{ url_for('static', filename='uploads/' + (pet.image_filename or 'default_pet.png')) }}" alt="{{ pet.name }}">
+  {% endif %}
+    <h3>{{ pet.name }}</h3>
+    <p>
+      {% if pet.type.lower() == 'dog' %}🐶{% elif pet.type.lower() == 'cat' %}🐱{% else %}🐾{% endif %}
+      {{ pet.type }} • {{ pet.gender }}
+    </p>
+    <p>🎂 Age: {{ pet.age }} {% if pet.age == 1 %}Year{% else %}Years{% endif %}</p>
+    <p>🏠 Location: <b>{{ pet.location }}</b></p>
+    
+    {% if pet.status == 'Available' %}
+    <p class="status available">Available</p>
+    <a href="/user/pet-detail/{{ pet.id }}"><button>View</button></a>
+    {% elif pet.status == 'Pending' %}
+    <p class="status pending">Pending</p>
+    <button disabled>Request Sent</button>
+    {% elif pet.status == 'Adopted' %}
+    <p class="status adopted">Adopted</p>
+    <button disabled>Adopted</button>
+    {% endif %}
+  </div>
+  {% endfor %}
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/User/nav-bar.js"></script>
+
+</body>
+</html>

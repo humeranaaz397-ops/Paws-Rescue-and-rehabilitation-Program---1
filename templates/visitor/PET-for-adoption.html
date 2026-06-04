@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adopted Pet Upload</title>
+<link rel="stylesheet" href="/static/visitor/nav-bar.css">
+<link rel="stylesheet" href="/static/visitor/footer.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<style>
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== FULL PAGE LAYOUT (FOOTER FIX) ===== */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: #dbe9f8;
+}
+
+/* Main grows and pushes footer */
+main {
+  flex: 1;
+}
+
+/* Footer always bottom */
+footer {
+  margin-top: auto;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.adopt-main{
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+  gap:40px;
+  padding:60px 5%;
+  flex-wrap:wrap;
+}
+.adopt-main{
+  margin-top:40px;
+}
+/* BOTH SIDES EQUAL */
+.adopt-info,
+.card{
+  flex:1;
+  min-width:320px;
+  max-width:500px;
+}
+
+/* ===== LEFT INFO ===== */
+.adopt-info{
+  background:#9fcbef;
+  padding:35px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.adopt-info h1{
+  font-size:2.3rem;
+  margin-bottom:15px;
+  color:#000;
+}
+
+.adopt-info p{
+  font-size:1rem;
+  line-height:1.7;
+  margin-bottom:20px;
+  color:#222;
+}
+
+.adopt-info ul{
+  list-style:none;
+  margin-top:10px;
+}
+
+.adopt-info li{
+  margin:14px 0;
+  font-size:1rem;
+  color:#111;
+}
+
+/* EXTRA CONTENT BOX */
+.info-box{
+  margin-top:25px;
+  padding:20px;
+  background:#dbe9f8;
+  border-radius:12px;
+}
+
+.info-box h3{
+  margin-bottom:10px;
+}
+
+.info-box p{
+  margin-bottom:0;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: #9fcbef;
+  padding: 25px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+/* Keep height stable after submit */
+#adoptCard {
+  min-height: 480px;
+}
+
+.card h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* ===== FORM ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+input, select, textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #1565C0;
+}
+
+textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+/* ===== BUTTON ===== */
+button {
+  margin-top: 10px;
+  padding: 12px;
+  background: #1565C0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #0d47a1;
+  transform: translateY(-2px);
+}
+
+/* ===== SUCCESS MESSAGE ===== */
+.success-box {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-box h2 {
+  color: #16a34a;
+  margin-bottom: 10px;
+}
+
+.success-box p {
+  color: #333;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .adopt-main {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .adopt-info {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .adopt-main {
+    padding: 40px 15px;
+  }
+
+  .adopt-info h1 {
+    font-size: 1.6rem;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+    <header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<!-- ===== ADOPT PET UPLOAD PAGE (UPDATED) ===== -->
+<main class="adopt-main">
+
+  <!-- LEFT INFO -->
+  <div class="adopt-info">
+    <h1>Put Your Pet for Adoption 🐾</h1>
+    <p>
+      Help your pet find a loving home. Share details so interested adopters can connect with you.
+    </p>
+
+    <ul>
+      <div class="info-box">
+  <h3>Why Adoption Matters ❤️</h3>
+  <p>
+    Upload pets for adoption and help them find a loving forever home.
+    Every animal deserves care, safety, and a family to love them.
+  </p>
+</div>
+      <li>🏡 Find a safe home for your pet</li>
+      <li>❤️ Connect with animal lovers</li>
+      <li>🐶 Give your pet a better future</li>
+    </ul>
+
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card" id="adoptCard">
+    <h2>Pet Adoption Details</h2>
+
+    <form id="adoptForm">
+
+      <label>Pet Name</label>
+      <input type="text" name="name" id="petName" placeholder="Enter pet name" required>
+
+      <label>Pet Age</label>
+      <input type="number" name="age" id="petAge" placeholder="Enter age" min="0" required>
+
+      <label>Pet Type</label>
+      <input type="text" name="type" id="petType" placeholder="Dog / Cat / Other" required>
+
+      <label>Breed (Optional)</label>
+      <input type="text" name="breed" id="petBreed" placeholder="Enter breed">
+
+      <label>Gender</label>
+      <select name="gender" id="petGender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label>Location</label>
+      <input type="text" name="location" id="petLocation" placeholder="Enter city / area" required>
+
+      <label>Contact Number</label>
+      <input type="tel" name="contact" id="petContact" placeholder="Enter phone number" required>
+
+      <label>Upload Image</label>
+      <input type="file" name="image" id="petImage" accept="image/*" required>
+
+      <label>Description</label>
+      <textarea name="description" id="petDescription" placeholder="Write about pet behavior, health, etc..." required></textarea>
+
+      <button type="submit">Upload Pet</button>
+
+    </form>
+  </div>
+
+</main>
+
+<!-- SUCCESS SCRIPT -->
+<script>
+document.getElementById("adoptForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("name", document.getElementById("petName").value);
+  formData.append("age", document.getElementById("petAge").value);
+  formData.append("type", document.getElementById("petType").value);
+  formData.append("breed", document.getElementById("petBreed").value);
+  formData.append("gender", document.getElementById("petGender").value);
+  formData.append("location", document.getElementById("petLocation").value);
+  formData.append("contact", document.getElementById("petContact").value);
+  formData.append("image", document.getElementById("petImage").files[0]);
+  formData.append("description", document.getElementById("petDescription").value);
+
+  fetch("/visitor/pets", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      const card = document.getElementById("adoptCard");
+      card.innerHTML = `
+        <div style="text-align:center; padding:40px;">
+          <h2 style="color:#16a34a;">Uploaded Successfully! 🎉</h2>
+          <p style="margin-top:10px;">
+            Your pet is now listed for adoption. Someone will contact you soon.
+          </p>
+        </div>
+      `;
+    } else {
+      alert("Error uploading pet details. Please try again.");
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("An error occurred. Please try again.");
+  });
+});
+</script>
+
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/visitor/nav-bar.js"></script>
+</body>
+</html>

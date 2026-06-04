@@ -1,0 +1,217 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program/Nearby-Veterinary-Hospitals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/visitor/medical-care-option-2-home.css">
+  <link rel="stylesheet" href="/static/User/nav-bar.css">
+  <link rel="stylesheet" href="/static/User/footer.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<style>
+
+.map-section{
+width:100%;
+padding:40px;
+text-align:center;
+}
+
+.map-box{
+width:100%;
+max-width:800px;
+height:400px;
+margin:auto;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot"></span>
+    </a>
+    <a href="/user/profile"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%"></a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot">notifications</span>
+    </a>
+    <a href="/user/profile" style="display: flex;"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%" >{{ session.user_email }}</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="vet-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Nearby Veterinary Hospitals</h1>
+    <p>Find trusted veterinary care for injured and sick animals</p>
+  </div>
+</section>
+
+<!-- ===== INFO ===== -->
+<section class="vet-info">
+  <h2>Why Veterinary Care is Important</h2>
+  <p>
+    Veterinary hospitals provide professional medical treatment, surgeries, and emergency care
+    for animals. Reaching a nearby veterinary hospital on time can save lives and ensure
+    proper recovery.
+  </p>
+</section>
+
+<!-- ===== SEARCH ===== -->
+<section class="vet-search">
+  <input type="text" placeholder="Enter your city or area...">
+  <button>Search</button>
+</section>
+
+<!-- ===== HOSPITAL LIST ===== -->
+<section class="hospital-list">
+
+  <div class="hospital-card">
+    <img src="https://i.postimg.cc/C5F7Xvvf/hospital-1.jpg" alt="Veterinary Hospital">
+    <h3>GHMC-Animal Shelter/veternary Hospital</h3>
+    <p>📍 Near Nallakunta RTC bu Stop <br> Hydrabad-500044,Telengana,India</p>
+    <p>🕒 9:00 AM - 4:00 PM</p>
+    <p>📞 040-21111111 (GHMC helpline)</p>
+    <button onclick="openMap(
+    'GHMC Animal Shelter / Veterinary Hospital',
+    '📍 Near Nallakunta RTC Bus Stop <br> Hyderabad - 500044, Telangana, India',
+    'GHMC Animal Shelter Nallakunta Hyderabad'
+    )">View Location</button>
+  </div>
+
+  <div class="hospital-card">
+    <img src="https://i.postimg.cc/JzyqfHQT/hospital-2.jpg" alt="Animal Clinic">
+    <h3>Pashu Samkshema Bhavan Department of Animal Husbandry</h3>
+    <p>📍 Masab Tank Road, AC Guards Area <br> Hyderabad, Telangana-500028</p>
+    <p>🕒 10:00 AM - 5:00 PM</p>
+    <p>📞 040-23328505 (helpline)</p>
+    <button onclick="openMap(
+    'Pashu Samkshema Bhavan - Animal Husbandry Department',
+    '📍 Masab Tank Road, AC Guards Area <br> Hyderabad - 500028, Telangana',
+    'Pashu Samkshema Bhavan Masab Tank Hyderabad'
+    )">View Location</button>
+  </div>
+
+  <div class="hospital-card">
+    <img src="https://i.postimg.cc/QN0JVJ42/hospital3.jpg" alt="Pet Hospital">
+    <h3>Government Veterinary Hospital</h3>
+    <p>📍 Narayanguda / Himayatnagar Area <br> Hyderabad, Telangana-500029</p>
+    <p>🕒 10:00 AM - 5:00 PM</p>
+    <p>📞 040-27567834 (helpline)</p>
+    <button onclick="openMap(
+    'Government Veterinary Hospital',
+    '📍 Narayanguda / Himayatnagar Area <br> Hyderabad - 500029, Telangana',
+    'Government Veterinary Hospital Narayanguda Hyderabad'
+    )">View Location</button>
+  </div>
+
+</section>
+
+<!-- ===== MAP SECTION ===== -->
+<div class="map-section"  id="mapSection">
+
+<h2 id="mapTitle">GHMC Animal Shelter / Veterinary Hospital</h2>
+
+<p id="mapAddress">
+📍 Near Nallakunta RTC Bus Stop <br>
+Hyderabad - 500044, Telangana, India
+</p>
+
+<div class="map-box">
+
+<iframe 
+id="mapFrame"
+src="https://maps.google.com/maps?q=GHMC%20Animal%20Shelter%20Nallakunta%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed"
+width="100%" 
+height="100%" 
+style="border:0;"
+loading="lazy">
+</iframe>
+
+</div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/User/nav-bar.js"></script>
+
+<script>
+function openMap(title,address,location){
+
+let map = document.getElementById("mapFrame");
+
+map.src = "https://maps.google.com/maps?q="
++ encodeURIComponent(location)
++ "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+
+document.getElementById("mapTitle").innerHTML = title;
+
+document.getElementById("mapAddress").innerHTML = address;
+
+/* scroll to map section */
+document.getElementById("mapSection").scrollIntoView({
+behavior: "smooth"
+});
+
+}
+</script>
+
+</body>
+</html>

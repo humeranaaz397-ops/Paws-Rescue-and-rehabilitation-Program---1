@@ -1,0 +1,384 @@
+/* ===============================
+   GLOBAL RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===============================
+   BODY & LAYOUT (FIXED FOOTER)
+================================ */
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #dbe9f8;
+  color: #000000;
+}
+
+/* ===============================
+   MAIN
+================================ */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3%;
+}
+/* ===============================
+   EDIT PROFILE WRAPPER
+================================ */
+
+
+/* ===== MODAL ===== */
+#edit-profile{
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding-top: 90px;
+  padding-inline: 20px;
+
+  background: rgba(15,23,42,0.55);
+  backdrop-filter: blur(6px);
+
+  z-index: 999;
+}
+
+/* ===== SMALL EDIT PROFILE CARD ===== */
+.form-card{
+
+  width:100%;
+  max-width:380px;
+
+  background:rgba(255,255,255,0.18);
+
+  backdrop-filter:blur(15px);
+
+  border:1px solid rgba(255,255,255,0.2);
+
+  border-radius:22px;
+
+  padding:24px 22px;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,0.22);
+
+  animation:popup 0.35s ease;
+}
+
+/* ===== TITLE ===== */
+.form-card h1{
+  text-align:center;
+  font-size:2rem;
+  margin-bottom:8px;
+  color:#0f172a;
+}
+
+.subtitle{
+  text-align:center;
+  margin-bottom:30px;
+  color:#334155;
+  font-size:14px;
+}
+
+/* ===== INPUTS ===== */
+.input-group{
+  margin-bottom:18px;
+}
+
+.input-group label{
+  display:block;
+  margin-bottom:8px;
+  font-size:14px;
+  font-weight:600;
+  color:#0f172a;
+}
+
+.input-group input{
+  width:100%;
+
+  padding:11px 13px;
+
+  border:none;
+  outline:none;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,0.7);
+
+  font-size:13px;
+
+  transition:0.3s;
+}
+
+.input-group input:focus{
+  background:white;
+
+  box-shadow:
+  0 0 0 3px rgba(30,136,229,0.25);
+}
+
+/* ===== BUTTONS ===== */
+.submit-btn{
+  width:100%;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:16px;
+
+  margin-top:12px;
+
+  cursor:pointer;
+
+  font-size:14px;
+  font-weight:600;
+
+  color:white;
+
+  background:
+  linear-gradient(135deg,#1E88E5,#1565C0);
+
+  transition:0.3s;
+}
+
+.submit-btn:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 15px 30px rgba(30,136,229,0.35);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes popup{
+
+  from{
+    opacity:0;
+    transform:scale(0.9) translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1) translateY(0);
+  }
+
+}
+/* ===============================
+   PROFILE WRAPPER
+================================ */
+.profile-wrapper {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* ===============================
+   PROFILE CARD
+================================ */
+.profile-card {
+
+  background:#bad9f3;
+
+  width:100%;
+  max-width:420px;
+
+  padding:30px 28px;
+
+  border-radius:20px;
+
+  box-shadow:
+  0 20px 45px rgba(0,0,0,0.25);
+
+  animation:fadeUp 0.9s ease;
+}
+
+/* ===============================
+   PROFILE HEADER
+================================ */
+.profile-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+/* PROFILE IMAGE */
+.profile-image {
+
+  width:110px;
+  height:110px;
+
+  margin:0 auto 12px;
+
+  border-radius:50%;
+
+  padding:4px;
+
+  background:
+  linear-gradient(135deg,#38bdf8,#0ea5e9);
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #000000;
+}
+
+.profile-header h2 {
+  font-size: 2em;
+  color: #000000;
+}
+
+.profile-header .role {
+  font-size: 0.95em;
+  color: #000000;
+  margin-top: 5px;
+}
+
+/* ===============================
+   PROFILE DETAILS
+================================ */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detail {
+  background: #fffcfc;
+  padding:12px 15px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detail:hover {
+  transform: scale(1.01);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.detail span {
+  font-size: 0.85em;
+  color: #000000;
+}
+
+.detail p {
+  font-size: 0.95em;
+  color: #000000;
+}
+
+/* ===============================
+   PROFILE ACTIONS
+================================ */
+.profile-actions {
+  display: flex;
+  gap: 15px;
+  margin-top:25px;
+}
+
+.profile-actions button {
+  flex: 1;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* ===============================
+   BUTTON STYLES
+================================ */
+#options{
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #7c2d12;
+  background: linear-gradient(135deg, #1E88E5, #1565C0);
+}
+
+.logout-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(153, 218, 204, 0.45);
+}
+
+.profile-actions button:active {
+  transform: scale(0.95);
+}
+
+/* ===============================
+   FOOTER 
+================================ */
+footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 30px 15px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-info {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ===============================
+   ANIMATION
+================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .footer-info {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 30px 22px;
+  }
+
+  .profile-header h2 {
+    font-size: 1.7em;
+  }
+}

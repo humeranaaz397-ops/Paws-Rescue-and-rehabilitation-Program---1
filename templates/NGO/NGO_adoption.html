@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adoption</title>
+
+  <link rel="stylesheet" href="/static/NGO/nav and header.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e4fa1, #4b7bec);
+      min-height: 100vh;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+    /* ===== MAIN ===== */
+    .main {
+      padding: 20px;
+      margin-left: 260px;
+      width: calc(100% - 260px);
+      transition: all 0.3s ease;
+    }
+
+    .main.full {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    /* ===== TITLE ===== */
+    .top {
+      margin: 20px 0;
+    }
+
+    .top h1 {
+      color: white;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      margin-left: auto;
+    }
+
+    #searchInput {
+      padding: 12px 15px;
+      border: none;
+      border-radius: 12px;
+      outline: none;
+      width: 260px;
+      font-size: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      padding: 18px;
+      border-radius: 12px;
+      color: white;
+    }
+
+    .card h2 {
+      margin-top: 8px;
+    }
+
+    .green {
+      background: #2ecc71;
+    }
+
+    .orange {
+      background: #f39c12;
+    }
+
+    .blue {
+      background: #3498db;
+    }
+
+    /* ===== TABLE ===== */
+    .table {
+      background: white;
+      border-radius: 12px;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+    }
+
+    /* ===== STATUS ===== */
+    .status {
+      padding: 6px 10px;
+      border-radius: 8px;
+      color: white;
+      font-size: 12px;
+    }
+
+    .pending {
+      background: #f39c12;
+    }
+
+    .approved {
+      background: #2ecc71;
+    }
+
+    .rejected {
+      background: #e74c3c;
+    }
+
+    /* ===== BUTTON ===== */
+    .view-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px) {
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+
+    .notification {
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    @keyframes ring {
+      0% {
+        transform: rotate(0);
+      }
+
+      10% {
+        transform: rotate(15deg);
+      }
+
+      20% {
+        transform: rotate(-15deg);
+      }
+
+      30% {
+        transform: rotate(10deg);
+      }
+
+      40% {
+        transform: rotate(-10deg);
+      }
+
+      50% {
+        transform: rotate(0);
+      }
+    }
+
+    .sidebar {
+      transition: all 0.4s ease;
+    }
+
+    .sidebar.closed {
+      transform: translateX(-100%);
+    }
+
+    .welcome {
+      margin: 20px 0;
+      color: white;
+    }
+
+    .welcome h1 {
+      font-size: 32px;
+    }
+
+    .welcome p {
+      opacity: 0.9;
+    }
+
+    #clock {
+      color: #333;
+      font-weight: bold;
+    }
+
+    .card,
+    .box {
+      animation: fadeUp 0.6s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== SEARCH ===== */
+
+    .search-box {
+      display: flex;
+      align-items: center;
+    }
+
+    #searchInput {
+      padding: 12px 15px;
+      border: none;
+      border-radius: 12px;
+      outline: none;
+      width: 260px;
+      font-size: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== MODAL ===== */
+
+    .adoption-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 5000;
+      padding: 20px;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 650px;
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      animation: popup 0.35s ease;
+    }
+
+    .modal-top {
+      position: relative;
+      height: 220px;
+    }
+
+    .modal-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay-dark {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+          rgba(0, 0, 0, 0.8),
+          rgba(0, 0, 0, 0.2));
+    }
+
+    .modal-title {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      color: white;
+      z-index: 2;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    .info-card {
+      background: #f8fbff;
+      border: 1px solid #e7eef7;
+      border-radius: 16px;
+      padding: 15px;
+    }
+
+    .info-card span {
+      display: block;
+      color: #777;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .info-card h4 {
+      color: #1e4fa1;
+    }
+
+    .action-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .approve-btn {
+      background: #2ecc71;
+    }
+
+    .reject-btn {
+      background: #e74c3c;
+    }
+
+    .approve-btn,
+    .reject-btn {
+      border: none;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <h2 class="logo">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg">
+      PAWS
+    </h2>
+    <a href="/ngo/dashboard">Dashboard</a>
+    <a href="/ngo/rescue">Rescue Cases</a>
+    <a href="/ngo/medical-care">Medical care</a>
+    <a href="#" class="active">Adoption</a>
+    <a href="/ngo/shelters">Shelters</a>
+    <a href="/ngo/add-rescue-member">Manage Rescue Members</a>
+    <div class="sidebar-bottom">
+
+      <a href="/logout">
+        <button class="logout-btn" id="logoutBtn">
+          🚪 Logout
+        </button>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <span class="menu" id="menu">☰</span>
+
+        <div class="logo-image">
+          <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg">
+          PAWS RESCUE
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div id="clock"></div>
+        <!-- <div class="notification">🔔</div> -->
+
+        <img
+          src="{{ session.get('user_profile_img') or 'https://img.magnific.com/free-vector/young-man-with-glasses-avatar_1308-175763.jpg?semt=ais_hybrid&w=740&q=80' }}"
+          class="profile-img">
+      </div>
+    </div>
+
+    <!-- TITLE -->
+    <div class="top">
+
+      <h1>Adoption Management</h1>
+
+      <div class="search-box">
+
+        <input type="text" id="searchInput" placeholder="Search adoption...">
+
+      </div>
+
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+      <div class="card green">
+        Adopted Pets
+        <h2 id="adoptedCount">{{ adopted_count }}</h2>
+      </div>
+
+      <div class="card orange">
+        Pending Requests
+        <h2 id="pendingCount">{{ pending_count }}</h2>
+      </div>
+
+      <div class="card blue">
+        Total Requests
+        <h2 id="totalCount">{{ total_count }}</h2>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table">
+      <table>
+        <tr>
+
+          <th>ID</th>
+
+          <th>Pet</th>
+
+          <th>Adopter</th>
+
+          <th>Status</th>
+
+          <th>Action</th>
+
+        </tr>
+
+        {% for app in applications %}
+        <tr id="adoption-{{ app.id }}">
+          <td>{{ app.id }}</td>
+          <td>{{ app.pet_name }}</td>
+          <td>{{ app.full_name }}</td>
+          <td>
+            {% if app.status == 'Pending' %}
+            <span class="status pending">Pending</span>
+            {% elif app.status == 'Approved' %}
+            <span class="status approved">Approved</span>
+            {% else %}
+            <span class="status rejected">{{ app.status }}</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="/ngo/adoption/{{ app.id }}"><button class="view-btn">View</button></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+  </div>
+
+  <div class="adoption-modal" id="adoptionModal">
+
+    <div class="modal-box">
+
+      <div class="modal-top">
+
+        <img id="petImage" src="https://images.unsplash.com/photo-1517849845537-4d257902454a">
+
+        <div class="overlay-dark"></div>
+
+        <div class="modal-title">
+
+          <h2 id="petName">
+            Dog
+          </h2>
+
+        </div>
+
+        <button class="close-modal" id="closeModal">
+          ✕
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <div class="info-grid">
+
+          <div class="info-card">
+
+            <span>🐾 Pet</span>
+
+            <h4 id="detailPet">
+              Dog
+            </h4>
+
+          </div>
+
+          <div class="info-card">
+
+            <span>👤 Adopter</span>
+
+            <h4 id="detailAdopter">
+              Rahul
+            </h4>
+
+          </div>
+
+          <div class="info-card">
+
+            <span>📌 Status</span>
+
+            <h4 id="detailStatus">
+              Pending
+            </h4>
+
+          </div>
+
+        </div>
+
+        <div class="action-buttons">
+
+          <button class="approve-btn" id="approveBtn">
+            Approve
+          </button>
+
+          <button class="reject-btn" id="rejectBtn">
+            Reject
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // ===== SIDEBAR =====
+    // ===== SIDEBAR =====
+
+    const menu = document.getElementById("menu");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.querySelector(".main");
+
+    menu.onclick = (e) => {
+
+      e.stopPropagation();
+
+      sidebar.classList.toggle("closed");
+      main.classList.toggle("full");
+
+    };
+
+    document.addEventListener("click", (e) => {
+
+      if (
+        !sidebar.contains(e.target) &&
+        !menu.contains(e.target)
+      ) {
+
+        sidebar.classList.add("closed");
+        main.classList.add("full");
+
+      }
+
+    });
+
+    sidebar.onclick = (e) => {
+
+      e.stopPropagation();
+
+    };
+
+    /* ===== SEARCH ===== */
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    searchInput.addEventListener("keyup", () => {
+
+      const value =
+        searchInput.value.toLowerCase();
+
+      document
+        .querySelectorAll("table tr")
+        .forEach((row, index) => {
+
+          if (index === 0) return;
+
+          const text =
+            row.textContent.toLowerCase();
+
+          row.style.display =
+            text.includes(value)
+              ? ""
+              : "none";
+
+        });
+
+    });
+
+    /* ===== COUNT UPDATE ===== */
+
+    function updateCounts() {
+
+      const rows =
+        document.querySelectorAll("table tr");
+
+      let adopted = 0;
+      let pending = 0;
+      let total = rows.length - 1;
+
+      rows.forEach((row, index) => {
+
+        if (index === 0) return;
+
+        const statusElement =
+          row.querySelector(".status");
+
+        if (!statusElement) return;
+
+        const status =
+          statusElement.textContent.trim();
+
+        if (status === "Approved") {
+
+          adopted++;
+
+        }
+
+        if (status === "Pending") {
+
+          pending++;
+
+        }
+
+      });
+
+      document.getElementById("adoptedCount")
+        .textContent = adopted;
+
+      document.getElementById("pendingCount")
+        .textContent = pending;
+
+      document.getElementById("totalCount")
+        .textContent = total;
+
+    }
+
+    /* ===== CLOCK ===== */
+
+    function updateClock() {
+
+      const now = new Date();
+
+      document.getElementById("clock")
+        .innerHTML =
+        now.toLocaleTimeString();
+
+    }
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+
+    /* ===== INIT ===== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        updateCounts();
+
+      }
+    );
+  </script>
+</body>
+
+</html>

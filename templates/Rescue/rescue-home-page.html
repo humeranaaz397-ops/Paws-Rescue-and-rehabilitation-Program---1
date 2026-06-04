@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rescue Team Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/Rescue/nav-bar.css">
+  <link rel="stylesheet" href="/static/Rescue/footer.css">
+  <link rel="stylesheet" href="/static/Rescue/rescue_home_page.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <!-- ===== HEADER / NAVBAR ===== -->
+  <header>
+    <!-- Hamburger (left) -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Logo + Title -->
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+
+    <!-- Desktop Menu -->
+    <nav class="nav-links">
+      <a href="/rescue/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="/rescue/profile">
+        {% if session.get('user_profile_img') and (session.get('user_profile_img')[:4] == 'http' or
+        session.get('user_profile_img')[0] == '/') %}
+        <img src="{{ session.get('user_profile_img') }}" alt="Profile"
+          style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+        {% else %}
+        <img
+          src="{{ url_for('static', filename='uploads/' + (session.get('user_profile_img') or 'default_user.png')) }}"
+          alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+        {% endif %}
+      </a>
+    </nav>
+
+    <!-- Mobile Slide Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-header">
+        <div class="brand">
+          <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+          <h1>Paws Rescue &<br>Rehabilitation Program</h1>
+        </div>
+        <div class="close-btn" id="closeBtn">&times;</div>
+      </div>
+
+      <div class="mobile-links">
+        <a href="/rescue/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+        <a href="/rescue/profile" style="display: flex; align-items: center; gap: 10px;">
+          {% if session.get('user_profile_img') and (session.get('user_profile_img')[:4] == 'http' or
+          session.get('user_profile_img')[0] == '/') %}
+          <img src="{{ session.get('user_profile_img') }}" alt="Profile"
+            style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+          {% else %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + (session.get('user_profile_img') or 'default_user.png')) }}"
+            alt="Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+          {% endif %}
+          {{ session['user_email'] }}
+        </a>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+  </header>
+
+  <!-- ===== RESCUE DASHBOARD SECTION ===== -->
+  <section class="rescue-dashboard">
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div
+      style="background-color: #2ecc71; color: white; padding: 15px 25px; border-radius: 40px; margin: 20px 0; font-weight: bold; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 10000; position: relative;">
+      <span><i class="fas fa-check-circle" style="margin-right: 10px;"></i> {{ message }}</span>
+      <span style="cursor: pointer; font-size: 20px; line-height: 1;"
+        onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- TOP HEADER -->
+    <div class="dashboard-top">
+      <div class="dashboard-title">
+        <div class="dashboard-icon">
+          <i class="fa-solid fa-truck-medical"></i>
+        </div>
+        <div>
+          <h1>Rescue Mission Dashboard</h1>
+          <p>
+            View and manage incoming rescue requests.
+            Accept a mission to help save a life.
+          </p>
+        </div>
+      </div>
+      <!-- STATS -->
+      <div class="dashboard-stats">
+        <div class="stat-box">
+          <i class="fa-regular fa-clipboard"></i>
+          <div>
+            <h2>{{ total_count }}</h2>
+            <span>Total Requests</span>
+          </div>
+        </div>
+        <div class="stat-box">
+          <i class="fa-regular fa-clock"></i>
+          <div>
+            <h2>{{ pending_count }}</h2>
+            <span>Pending</span>
+          </div>
+        </div>
+        <div class="stat-box">
+          <i class="fa-regular fa-circle-check"></i>
+          <div>
+            <h2>{{ accepted_count }}</h2>
+            <span>Accepted</span>
+          </div>
+        </div>
+        <div class="stat-box">
+          <i class="fa-regular fa-circle-xmark"></i>
+          <div>
+            <h2>{{ resolved_count }}</h2>
+            <span>Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FILTER BAR -->
+    <div class="dashboard-filter">
+      <div class="filter-left">
+        <button class="filter-btn active">
+          <i class="fa-regular fa-clipboard"></i>
+          Pending
+        </button>
+        <button class="filter-btn">
+          <i class="fa-regular fa-circle-check"></i>
+          Accepted
+        </button>
+        <button class="filter-btn">
+          <i class="fa-solid fa-flag"></i>
+          Completed
+        </button>
+        <button class="filter-btn">
+          <i class="fa-regular fa-circle-xmark"></i>
+          Rejected
+        </button>
+      </div>
+      <div class="filter-right">
+
+        <select>
+
+          <option>All Locations</option>
+
+          <option>Hyderabad</option>
+
+          <option>Bangalore</option>
+
+        </select>
+
+        <button class="history-btn">
+
+          <i class="fa-solid fa-clock-rotate-left"></i>
+
+          History
+
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ===== GOOGLE MAP ===== -->
+
+    <div class="google-map-box" id="googleMapBox">
+
+      <div class="map-header">
+
+        <h2>Live Navigation</h2>
+
+        <button id="closeMapBtn">
+          Back
+        </button>
+
+      </div>
+
+      <iframe id="googleMapFrame" width="100%" height="500" style="border:0;" loading="lazy" allowfullscreen>
+      </iframe>
+
+    </div>
+
+    <!-- ===== UPLOAD INJURED ANIMAL ===== -->
+    <form class="upload-animal-box" id="uploadForm" method="POST" action="" enctype="multipart/form-data"
+      style="display:none;">
+      <input type="hidden" name="action" value="resolve">
+      <input type="hidden" name="case_id" id="uploadCaseId" value="">
+
+      <div class="upload-header">
+        <h2>Upload Injured Animal Photo</h2>
+        <p>
+          Capture and upload the current condition of the rescued animal.
+        </p>
+      </div>
+
+      <div class="upload-area">
+        <input type="file" name="resolved_image" id="animalUpload" accept="image/*" hidden>
+        <label for="animalUpload" class="upload-label">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span>Click to Upload Image</span>
+        </label>
+      </div>
+
+      <!-- IMAGE PREVIEW -->
+      <div class="preview-box" id="previewBox" style="display:none;">
+        <img id="previewImage" src="" alt="Preview">
+        <div class="upload-success" id="uploadSuccess">
+          <i class="fa-solid fa-circle-check"></i>
+          Image Selected
+        </div>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <button type="submit" id="submitAnimalBtn">
+        <i class="fa-solid fa-paper-plane"></i>
+        Submit Report
+      </button>
+    </form>
+
+
+    <!-- Hidden Action Form -->
+    <form id="actionForm" method="POST" style="display:none;">
+      <input type="hidden" name="action" id="actionInput">
+      <input type="hidden" name="case_id" id="caseIdInput">
+      <input type="hidden" name="reason" id="reasonInput">
+    </form>
+
+    <!-- Active cases dynamic loop -->
+    {% for case in active_cases %}
+    <div class="mission-card" data-id="{{ case.id }}" data-status="{{ case.status | lower }}"
+      data-lat="{{ case.lat or '17.3920' }}" data-lng="{{ case.lng or '78.4910' }}">
+      <div class="mission-image">
+        {% if case.status == 'Assigned' %}
+        <span class="new-badge">NEW</span>
+        {% endif %}
+        {% if case.image_filename and (case.image_filename[:4] == 'http' or case.image_filename[0] == '/') %}
+        <img src="{{ case.image_filename }}" alt="animal">
+        {% else %}
+        {% set rel = case.image_filename if case.image_filename else 'default_injured.png' %}
+        <img src="{{ url_for('static', filename='uploads/' + rel) }}" alt="animal">
+        {% endif %}
+      </div>
+
+      <div class="mission-content">
+        <div class="mission-info">
+          <h2>Animal Rescue Mission ({{ case.animal_type or 'Stray Animal' }})</h2>
+          <p>{{ case.description }}</p>
+          <div class="mission-tags">
+            <span>❤️ Injured</span>
+            <span>⚠️ Urgent</span>
+          </div>
+        </div>
+
+        <div class="mission-location">
+          <p><i class="fa-solid fa-location-dot"></i> {{ case.location }}</p>
+          <p><i class="fa-regular fa-calendar"></i> {{ case.reported_at.strftime('%B %d, %Y') if case.reported_at else
+            '' }}</p>
+          <p><i class="fa-regular fa-clock"></i> {{ case.reported_at.strftime('%I:%M %p') if case.reported_at else '' }}
+          </p>
+          <p><i class="fa-regular fa-user"></i> Reported by: {{ case.reported_by_name or 'Visitor' }}</p>
+          <p><i class="fa-solid fa-signal"></i> Status:
+            {% if case.status == 'Assigned' %}
+            <span style="color: #f39c12; font-weight: bold;">Pending</span>
+            {% elif case.status == 'Ongoing' or case.status == 'Accepted' %}
+            <span style="color: #3498db; font-weight: bold;">Accepted</span>
+            {% elif case.status == 'Resolved' or case.status == 'Completed' %}
+            <span style="color: #2ecc71; font-weight: bold;">Completed</span>
+            {% else %}
+            <span style="font-weight: bold;">{{ case.status }}</span>
+            {% endif %}
+          </p>
+          <p><i class="fa-solid fa-user-shield"></i> Assigned Rescuer: {{ case.assigned_name or session.get('user_name')
+            }}</p>
+        </div>
+
+        <div class="mission-actions">
+          {% if case.status == 'Assigned' %}
+          <button class="accept-btn"
+            onclick="acceptMission({{ case.id }}, {{ case.lat or '17.3920' }}, {{ case.lng or '78.4910' }})">
+            <i class="fa-solid fa-check"></i>
+            Accept Mission
+          </button>
+          <button class="reject-btn" onclick="rejectMission({{ case.id }})">
+            <i class="fa-solid fa-xmark"></i>
+            Reject Mission
+          </button>
+          {% elif case.status == 'Ongoing' or case.status == 'Accepted' %}
+          <button class="accept-btn" style="background: rgb(15, 143, 56);" disabled>
+            <i class="fa-solid fa-circle-check"></i>
+            Accepted
+          </button>
+          <button class="complete-btn" onclick="completeMissionDirect({{ case.id }})"
+            style="background: #2ecc71; color: white; border: none; border-radius: 10px; padding: 8px 14px; font-weight: bold; cursor: pointer;">
+            <i class="fa-solid fa-flag"></i>
+            Mark as Completed
+          </button>
+          {% endif %}
+          <a href="#" class="view-details-link"
+            data-title="Animal Rescue Mission ({{ case.animal_type or 'Stray Animal' }})"
+            data-description="{{ case.description }}"
+            data-image="{% if case.image_filename and (case.image_filename[:4] == 'http' or case.image_filename[0] == '/') %}{{ case.image_filename }}{% else %}{{ url_for('static', filename='uploads/' + (case.image_filename or 'default_injured.png')) }}{% endif %}"
+            data-location="{{ case.location }}"
+            data-date="{{ case.reported_at.strftime('%B %d, %Y') if case.reported_at else '' }}"
+            data-time="{{ case.reported_at.strftime('%I:%M %p') if case.reported_at else '' }}"
+            data-reporter="{{ case.reported_by_name or 'Visitor' }}" data-tags="❤️ Injured | ⚠️ Urgent">View Details
+            →</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Completed/Resolved cases loop -->
+    {% for case in resolved_cases %}
+    <div class="mission-card completed-mission" data-id="{{ case.id }}" data-status="completed">
+      <div class="mission-image">
+        <span class="new-badge" style="background: #20b24b;">COMPLETED</span>
+        {% if case.image_filename and (case.image_filename[:4] == 'http' or case.image_filename[0] == '/') %}
+        <img src="{{ case.image_filename }}" alt="animal">
+        {% else %}
+        {% set rel2 = case.image_filename if case.image_filename else 'default_injured.png' %}
+        <img src="{{ url_for('static', filename='uploads/' + rel2) }}" alt="animal">
+        {% endif %}
+      </div>
+
+      <div class="mission-content">
+        <div class="mission-info">
+          <h2>Animal Rescue Mission ({{ case.animal_type or 'Stray Animal' }}) (Completed)</h2>
+          <p>{{ case.description }}</p>
+          <div class="mission-tags">
+            <span>❤️ Rescued</span>
+            {% if case.resolved_image_filename %}
+            <span>📸 Image Uploaded</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mission-location">
+          <p><i class="fa-solid fa-location-dot"></i> {{ case.location }}</p>
+          <p><i class="fa-regular fa-calendar"></i> {{ case.reported_at.strftime('%B %d, %Y') if case.reported_at else
+            '' }}</p>
+          <p><i class="fa-regular fa-clock"></i> {{ case.reported_at.strftime('%I:%M %p') if case.reported_at else '' }}
+          </p>
+          <p><i class="fa-regular fa-user"></i> Reported by: {{ case.reported_by_name or 'Visitor' }}</p>
+          <p><i class="fa-solid fa-signal"></i> Status: <span
+              style="color: #2ecc71; font-weight: bold;">Completed</span></p>
+          <p><i class="fa-solid fa-user-shield"></i> Assigned Rescuer: {{ case.assigned_name or session.get('user_name')
+            }}</p>
+        </div>
+
+        <div class="mission-actions">
+          <button class="accept-btn" style="background: rgb(15, 143, 56);" disabled>
+            <i class="fa-solid fa-circle-check"></i>
+            Rescued
+          </button>
+          <a href="#" class="view-details-link"
+            data-title="Animal Rescue Mission ({{ case.animal_type or 'Stray Animal' }})"
+            data-description="{{ case.description }}"
+            data-image="{% if case.image_filename and (case.image_filename[:4] == 'http' or case.image_filename[0] == '/') %}{{ case.image_filename }}{% else %}{{ url_for('static', filename='uploads/' + (case.image_filename or 'default_injured.png')) }}{% endif %}"
+            data-location="{{ case.location }}"
+            data-date="{{ case.reported_at.strftime('%B %d, %Y') if case.reported_at else '' }}"
+            data-time="{{ case.reported_at.strftime('%I:%M %p') if case.reported_at else '' }}"
+            data-reporter="{{ case.reported_by_name or 'Visitor' }}" data-tags="❤️ Rescued">View Details →</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if not active_cases and not resolved_cases %}
+    <div
+      style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; margin-bottom: 20px;">
+      <i class="fa-solid fa-circle-check" style="font-size: 48px; color: #20b24b; margin-bottom: 15px;"></i>
+      <p style="font-size: 18px; color: #fff;">No rescue missions assigned or completed yet!</p>
+    </div>
+    {% endif %}
+
+
+
+    <!-- INFO -->
+    <div class="dashboard-note">
+
+      <i class="fa-solid fa-circle-info"></i>
+
+      <p>
+        Accept a mission only if you are available to reach the location quickly.
+      </p>
+
+    </div>
+    <!-- ================= JAVASCRIPT ================= -->
+    <script src="/static/Rescue/nav-bar.js"></script>
+    <script>
+      // ===== FILTER BUTTON ACTIVE =====
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+          filterButtons.forEach(btn => {
+            btn.classList.remove("active");
+          });
+          button.classList.add("active");
+          filterMissions();
+        });
+      });
+
+      // ===== GOOGLE MAP VARIABLES =====
+      const googleMapBox = document.getElementById("googleMapBox");
+      const googleMapFrame = document.getElementById("googleMapFrame");
+      const closeMapBtn = document.getElementById("closeMapBtn");
+      const dashboardFilter = document.querySelector(".dashboard-filter");
+      const dashboardNote = document.querySelector(".dashboard-note");
+      const uploadBox = document.getElementById("uploadForm");
+      const previewBox = document.getElementById("previewBox");
+      const previewImage = document.getElementById("previewImage");
+      const animalUpload = document.getElementById("animalUpload");
+      const uploadSuccess = document.getElementById("uploadSuccess");
+
+      let activeMissionCard = null;
+      let rescueCompleted = false;
+
+      // ===== ACCEPT MISSION FUNCTION =====
+      function acceptMission(caseId, lat, lng) {
+        const form = document.getElementById("actionForm");
+        form.action = "{{ url_for('accept_mission') }}";
+        document.getElementById("actionInput").value = "accept";
+        document.getElementById("caseIdInput").value = caseId;
+        form.submit();
+      }
+
+      // ===== DIRECT COMPLETE MISSION FUNCTION =====
+      function completeMissionDirect(caseId) {
+        if (confirm("Are you sure you want to mark this rescue mission as completed?")) {
+          const form = document.getElementById("actionForm");
+          form.action = "{{ url_for('complete_mission') }}";
+          document.getElementById("actionInput").value = "resolve";
+          document.getElementById("caseIdInput").value = caseId;
+          form.submit();
+        }
+      }
+
+      // ===== REJECT MISSION FUNCTION =====
+      function rejectMission(caseId) {
+        const rejectReason = prompt("Please enter the reason for rejecting this mission:");
+        if (rejectReason === null) {
+          return;
+        }
+        if (rejectReason.trim() === "") {
+          alert("Please provide a rejection reason.");
+          return;
+        }
+        const form = document.getElementById("actionForm");
+        // Use standard dashboard route for rejection actions
+        form.action = "{{ url_for('rescue_dashboard') }}";
+        document.getElementById("actionInput").value = "reject";
+        document.getElementById("caseIdInput").value = caseId;
+        document.getElementById("reasonInput").value = rejectReason;
+        form.submit();
+      }
+
+      // ===== VIEW DETAILS =====
+      document.addEventListener("click", (e) => {
+        const link = e.target.closest(".view-details-link");
+        if (link) {
+          e.preventDefault();
+          const title = link.getAttribute("data-title");
+          const description = link.getAttribute("data-description");
+          const image = link.getAttribute("data-image");
+          const location = link.getAttribute("data-location");
+          const date = link.getAttribute("data-date");
+          const time = link.getAttribute("data-time");
+          const reporter = link.getAttribute("data-reporter");
+          const tags = link.getAttribute("data-tags");
+
+          // Remove old box
+          const oldBox = document.querySelector(".details-popup");
+          if (oldBox) {
+            oldBox.remove();
+          }
+
+          // Create details box
+          const detailsBox = document.createElement("div");
+          detailsBox.className = "details-popup";
+          // Get status and assigned from the parent card
+          const card = link.closest(".mission-card") || link.closest(".completed-mission");
+          const statusText = card.querySelector(".mission-location p:nth-child(5)")?.innerText || "";
+          const rescuerText = card.querySelector(".mission-location p:nth-child(6)")?.innerText || "";
+
+          detailsBox.innerHTML = `
+          <div class="details-card">
+            <button class="close-details">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img src="${image}" alt="animal">
+            <h2>${title}</h2>
+            <p class="details-description">${description}</p>
+            <div class="details-tags">${tags}</div>
+            <div class="details-info">
+              <p><i class="fa-solid fa-location-dot"></i> ${location}</p>
+              <p><i class="fa-regular fa-calendar"></i> ${date}</p>
+              <p><i class="fa-regular fa-clock"></i> ${time}</p>
+              <p><i class="fa-regular fa-user"></i> ${reporter}</p>
+              <p><i class="fa-solid fa-signal"></i> ${statusText}</p>
+              <p><i class="fa-solid fa-user-shield"></i> ${rescuerText}</p>
+            </div>
+          </div>
+        `;
+          document.body.appendChild(detailsBox);
+
+          detailsBox.querySelector(".close-details").addEventListener("click", () => {
+            detailsBox.remove();
+          });
+        }
+      });
+
+      // ===== LOCATION FILTER =====
+      const locationSelect = document.querySelector(".filter-right select");
+
+      // ===== MAIN FILTER FUNCTION =====
+      function filterMissions() {
+        const activeFilter = document.querySelector(".filter-btn.active").textContent.trim().toLowerCase();
+        const selectedLocation = locationSelect.value.toLowerCase();
+        const missionCards = document.querySelectorAll(".mission-card, .completed-mission");
+
+        missionCards.forEach(card => {
+          const status = card.getAttribute("data-status");
+          const locationText = card.querySelector(".mission-location p").innerText.toLowerCase();
+
+          // ===== STATUS FILTER =====
+          let statusMatch = false;
+          if (activeFilter.includes("pending")) {
+            statusMatch = status === "assigned";
+          } else if (activeFilter.includes("accepted")) {
+            statusMatch = status === "accepted" || status === "ongoing";
+          } else if (activeFilter.includes("completed")) {
+            statusMatch = status === "completed" || status === "resolved";
+          } else if (activeFilter.includes("rejected")) {
+            statusMatch = status === "rejected";
+          }
+
+          // ===== LOCATION FILTER =====
+          let locationMatch = false;
+          if (selectedLocation === "all locations") {
+            locationMatch = true;
+          } else {
+            locationMatch = locationText.includes(selectedLocation);
+          }
+
+          // ===== FINAL SHOW/HIDE =====
+          if (statusMatch && locationMatch) {
+            card.style.display = "flex";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+
+      if (locationSelect) {
+        locationSelect.addEventListener("change", filterMissions);
+      }
+
+      // ===== BACK BUTTON =====
+      if (closeMapBtn) {
+        closeMapBtn.addEventListener("click", () => {
+          if (!rescueCompleted) {
+            alert("You should complete this rescue task first.");
+            return;
+          }
+          googleMapBox.style.display = "none";
+          uploadBox.style.display = "none";
+          if (activeMissionCard) {
+            activeMissionCard.style.border = "none";
+          }
+          dashboardFilter.style.display = "flex";
+          dashboardNote.style.display = "flex";
+          filterMissions();
+        });
+      }
+
+      // ===== IMAGE UPLOAD PREVIEW =====
+      if (animalUpload) {
+        animalUpload.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const imageURL = URL.createObjectURL(file);
+            previewImage.src = imageURL;
+            previewBox.style.display = "block";
+            uploadSuccess.style.display = "flex";
+          }
+        });
+      }
+
+      // ===== SUBMIT BUTTON (INTERACTIVE POPUP THEN SUBMIT) =====
+      const submitAnimalBtn = document.getElementById("submitAnimalBtn");
+      if (submitAnimalBtn) {
+        submitAnimalBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (animalUpload.files.length === 0) {
+            alert("Please upload an image first.");
+            return;
+          }
+
+          // Hide upload box
+          uploadBox.style.display = "none";
+          rescueCompleted = false;
+
+          // Create success notification
+          const successMessage = document.createElement("div");
+          successMessage.className = "ngo-success-message";
+          successMessage.innerHTML = `
+          <i class="fa-solid fa-circle-check"></i>
+          <h2>Rescue Team Reached Successfully</h2>
+          <p>
+            Please submit this rescued animal to an NGO
+            for further treatment and proper care.
+          </p>
+          <button type="button" id="finishRescueBtn">
+            Finish Rescue
+          </button>
+        `;
+          document.querySelector(".rescue-dashboard").appendChild(successMessage);
+
+          document.getElementById("finishRescueBtn").addEventListener("click", () => {
+            rescueCompleted = true;
+            alert("Rescue Mission Completed!");
+            const form = document.getElementById("uploadForm");
+            form.action = "{{ url_for('complete_mission') }}";
+            form.submit();
+          });
+        });
+      }
+
+      // ===== ON PAGE LOAD STATE RESTORATION =====
+      document.addEventListener("DOMContentLoaded", () => {
+        const ongoingCard = document.querySelector('.mission-card[data-status="accepted"]') || document.querySelector('.mission-card[data-status="ongoing"]');
+        if (ongoingCard) {
+          const caseId = ongoingCard.getAttribute('data-id');
+          const lat = ongoingCard.getAttribute('data-lat');
+          const lng = ongoingCard.getAttribute('data-lng');
+
+          activeMissionCard = ongoingCard;
+          rescueCompleted = false;
+
+          document.getElementById("uploadCaseId").value = caseId;
+          ongoingCard.style.border = "3px solid #20b24b";
+
+          // Hide other cards
+          document.querySelectorAll(".mission-card, .completed-mission").forEach(card => {
+            if (card !== ongoingCard) {
+              card.style.display = "none";
+            }
+          });
+
+          if (dashboardFilter) dashboardFilter.style.display = "none";
+          if (dashboardNote) dashboardNote.style.display = "none";
+          if (googleMapBox) googleMapBox.style.display = "block";
+          if (uploadBox) uploadBox.style.display = "block";
+
+          if (googleMapFrame) {
+            googleMapFrame.src = "https://maps.google.com/maps?q=" + lat + "," + lng + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+          }
+
+          // Update form action explicitly to complete_mission route
+          const form = document.getElementById("uploadForm");
+          if (form) {
+            form.action = "{{ url_for('complete_mission') }}";
+          }
+        }
+      });
+    </script>
+</body>
+</html>
+    

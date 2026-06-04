@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program/Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/registration.css">
+  <link rel="stylesheet" href="/static/nav-bar.css">
+  <link rel="stylesheet" href="/static/footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+<main>
+  <div class="register-wrapper">
+    <div class="register-card">
+      <h1>Create Account</h1>
+      <p class="subtitle">Join Project Paws and help animals in need</p>
+      <form method="POST" action="/register">
+        {% if error %}
+        <p style="color: red; text-align: center; margin-bottom: 10px;">{{ error }}</p>
+        {% endif %}
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="input-group">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="Enter phone number" required>
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Create password" required>
+        </div>
+
+        <div class="input-group">
+          <label>Confirm Password</label>
+          <input type="password" name="confirm_password" placeholder="Confirm password" required>
+        </div>
+        <button type="submit" class="register-btn">Register</button>
+        <p class="login-text">
+          Already have an account?
+          <a href="/login">Login</a>
+        </p>
+
+      </form>
+    </div>
+  </div>
+  </main>
+  <!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/nav-bar.js"></script>
+
+
+</body>
+</html>

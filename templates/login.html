@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Project Paws</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/static/login.css">
+  <link rel="stylesheet" href="/static/nav-bar.css">
+  <link rel="stylesheet" href="/static/footer.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+</head>
+
+<body>
+
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <nav class="nav-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="#">Login / Signup</a>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-header">
+      <div class="brand">
+        <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+        <h1>Paws Rescue & Rehabilitation Program</h1>
+      </div>
+      <div class="close-btn" id="closeBtn">&times;</div>
+    </div>
+
+    <div class="mobile-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="#">Login / Signup</a>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+</header>
+
+
+<!-- ===== LOGIN SECTION ===== -->
+ <main>
+
+<div class="login-wrapper">
+  <!-- LEFT SIDE : WELCOME -->
+  <div class="welcome-side">
+<div class="cat-container">
+
+<svg id="cat" width="140" height="140" viewBox="0 0 200 200">
+
+<!-- ears -->
+<polygon points="40,60 70,20 90,70" fill="#F4A261"/>
+<polygon points="160,60 130,20 110,70" fill="#F4A261"/>
+
+<!-- face -->
+<circle cx="100" cy="110" r="70" fill="#F4A261"/>
+
+<!-- eyes -->
+<circle cx="75" cy="100" r="16" fill="white"/>
+<circle cx="125" cy="100" r="16" fill="white"/>
+
+<!-- pupils -->
+<circle class="pupil" cx="75" cy="100" r="7" fill="black"/>
+<circle class="pupil" cx="125" cy="100" r="7" fill="black"/>
+
+<!-- nose -->
+<polygon points="100,115 92,125 108,125" fill="#E76F51"/>
+
+<!-- mouth -->
+<path d="M92 125 Q90 140 75 140" stroke="#333" fill="none" stroke-width="3"/>
+<path d="M108 125 Q110 140 125 140" stroke="#333" fill="none" stroke-width="3"/>
+
+</svg>
+
+</div>
+
+
+    <h1 class="welcome-title">Welcome to Project Paws 🐾</h1>
+
+    <p class="welcome-text">
+      A platform dedicated to rescuing injured and abandoned animals.
+      Help us give every pet a safe home and better life.
+    </p>
+
+    <p class="welcome-text">
+      Join our mission and become a hero for animals in need.
+    </p>
+
+    <div class="pet-animation">
+      <span>🐶</span>
+      <span>🐱</span>
+      <span>🐾</span>
+      <span>🐕</span>
+      <span>🐈</span>
+    </div>
+
+  </div>
+
+  <div class="login-card">
+
+    <h1>Welcome Back</h1>
+    <p class="subtitle">Login to continue to Project Paws</p>
+
+    <form method="POST" action="/login">
+
+      <!-- Email -->
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Enter your email" required id="email">
+      </div>
+
+      <!-- Password -->
+      <div class="input-group">
+        <label>Password</label>
+
+        <div class="password-box">
+          <input type="password" name="password" placeholder="Enter your password" required id="password">
+          <span class="toggle-password" onclick="togglePassword()">Show</span>
+        </div>
+
+      </div>
+
+      <!-- Notification -->
+      {% if error %}
+      <p id="notification" style="color: red;">{{ error }}</p>
+      {% else %}
+      <p id="notification"></p>
+      {% endif %}
+
+      <!-- Options -->
+      <div class="options">
+        <label class="remember">
+          <input type="checkbox"> Remember me
+        </label>
+        <a href="#" class="forgot" onclick="showForgot(); return false;">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+
+      <p class="signup-text">
+        Don't have an account?
+        <a href="/register">Sign up</a>
+      </p>
+    </form>
+    <!-- ===== FORGOT PASSWORD SECTION ===== -->
+<div class="forgot-section" id="forgotSection">
+
+  <h2>Reset Password</h2>
+  <p>Enter your email to reset your password</p>
+
+  <div class="input-group">
+    <label>Email</label>
+    <input type="email" placeholder="Enter your registered email">
+  </div>
+
+  <button class="login-btn">Send Reset Link</button>
+
+  <p class="back-login">
+    <a href="#" onclick="backToLogin()">Back to Login</a>
+  </p>
+
+</div>
+
+  </div>
+</div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 Project Paws. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/static/nav-bar.js"></script>
+
+<script>
+function login(){
+  let user_email = "user@gmail.com"
+  let user_password = "user123"
+
+  let admin_email = "admin@gmail.com"
+  let admin_password = "admin123"
+
+  let ngo_email = "ngo@gmail.com"
+  let ngo_password = "ngo123"
+
+  let rescue_email = "rescue@gmail.com"
+  let rescue_password = "rescue123"
+
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+  
+  if (email === user_email && password === user_password){
+    window.location.href = "./User/user-home-page.html";
+  }
+  else if (email === admin_email && password === admin_password){
+    window.location.href = "./New-admin/admin_dashboard.html";
+  }
+  else if (email === ngo_email && password === ngo_password){
+    window.location.href = "./NGO/NGO_Dashboard.html";
+  }
+  else if (email === rescue_email && password === rescue_password){
+    window.location.href = "./Rescue/rescue-home-page.html";
+  }
+  else{
+    document.getElementById("notification").innerHTML = "Invalid Credentials";
+    document.getElementById("notification").style.color = "red";
+  }
+}
+
+
+function togglePassword() {
+  const passwordInput = document.getElementById("password");
+  const toggleText = document.querySelector(".toggle-password");
+
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    toggleText.innerText = "Hide";
+  } else {
+    passwordInput.type = "password";
+    toggleText.innerText = "Show";
+  }
+}
+
+
+function showForgot(){
+  document.querySelector("form").style.display = "none";
+  document.getElementById("forgotSection").style.display = "block";
+}
+
+function backToLogin(){
+  document.querySelector("form").style.display = "block";
+  document.getElementById("forgotSection").style.display = "none";
+}
+
+// 
+const pupils = document.querySelectorAll(".pupil");
+const password = document.getElementById("password");
+const cat = document.getElementById("cat");
+
+/* FOLLOW CURSOR */
+
+document.addEventListener("mousemove",(e)=>{
+
+pupils.forEach(pupil=>{
+
+const rect = pupil.getBoundingClientRect();
+
+const x = e.clientX - rect.left - rect.width/2;
+const y = e.clientY - rect.top - rect.height/2;
+
+const angle = Math.atan2(y,x);
+
+const moveX = Math.cos(angle)*5;
+const moveY = Math.sin(angle)*5;
+
+pupil.setAttribute("transform",
+`translate(${moveX} ${moveY})`); 
+
+});
+
+});
+
+
+/* CLOSE EYES WHEN PASSWORD */
+
+password.addEventListener("focus",()=>{
+cat.classList.add("closed");
+});
+
+password.addEventListener("blur",()=>{
+cat.classList.remove("closed");
+});
+
+</script>
+
+</body>
+</html>

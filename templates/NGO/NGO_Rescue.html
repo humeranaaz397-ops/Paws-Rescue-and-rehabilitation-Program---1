@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>PAWS Rescue | Rescue Cases</title>
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/NGO/nav and header.css">
+  <style>
+    /* ===== GLOBAL RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e4fa1, #4b7bec);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 28px;
+      color: white;
+      box-shadow: 0 12px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .orange {
+      background: linear-gradient(145deg, #f39c12, #e67e22);
+    }
+
+    .red {
+      background: linear-gradient(145deg, #e74c3c, #c0392b);
+    }
+
+    .blue {
+      background: linear-gradient(145deg, #3498db, #2980b9);
+    }
+
+    .green {
+      background: linear-gradient(145deg, #16a085, #1abc9c);
+    }
+
+    .card h2 {
+      font-size: 2.6rem;
+      margin-top: 10px;
+      font-weight: 800;
+    }
+
+    /* ===== FILTER SECTION ===== */
+    .filters {
+      background: white;
+      padding: 18px 22px;
+      border-radius: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+      margin-bottom: 25px;
+    }
+
+    .filters input,
+    .filters select {
+      padding: 12px 18px;
+      border-radius: 40px;
+      border: 1px solid #ddd;
+      outline: none;
+      flex: 1;
+      min-width: 160px;
+      background: #fafcff;
+      font-weight: 500;
+    }
+
+    /* ===== TABLE STYLES ===== */
+    .table {
+      background: white;
+      border-radius: 28px;
+      overflow-x: auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th {
+      background: #1e4fa1;
+      color: white;
+      padding: 16px 12px;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #edf2f7;
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background: #f8fbff;
+    }
+
+    /* Status & Priority badges */
+    .status,
+    .priority {
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 12px;
+      font-weight: bold;
+      display: inline-block;
+      text-align: center;
+      min-width: 90px;
+    }
+
+    .pending {
+      background: #f39c12;
+      color: white;
+    }
+
+    .progress {
+      background: #3498db;
+      color: white;
+    }
+
+    .done {
+      background: #2ecc71;
+      color: white;
+    }
+
+    .rejected {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .high {
+      background: #e74c3c;
+    }
+
+    .medium {
+      background: #f39c12;
+    }
+
+    .low {
+      background: #2ecc71;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 40px;
+      background: #3498db;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    .assign-btn {
+      background: #16a085;
+    }
+
+    .assign-btn:hover {
+      background: #0e6b58;
+    }
+
+    /* ===== MODAL GLOBAL ===== */
+    .modal,
+    .assign-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 20px;
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-content,
+    .assign-box {
+      background: white;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 32px;
+      overflow: hidden;
+      animation: fadeScale 0.25s ease;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeScale {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-header,
+    .assign-header {
+      background: linear-gradient(135deg, #1e4fa1, #4b7bec);
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close {
+      font-size: 32px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 300;
+    }
+
+    .close:hover {
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    /* Image grid */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .image-grid img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-box {
+      background: #f4f9ff;
+      padding: 18px;
+      border-radius: 24px;
+      margin-bottom: 20px;
+      border-left: 6px solid #1e4fa1;
+    }
+
+    .info-box p {
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    /* assign modal members */
+    .member-card {
+      background: #f8faff;
+      padding: 16px;
+      border-radius: 24px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border: 1px solid #dfe8ff;
+    }
+
+    .member-info h4 {
+      color: #1e4fa1;
+      margin-bottom: 5px;
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .sidebar {
+        width: 260px;
+      }
+
+      .image-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .image-grid img {
+        height: 200px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+      }
+    }
+
+    /* fixed missing modal container */
+  </style>
+</head>
+
+<body>
+
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2 class="logo">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      PAWS
+    </h2>
+
+    <a href="/ngo/dashboard">Dashboard</a>
+    <a href="#" class="active" class="active">Rescue Cases</a>
+    <a href="/ngo/medical-care">Medical care</a>
+    <a href="/ngo/adoption">Adoption</a>
+    <a href="/ngo/shelters">Shelters</a>
+    <a href="/ngo/add-rescue-member">Manage Rescue Members</a>
+    <div class="sidebar-bottom">
+
+      <a href="/logout">
+        <button class="logout-btn" id="logoutBtn">
+          🚪 Logout
+        </button>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Header -->
+
+    <div class="header">
+      <div class="header-left">
+        <span class="menu" id="menu">☰</span>
+
+        <div class="logo-image">
+          <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+          PAWS RESCUE
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div id="clock"></div>
+        <!-- <div class="notification">🔔</div> -->
+
+        <img
+          src="{{ session.user_profile_img or 'https://img.magnific.com/free-vector/young-man-with-glasses-avatar_1308-175763.jpg?semt=ais_hybrid&w=740&q=80' }}"
+          class="profile-img">
+      </div>
+    </div>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div
+      style="background-color: #2ecc71; color: white; padding: 15px 25px; border-radius: 40px; margin: 20px 0; font-weight: bold; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+      <span><i class="fas fa-check-circle" style="margin-right: 10px;"></i> {{ message }}</span>
+      <span style="cursor: pointer; font-size: 20px; line-height: 1;"
+        onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- STATS CARDS -->
+    <div class="cards">
+      <div class="card orange">Pending <h2 id="statPending">9</h2>
+      </div>
+      <div class="card red">In Progress <h2 id="statProgress">7</h2>
+      </div>
+      <div class="card blue">Rescued <h2 id="statRescued">11</h2>
+      </div>
+      <div class="card green">Assigned <h2 id="statAssigned">5</h2>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="🔍 Search rescue cases...">
+      <select id="statusSelect">
+        <option value="">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Assigned">Assigned</option>
+        <option value="Accepted">Accepted</option>
+        <option value="Rejected">Rejected</option>
+        <option value="Completed">Completed</option>
+      </select>
+      <select id="locationSelect">
+        <option value="">All Locations</option>
+      </select>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table">
+      <table id="rescueTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Case</th>
+            <th>Location</th>
+            <th>Reporter</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Action</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data injected dynamically via JS (original data preserved and enhanced) -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CASE DETAIL MODAL -->
+  <div class="modal" id="caseModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Case Details</h2><span class="close" onclick="closeModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="image-grid"><img id="petImage" alt="Pet"><img id="injuryImage" alt="Injury"></div>
+        <div class="info-box">
+          <h3><i class="fas fa-info-circle"></i> Animal & Condition</h3>
+          <p><strong>Animal:</strong> <span id="animalType"></span></p>
+          <p><strong>Condition:</strong> <span id="condition"></span></p>
+          <p><strong>Status:</strong> <span id="status"></span> | <strong>Priority:</strong> <span id="priority"></span>
+          </p>
+        </div>
+        <div class="info-box">
+          <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+          <p><strong>City:</strong> <span id="city"></span></p>
+          <p><strong>Area:</strong> <span id="area"></span></p>
+          <p><strong>Landmark:</strong> <span id="landmark"></span></p>
+        </div>
+        <div class="info-box">
+          <h3><i class="fas fa-phone-alt"></i> Reporter Info</h3>
+          <p><strong>Reporter:</strong> <span id="reporter"></span></p>
+          <p><strong>Phone:</strong> <span id="phone"></span></p>
+          <p><strong>Reported Time:</strong> <span id="reportedTime"></span></p>
+        </div>
+        <div class="info-box">
+          <h3><i class="fas fa-ambulance"></i> Rescue & Medical</h3>
+          <p><strong>NGO:</strong> <span id="ngo"></span></p>
+          <p><strong>Doctor Assigned:</strong> <span id="doctor"></span></p>
+          <p><strong>Emergency Level:</strong> <span id="emergency"></span></p>
+        </div>
+        <div class="info-box" id="assignedMemberInfoBox" style="display: none;">
+          <h3><i class="fas fa-user-shield"></i> Assigned Rescue Member Details</h3>
+          <p><strong>Name:</strong> <span id="assignedMemberName"></span></p>
+          <p><strong>Email:</strong> <span id="assignedMemberEmail"></span></p>
+          <p><strong>Phone:</strong> <span id="assignedMemberPhone"></span></p>
+        </div>
+        <div class="info-box" id="rejectionInfoBox" style="display: none; border-left-color: #e74c3c;">
+          <h3 style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Rejection Details</h3>
+          <p><strong>Reason:</strong> <span id="rejectionReasonText" style="color: #e74c3c; font-weight: bold;"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSIGN MODAL -->
+  <div class="assign-modal" id="assignModal">
+    <div class="assign-box">
+      <div class="assign-header">
+        <h2 id="assignCaseTitle">Assign Rescue Member</h2><span class="close"
+          onclick="closeAssignModal()">&times;</span>
+      </div>
+      <div class="assign-body" id="assignMembersList"></div>
+    </div>
+  </div>
+
+  <script>
+
+    const menu = document.getElementById("menu");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.querySelector(".main");
+
+    // Toggle sidebar
+    menu.onclick = (e) => {
+      e.stopPropagation();
+
+      sidebar.classList.toggle("closed");
+      main.classList.toggle("full");
+    };
+
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      const insideSidebar = sidebar.contains(e.target);
+      const isMenu = menu.contains(e.target);
+
+      if (!insideSidebar && !isMenu) {
+        sidebar.classList.add("closed");
+        main.classList.add("full");
+      }
+    });
+
+    // Prevent closing when clicking inside sidebar
+    sidebar.onclick = (e) => {
+      e.stopPropagation();
+    };
+
+
+    // ---------- RESCUE CASES DATA ----------
+    const rescueData = [
+      {% for c in cases %}
+    {
+      id: "{{ c.id }}",
+        caseName: "Case #{{ c.id }}",
+          location: "{{ c.location | replace('"', '\\"') }}",
+            reporter: "{{ c.reported_by_name or 'Anonymous' }}",
+              priority: "High",
+                status: "{{ c.status }}",
+                  time: "{{ c.reported_at }}",
+                    animal: "{{ c.animal_type | replace('"', '\\"') if c.animal_type else 'Stray Animal' }}",
+                      condition: "{{ c.description | replace('"', '\\"') | replace('\r', '') | replace('\n', ' ') }}",
+                        city: "{{ c.location | replace('"', '\\"') }}",
+                          area: "",
+                            landmark: "",
+                              phone: "{{ c.reported_by_phone or '' }}",
+                                ngo: "PAWS Rescue",
+                                  doctor: "",
+                                    emergency: "High",
+                                      assignedName: "{{ c.assigned_name | replace('"', '\\"') if c.assigned_name else '' }}",
+                                        assignedEmail: "{{ c.assigned_email | replace('"', '\\"') if c.assigned_email else '' }}",
+                                          assignedPhone: "{{ c.assigned_phone | replace('"', '\\"') if c.assigned_phone else '' }}",
+                                            rejectionReason: "{{ c.rejection_reason | replace('"', '\\"') | replace('\r', '') | replace('\n', ' ') if c.rejection_reason else '' }}",
+                                              petImg: "{% if c.image_filename and (c.image_filename[:4] == 'http' or c.image_filename[0] == '/') %}{{ c.image_filename }}{% else %}{{ url_for('static', filename='uploads/' + (c.image_filename or 'default_injured.png')) }}{% endif %}",
+                                                injuryImg: "{% if c.image_filename and (c.image_filename[:4] == 'http' or c.image_filename[0] == '/') %}{{ c.image_filename }}{% else %}{{ url_for('static', filename='uploads/' + (c.image_filename or 'default_injured.png')) }}{% endif %}"
+    },
+    {% endfor %}
+  ];
+
+    // Members list
+    const teamMembers = [
+      {% for m in members %}
+    {
+      id: "{{ m.user_id }}",
+        name: "{{ m.name | replace('"', '\\"') }}",
+          location: "Near {{ m.role | replace('"', '\\"') }}",
+            status: "Available"
+    },
+    {% endfor %}
+  ];
+
+    let currentAssignRow = null;
+    let currentAssignId = null;
+
+    // Render table
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      rescueData.forEach(c => {
+        const row = tbody.insertRow();
+        row.setAttribute('data-id', c.id);
+        // ID
+        row.insertCell(0).innerText = c.id;
+        // Case
+        row.insertCell(1).innerText = c.caseName;
+        // Location
+        row.insertCell(2).innerText = c.location;
+        // Reporter
+        row.insertCell(3).innerText = c.reporter;
+        // Priority
+        const prioritySpan = document.createElement('span');
+        prioritySpan.className = `priority ${c.priority.toLowerCase()}`;
+        prioritySpan.innerText = c.priority;
+        row.insertCell(4).appendChild(prioritySpan);
+        // Status
+        const statusSpan = document.createElement('span');
+        let statusClass = '';
+        if (c.status === 'Pending') statusClass = 'pending';
+        else if (c.status === 'Assigned') statusClass = 'progress';
+        else if (c.status === 'Accepted' || c.status === 'Ongoing' || c.status === 'In Progress') statusClass = 'progress';
+        else if (c.status === 'Rejected') statusClass = 'rejected';
+        else if (c.status === 'Completed' || c.status === 'Resolved') statusClass = 'done';
+        statusSpan.className = `status ${statusClass}`;
+        statusSpan.innerText = c.status;
+        row.insertCell(5).appendChild(statusSpan);
+        // Time
+        row.insertCell(6).innerText = c.time;
+        // Action button
+        const actionBtn = document.createElement('button');
+        if (c.status === 'Pending') {
+          actionBtn.innerText = 'Assign Member';
+          actionBtn.className = 'assign-btn';
+          actionBtn.onclick = (function (caseId, caseName, btnElement) {
+            return function () { openAssignModal(caseId, caseName, btnElement); };
+          })(c.id, c.caseName, actionBtn);
+        } else if (c.status === 'Rejected') {
+          actionBtn.innerText = 'Re-assign';
+          actionBtn.className = 'assign-btn';
+          actionBtn.style.background = '#e67e22';
+          actionBtn.onclick = (function (caseId, caseName, btnElement) {
+            return function () { openAssignModal(caseId, caseName, btnElement); };
+          })(c.id, c.caseName, actionBtn);
+        } else if (c.status === 'Assigned') {
+          actionBtn.innerText = 'Assigned';
+          actionBtn.style.background = '#3498db';
+          actionBtn.style.cursor = 'default';
+          actionBtn.disabled = true;
+        } else if (c.status === 'Accepted' || c.status === 'Ongoing' || c.status === 'In Progress') {
+          actionBtn.innerText = 'Accepted';
+          actionBtn.style.background = '#2980b9';
+          actionBtn.style.cursor = 'default';
+          actionBtn.disabled = true;
+        } else {
+          actionBtn.innerText = 'Rescued';
+          actionBtn.style.background = '#2ecc71';
+          actionBtn.style.cursor = 'default';
+          actionBtn.disabled = true;
+        }
+        row.insertCell(7).appendChild(actionBtn);
+        // View button
+        const viewBtn = document.createElement('button');
+        viewBtn.innerText = 'View';
+        viewBtn.style.background = '#1e4fa1';
+        viewBtn.onclick = (function (data) { return function () { openModalWithData(data); }; })(c);
+        row.insertCell(8).appendChild(viewBtn);
+      });
+      updateStats();
+    }
+
+    function updateStats() {
+      const pending = rescueData.filter(d => d.status === 'Pending').length;
+      const progress = rescueData.filter(d => d.status === 'Assigned' || d.status === 'In Progress' || d.status === 'Ongoing' || d.status === 'Accepted').length;
+      const completed = rescueData.filter(d => d.status === 'Completed' || d.status === 'Resolved').length;
+      const assignedCount = rescueData.filter(d => d.status === 'Assigned' || d.status === 'In Progress' || d.status === 'Ongoing' || d.status === 'Accepted').length;
+      document.getElementById('statPending').innerText = pending;
+      document.getElementById('statProgress').innerText = progress;
+      document.getElementById('statRescued').innerText = completed;
+      document.getElementById('statAssigned').innerText = assignedCount;
+    }
+
+    function openModalWithData(c) {
+      document.getElementById('modalTitle').innerText = c.caseName;
+      document.getElementById('petImage').src = c.petImg;
+      document.getElementById('injuryImage').src = c.injuryImg;
+      document.getElementById('animalType').innerText = c.animal;
+      document.getElementById('condition').innerText = c.condition;
+      document.getElementById('status').innerText = c.status;
+      document.getElementById('priority').innerText = c.priority;
+      document.getElementById('city').innerText = c.city;
+      document.getElementById('area').innerText = c.area;
+      document.getElementById('landmark').innerText = c.landmark;
+      document.getElementById('reporter').innerText = c.reporter;
+      document.getElementById('phone').innerText = c.phone;
+      document.getElementById('reportedTime').innerText = c.time;
+      document.getElementById('ngo').innerText = c.ngo;
+      document.getElementById('doctor').innerText = c.doctor;
+      document.getElementById('emergency').innerText = c.emergency;
+
+      const assignedBox = document.getElementById('assignedMemberInfoBox');
+      if (c.assignedName) {
+        assignedBox.style.display = 'block';
+        document.getElementById('assignedMemberName').innerText = c.assignedName;
+        document.getElementById('assignedMemberEmail').innerText = c.assignedEmail;
+        document.getElementById('assignedMemberPhone').innerText = c.assignedPhone;
+      } else {
+        assignedBox.style.display = 'none';
+      }
+
+      const rejectionBox = document.getElementById('rejectionInfoBox');
+      if (c.rejectionReason) {
+        rejectionBox.style.display = 'block';
+        document.getElementById('rejectionReasonText').innerText = c.rejectionReason;
+      } else {
+        rejectionBox.style.display = 'none';
+      }
+
+      document.getElementById('caseModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('caseModal').style.display = 'none'; }
+
+    // Assign modal and logic
+    function openAssignModal(caseId, caseTitle, btnElement) {
+      currentAssignRow = btnElement.closest('tr');
+      currentAssignId = caseId;
+      const assignTitle = document.getElementById('assignCaseTitle');
+      assignTitle.innerHTML = `Assign member for ${caseTitle} (${caseId})`;
+      const container = document.getElementById('assignMembersList');
+      container.innerHTML = '';
+      teamMembers.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'member-card';
+        card.innerHTML = `
+        <div class="member-info"><h4>${m.name}</h4><p>${m.location} • ${m.status}</p></div>
+        <button class="assign-member-btn" data-id="${m.id}" data-name="${m.name}">Assign</button>
+      `;
+        const assignBtn = card.querySelector('.assign-member-btn');
+        assignBtn.onclick = () => assignMemberToCase(m.id, m.name);
+        container.appendChild(card);
+      });
+      document.getElementById('assignModal').style.display = 'flex';
+    }
+
+    function assignMemberToCase(memberId, memberName) {
+      if (!currentAssignId) return;
+
+      // Create and submit a form POST request to assign the member
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '';
+
+      const actionInput = document.createElement('input');
+      actionInput.type = 'hidden';
+      actionInput.name = 'action';
+      actionInput.value = 'assign';
+      form.appendChild(actionInput);
+
+      const caseInput = document.createElement('input');
+      caseInput.type = 'hidden';
+      caseInput.name = 'case_id';
+      caseInput.value = currentAssignId;
+      form.appendChild(caseInput);
+
+      const memberInput = document.createElement('input');
+      memberInput.type = 'hidden';
+      memberInput.name = 'member_id';
+      memberInput.value = memberId;
+      form.appendChild(memberInput);
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+
+    function closeAssignModal() { document.getElementById('assignModal').style.display = 'none'; }
+
+    // Filter functionality
+    function filterTable() {
+      const searchVal = document.getElementById('searchInput').value.toLowerCase();
+      const statusVal = document.getElementById('statusSelect').value;
+      const locationVal = document.getElementById('locationSelect').value;
+      const rows = document.querySelectorAll('#tableBody tr');
+      rows.forEach(row => {
+        const caseName = row.cells[1]?.innerText.toLowerCase() || '';
+        const location = row.cells[2]?.innerText || '';
+        const statusSpan = row.cells[5]?.querySelector('.status');
+        const statusText = statusSpan ? statusSpan.innerText : '';
+        let match = true;
+        if (searchVal && !caseName.includes(searchVal)) match = false;
+        if (statusVal) {
+          if (statusVal === 'Pending') {
+            if (statusText !== 'Pending') match = false;
+          }
+          else if (statusVal === 'Assigned') {
+            if (statusText !== 'Assigned') match = false;
+          }
+          else if (statusVal === 'Accepted') {
+            if (statusText !== 'Accepted' && statusText !== 'Ongoing' && statusText !== 'In Progress') match = false;
+          }
+          else if (statusVal === 'Rejected') {
+            if (statusText !== 'Rejected') match = false;
+          }
+          else if (statusVal === 'Completed') {
+            if (statusText !== 'Completed' && statusText !== 'Resolved') match = false;
+          }
+          else if (statusVal === 'In Progress') {
+            if (statusText !== 'Assigned' && statusText !== 'In Progress' && statusText !== 'Ongoing' && statusText !== 'Accepted') match = false;
+          }
+        }
+        if (locationVal && location !== locationVal) match = false;
+        row.style.display = match ? '' : 'none';
+      });
+    }
+
+    function updateClock() {
+      document.getElementById('clock').innerHTML = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Populate location select dynamically from rescueData
+    const locationSelect = document.getElementById('locationSelect');
+    const uniqueLocations = [...new Set(rescueData.map(c => c.location))];
+    uniqueLocations.forEach(loc => {
+      const opt = document.createElement('option');
+      opt.value = loc;
+      opt.innerText = loc;
+      locationSelect.appendChild(opt);
+    });
+
+    // Global close modals on outside click/esc
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('caseModal');
+      const assignMod = document.getElementById('assignModal');
+      if (e.target === modal) closeModal();
+      if (e.target === assignMod) closeAssignModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeModal(); closeAssignModal(); }
+    });
+
+    // Event listeners for filter
+    document.getElementById('searchInput').addEventListener('input', filterTable);
+    document.getElementById('statusSelect').addEventListener('change', filterTable);
+    document.getElementById('locationSelect').addEventListener('change', filterTable);
+
+    // initial render
+    renderTable();
+  </script>
+
+</body>
+
+</html>

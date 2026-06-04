@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program/Adoption Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/User/pet-application-form.css">
+  <link rel="stylesheet" href="/static/User/nav-bar.css">
+  <link rel="stylesheet" href="/static/User/footer.css">
+</head>
+<body>
+    <!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot"></span>
+    </a>
+    <a href="/user/profile"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%"></a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue &<br>Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot">notifications</span>
+    </a>
+    <a href="/user/profile" style="display: flex;"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%" >{{ session.user_email }}</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+<main>
+  <div class="application-wrapper">
+
+    <form class="application-card" method="POST" action="/user/pet-application/{{ pet.id }}" enctype="multipart/form-data">
+
+      <h2>Pet Adoption Application</h2>
+      <p class="subtitle">
+        Help us find a loving and responsible home for our rescued animals.
+      </p>
+
+      <!-- PERSONAL INFO -->
+      <div class="section">
+        <h3>Personal Information</h3>
+
+        <div class="input-group">
+          <input type="text" name="full_name" placeholder=" " required>
+          <label>Full Name</label>
+        </div>
+
+        <div class="input-group">
+          <input type="email" name="email" placeholder=" " required>
+          <label>Email Address</label>
+        </div>
+
+        <div class="input-group">
+          <input type="tel" name="phone" placeholder=" " required>
+          <label>Phone Number</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" name="location" placeholder=" " required>
+          <label>City / Location</label>
+        </div>
+        <label for="aadhar" class="aadhar">upload your aadhar</label>
+        <div class="input-group">
+          <input type="file" name="aadhar" id="aadhar" required>
+        </div>
+
+      </div>
+  
+
+
+      <!-- PET DETAILS -->
+      <div class="section">
+        <h3>Pet Details</h3>
+
+        <div class="input-group">
+          <input type="text" value="{{ pet.name }}" placeholder=" " readonly required>
+          <label>Pet Name / ID</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" value="{{ pet.type }}" placeholder=" " readonly required>
+          <label>Type of Animal</label>
+        </div>
+      </div>
+
+      <!-- LIVING INFO -->
+      <div class="section">
+        <h3>Living Situation</h3>
+
+        <div class="input-group">
+          <select name="home_type" required>
+            <option value="" hidden></option>
+            <option value="Apartment">Apartment</option>
+            <option value="Independent House">Independent House</option>
+            <option value="Farm / Open Space">Farm / Open Space</option>
+          </select>
+          <label>Home Type</label>
+        </div>
+
+        <div class="input-group">
+          <select name="has_pets" required>
+            <option value="" hidden></option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <label>Do you have pets already?</label>
+        </div>
+
+        <div class="input-group textarea">
+          <textarea name="reason" placeholder=" " required></textarea>
+          <label>Why do you want to adopt this pet?</label>
+        </div>
+      </div>
+
+      <!-- AGREEMENT -->
+      <div class="agreement">
+        <input type="checkbox" required>
+        <span>
+          I agree to provide proper care, medical support, and a safe environment for the adopted animal.
+        </span>
+      </div>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="submit-btn">
+        Submit Application
+      </button>
+
+    </form>
+
+  </div>
+</main>
+  <!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/User/nav-bar.js"></script>
+
+</body>
+</html>

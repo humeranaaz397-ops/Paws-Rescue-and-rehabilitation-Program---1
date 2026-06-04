@@ -1,0 +1,288 @@
+/* ===== GOOGLE FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#f4f7fc;
+}
+
+/* ===== MAIN ===== */
+.main{
+  margin-left:260px;
+  padding:20px;
+  transition:0.3s ease;
+}
+
+/* when sidebar closed */
+.main.full{
+  margin-left:0;
+}
+
+/* ===== HEADER ===== */
+.header{
+  background:rgba(255,255,255,0.8);
+  backdrop-filter:blur(12px);
+  padding:16px 25px;
+  border-radius:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.4);
+  position:sticky;
+  top:15px;
+  z-index:100;
+}
+
+/* left */
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+/* right */
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+/* menu button */
+.menu{
+  font-size:30px;
+  cursor:pointer;
+  user-select:none;
+  color:#1e4fa1;
+  transition:0.3s;
+}
+
+.menu:hover{
+  transform:rotate(90deg);
+}
+
+/* logo */
+.logo-image{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:22px;
+  font-weight:600;
+  color:#1e4fa1;
+}
+
+.logo-image img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* notification */
+.notification{
+  position:relative;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.notification::after{
+  content:"3";
+  position:absolute;
+  top:-8px;
+  right:-10px;
+  background:red;
+  color:white;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* profile */
+.profile-img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  cursor:pointer;
+  border:2px solid #1e4fa1;
+  transition:0.3s;
+}
+
+.profile-img:hover{
+  transform:scale(1.08);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:260px;
+  background:linear-gradient(180deg,#1e4fa1,#163d7a);
+  color:white;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100%;
+  padding:25px 18px;
+  transition:0.35s ease;
+  z-index:1000;
+  overflow-y:auto;
+  box-shadow:5px 0 20px rgba(0,0,0,0.15);
+}
+
+/* closed */
+.sidebar.closed{
+  transform:translateX(-100%);
+}
+
+/* logo */
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:24px;
+  margin-bottom:35px;
+  font-weight:600;
+}
+
+.logo img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* links */
+.sidebar a{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  margin:10px 0;
+  border-radius:14px;
+  font-size:15px;
+  text-decoration:none;
+  color:white;
+  position:relative;
+  overflow:hidden;
+  transition:0.3s ease;
+}
+
+/* hover */
+.sidebar a:hover{
+  background:rgba(255,255,255,0.12);
+  transform:translateX(6px);
+}
+
+/* active */
+.sidebar a.active{
+  background:white;
+  color:#1e4fa1;
+  font-weight:600;
+  box-shadow:0 5px 15px rgba(255,255,255,0.2);
+}
+
+/* active indicator */
+.sidebar a.active::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:15%;
+  width:5px;
+  height:70%;
+  background:#4b7bec;
+  border-radius:10px;
+}
+
+/* ===== OVERLAY ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  opacity:0;
+  visibility:hidden;
+  transition:0.3s;
+  z-index:999;
+}
+
+.overlay.show{
+  opacity:1;
+  visibility:visible;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+
+  .main{
+    margin-left:0;
+  }
+
+  .sidebar{
+    transform:translateX(-100%);
+  }
+
+  .sidebar.show{
+    transform:translateX(0);
+  }
+
+  .logo-image{
+    font-size:18px;
+  }
+
+  .header{
+    padding:14px 18px;
+  }
+
+}
+
+/* ===== SIDEBAR LAYOUT ===== */
+
+.sidebar{
+    display:flex;
+    flex-direction:column;
+}
+
+/* push logout bottom */
+
+.sidebar-bottom{
+    margin-top:auto;
+    padding-top:20px;
+}
+
+/* logout button */
+
+.logout-btn{
+    width:100%;
+    border:none;
+    padding:14px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#e74c3c,#ff6b6b);
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s ease;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* hover */
+
+.logout-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* click */
+
+.logout-btn:active{
+    transform:scale(0.98);
+}

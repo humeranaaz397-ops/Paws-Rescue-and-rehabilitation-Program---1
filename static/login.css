@@ -1,0 +1,407 @@
+/* ===============================
+   GLOBAL
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===============================
+   BODY
+================================ */
+body {
+  min-height: 100vh;
+  background-color: #dbe9f8;
+  display: flex;
+  color: #000000;
+  flex-direction: column;
+}
+main {
+    flex: 1;
+    margin-top: 10%;
+}
+
+/* ===============================
+   WRAPPER
+================================ */
+.login-wrapper {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===============================
+   LOGIN CARD
+================================ */
+.login-card {
+  background: #bad9f3;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  animation: fadeUp 0.8s ease;
+}
+
+/* ===============================
+   HEADINGS
+================================ */
+.login-card h1 {
+  text-align: center;
+  color: #000000;
+  font-size: 2.2em;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1em;
+  color: #000000;
+  margin-bottom: 30px;
+}
+
+/* ===============================
+   INPUT GROUP
+================================ */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9em;
+  color: #000000;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #ffffff;
+  color: #000000;
+  font-size: 1em;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus {
+  box-shadow: 0 0 0 2px #38bdf8;
+}
+/* ===== SHOW / HIDE PASSWORD ===== */
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  width: 100%;
+  padding-right: 60px; /* space for Show/Hide */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  cursor: pointer;
+  color: #000000;
+  user-select: none;
+}
+
+
+/* ===============================
+   OPTIONS
+================================ */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 0.9em;
+}
+
+.remember {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #000000;
+}
+
+.forgot {
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot:hover {
+  color: #000000;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1E88E5, #1565C0);
+  color: #000000;
+  font-size: 1.05em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(56,189,248,0.45);
+}
+
+.login-btn:active {
+  transform: scale(0.96);
+}
+
+/* ===============================
+   SIGNUP TEXT
+================================ */
+.signup-text {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.95em;
+  color: #000000;
+}
+
+.signup-text a {
+  color: #1081dd;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+/* ===== FORGOT PASSWORD SECTION ===== */
+
+.forgot-section{
+  display:none;
+  margin-top:20px;
+  animation:fadeUp 0.5s ease;
+}
+
+.forgot-section h2{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.forgot-section p{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.back-login{
+  text-align:center;
+  margin-top:15px;
+}
+/* ===== LOGIN LAYOUT ===== */
+
+.login-wrapper{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:80px;
+flex-wrap:wrap;
+padding:40px;
+}
+
+
+/* ===== LEFT WELCOME SIDE ===== */
+
+.welcome-side{
+max-width:420px;
+animation:fadeUp 1s ease;
+}
+
+.welcome-title{
+font-size:2.4rem;
+color:#1E88E5;
+margin-bottom:20px;
+}
+
+.welcome-text{
+font-size:1rem;
+line-height:1.6;
+margin-bottom:15px;
+color:#333;
+}
+
+
+/* ===== PET ANIMATION ===== */
+
+.pet-animation{
+margin-top:20px;
+}
+
+.pet-animation span{
+font-size:40px;
+margin:0 8px;
+display:inline-block;
+animation:floatPets 3s infinite ease-in-out;
+}
+
+.pet-animation span:nth-child(2){
+animation-delay:0.5s;
+}
+
+.pet-animation span:nth-child(3){
+animation-delay:1s;
+}
+
+.pet-animation span:nth-child(4){
+animation-delay:1.5s;
+}
+
+.pet-animation span:nth-child(5){
+animation-delay:2s;
+}
+
+
+/* djhkjhjfhd */
+/* PET */
+
+.pet{
+display:flex;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.pet-face{
+width:120px;
+height:120px;
+background:#f5c16c;
+border-radius:50%;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* eyes */
+
+/* CAT */
+
+.cat{
+display:flex;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.cat-face{
+width:120px;
+height:120px;
+background:#f4a261;
+border-radius:50%;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* eyes */
+
+.cat-eyes{
+display:flex;
+gap:20px;
+}
+
+.cat-eye{
+width:28px;
+height:28px;
+background:white;
+border-radius:50%;
+position:relative;
+overflow:hidden;
+}
+
+.cat-pupil{
+width:12px;
+height:12px;
+background:black;
+border-radius:50%;
+position:absolute;
+top:8px;
+left:8px;
+transition:0.1s;
+}
+
+/* closed eyes */
+
+.cat-face.closed .cat-eye{
+height:4px;
+background:black;
+}
+
+.cat-container{
+display:flex;
+justify-content:center;
+margin-bottom:20px;
+}
+
+/* closed eyes */
+
+.closed .pupil{
+display:none;
+}
+
+.closed circle[fill="white"]{
+height:4px;
+}
+
+/* djsadjaslu */
+
+@keyframes floatPets{
+0%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0);}
+}
+
+/* Floating animation */
+
+@keyframes floatPets{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+
+/* ===============================
+   ANIMATION
+================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 22px;
+  }
+
+  .login-card h1 {
+    font-size: 1.9em;
+  }
+}

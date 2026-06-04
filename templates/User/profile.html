@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Paws Rescue & Rehabilitation Program / User Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/static/User/profile.css" />
+    <link rel="stylesheet" href="/static/User/nav-bar.css" />
+    <link rel="stylesheet" href="/static/User/footer.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- ===== HEADER / NAVBAR ===== -->
+    <header>
+      <!-- Hamburger (left) -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- Logo + Title -->
+      <div class="brand">
+        <img
+          src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg"
+          alt="logo"
+        />
+        <h1>Paws Rescue & Rehabilitation Program</h1>
+      </div>
+
+      <!-- Desktop Menu -->
+      <nav class="nav-links">
+        <a href="/user/dashboard" class="active"
+          ><i class="fa-solid fa-house"></i>Home</a
+        >
+        <a href="/user/about-us"
+          ><i class="fa-solid fa-circle-info"></i>About Us</a
+        >
+        <a href="/user/contact"
+          ><i class="fa-solid fa-envelope"></i>Contact</a
+        >
+        <a href="/user/notifications" class="notification-icon">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notif-dot"></span>
+        </a>
+        <a href="#"
+          ><img
+            src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}"
+            alt=""
+            width="10%"
+        /></a>
+      </nav>
+      <!-- Mobile Slide Menu -->
+      <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-header">
+          <div class="brand">
+            <img
+              src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg"
+              alt="logo"
+            />
+            <h1>Paws Rescue &<br />Rehabilitation Program</h1>
+          </div>
+          <div class="close-btn" id="closeBtn">&times;</div>
+        </div>
+
+        <div class="mobile-links">
+          <a href="/user/dashboard" class="active"
+            ><i class="fa-solid fa-house"></i>Home</a
+          >
+          <a href="/user/about-us"
+            ><i class="fa-solid fa-circle-info"></i>About Us</a
+          >
+          <a href="/user/contact"
+            ><i class="fa-solid fa-envelope"></i>Contact</a
+          >
+          <a href="/user/notifications" class="notification-icon">
+            <i class="fa-solid fa-bell"></i>
+            <span class="notif-dot">notifications</span>
+          </a>
+          <a href="#" style="display: flex"
+            ><img
+              src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}"
+              alt=""
+              width="10%"
+            />{{ session.user_email }}</a
+          >
+        </div>
+      </div>
+
+      <div class="overlay" id="overlay"></div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+      <div class="profile-wrapper">
+        <div class="profile-card">
+          <!-- Profile Header -->
+          <div class="profile-header">
+            <div class="profile-image">
+              <img
+                src="{{ user.profile_img or '/static/uploads/default_user.png' }}"
+                alt="User Profile"
+                id="profile-img"
+              />
+            </div>
+            <h2 id="name">{{ user.name }}</h2>
+            <p class="role">{{ user.role.upper() }}</p>
+          </div>
+
+          <!-- Profile Details -->
+          <div class="profile-details">
+            <div class="detail">
+              <span>Email</span>
+              <p id="Email">{{ user.email }}</p>
+            </div>
+
+            <div class="detail">
+              <span>Phone</span>
+              <p id="Phone-Number">{{ user.phone }}</p>
+            </div>
+
+            <div class="detail">
+              <span>Location</span>
+              <p id="Location">{{ user.location or 'Not Provided' }}</p>
+            </div>
+
+            <div class="detail">
+              <span>Joined On</span>
+              <p>{{ user.joined_on }}</p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="profile-actions">
+            <a href="/logout">
+              <button class="logout-btn">Logout</button>
+            </a>
+            <button class="logout-btn" onclick="EditProfile()">
+              Edit Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===== EDIT PROFILE MODAL ===== -->
+    <div id="edit-profile">
+      <div class="form-card">
+        <h1>Edit Profile</h1>
+
+        <p class="subtitle">Update your information</p>
+
+        <form id="editForm" method="POST" action="/user/profile" enctype="multipart/form-data">
+          <!-- NAME -->
+          <div class="input-group">
+            <label>Name</label>
+
+            <input
+              type="text"
+              name="name"
+              id="Name-input"
+              value="{{ user.name }}"
+              placeholder="Enter your name"
+              maxlength="30"
+              oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '')"
+              pattern="[A-Za-z ]{3,30}"
+              title="Only letters allowed"
+            />
+          </div>
+
+          <!-- PROFILE IMAGE -->
+          <div class="input-group">
+            <label>Upload Profile Picture</label>
+
+            <input
+              type="file"
+              name="profile_img"
+              id="Upload-profile-picture-input"
+              accept="image/*"
+            />
+          </div>
+
+          <!-- PHONE -->
+          <div class="input-group">
+            <label>Phone Number</label>
+
+            <input
+              type="tel"
+              name="phone"
+              id="phone-number-input"
+              value="{{ user.phone }}"
+              placeholder="Enter phone number"
+              maxlength="10"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              pattern="[0-9]{10}"
+              title="Enter valid 10 digit phone number"
+            />
+          </div>
+
+          <!-- EMAIL -->
+
+          <div class="input-group">
+            <label>Email Address</label>
+
+            <input
+              type="email"
+              name="email"
+              id="email-input"
+              value="{{ user.email }}"
+              placeholder="Enter email address"
+              autocomplete="off"
+              oninput="this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g, '')"
+              pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+              title="Enter valid Gmail address like example@gmail.com"
+            />
+          </div>
+
+          <!-- LOCATION -->
+          <div class="input-group">
+            <label>Location</label>
+
+            <input
+              type="text"
+              name="location"
+              id="location-input"
+              value="{{ user.location }}"
+              placeholder="Enter your location"
+              maxlength="40"
+              oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '')"
+              pattern="[A-Za-z ]{3,40}"
+              title="Only letters allowed"
+            />
+          </div>
+
+          <!-- BUTTON -->
+          <button type="submit" class="submit-btn">Update Profile</button>
+
+          <button type="button" class="submit-btn" onclick="EditProfile()">
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+      <div class="footer-container">
+        <p>© 2026 My Project. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="/static/User/nav-bar.js"></script>
+
+    <script>
+      function EditProfile() {
+        const modal = document.getElementById("edit-profile");
+
+        const profileCard = document.querySelector(".profile-wrapper");
+
+        if (modal.style.display === "flex") {
+          modal.style.display = "none";
+
+          profileCard.style.visibility = "visible";
+        } else {
+          modal.style.display = "flex";
+
+          profileCard.style.visibility = "hidden";
+        }
+      }
+
+      function updateDetails(event) {
+        event.preventDefault();
+
+        const form = document.getElementById("editForm");
+
+        // VALIDATION
+        if (!form.checkValidity()) {
+          form.reportValidity();
+
+          return;
+        }
+
+        const nameInput = document.getElementById("Name-input").value.trim();
+
+        const emailInput = document.getElementById("email-input").value.trim();
+
+        const phoneInput = document
+          .getElementById("phone-number-input")
+          .value.trim();
+
+        const locationInput = document
+          .getElementById("location-input")
+          .value.trim();
+
+        // UPDATE ONLY FILLED VALUES
+
+        if (nameInput !== "") {
+          document.getElementById("name").textContent = nameInput;
+        }
+
+        if (emailInput !== "") {
+          document.getElementById("Email").textContent = emailInput;
+        }
+
+        if (phoneInput !== "") {
+          document.getElementById("Phone-Number").textContent = phoneInput;
+        }
+
+        if (locationInput !== "") {
+          document.getElementById("Location").textContent = locationInput;
+        }
+
+        // IMAGE UPDATE
+        const file = document.getElementById("Upload-profile-picture-input")
+          .files[0];
+
+        if (file) {
+          document.getElementById("profile-img").src =
+            URL.createObjectURL(file);
+        }
+
+        EditProfile();
+      }
+    </script>
+  </body>
+</html>

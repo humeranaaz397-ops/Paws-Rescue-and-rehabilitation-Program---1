@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Paws Rescue & Rehabilitation Program/home-page</title>
+
+<link rel="stylesheet" href="/static/User/user-home-page.css">
+<link rel="stylesheet" href="/static/User/nav-bar.css">
+<link rel="stylesheet" href="/static/User/footer.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="#" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot"></span>
+    </a>
+    <a href="/user/profile"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%"></a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="#" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot">notifications</span>
+    </a>
+    <a href="/user/profile" style="display: flex;"><img src="/static/User/user-profile-img.png" alt="" width="10%" >{{ session.user_email }}</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+
+
+<!-- ===== HERO ===== -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>Rescue • Care • Protect • Adopt 🐾</h1>
+
+<p>Helping injured and homeless animals find safety and love.</p>
+
+<div class="hero-buttons">
+
+<a href="/user/report-injured">
+<button class="btn-green">Report Injured Animal</button>
+</a>
+
+<a href="/user/pet-adoption">
+<button class="btn-orange">Adopt a Pet</button>
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===== HOW YOU CAN HELP ===== -->
+
+<section class="help-section">
+  <div class="card-grid">
+
+
+<!-- Upload Card -->
+
+<div class="help-card upload-card">
+
+<div class="card-content">
+
+<h3>Upload Injured Animal</h3>
+
+<p>Help us locate injured street animals quickly.</p>
+
+<ul>
+<li>Upload animal image</li>
+<li>Add location</li>
+<li>Rescue team notified instantly</li>
+</ul>
+
+<a href="/user/report-injured">
+<button class="btn-green">Report Animal</button>
+</a>
+
+</div>
+
+</div>
+
+
+<!-- Medical Card -->
+
+<div class="help-card medical-card">
+
+<div class="card-content">
+
+<h3>Medical Care</h3>
+
+<p>Veterinary treatment for injured animals.</p>
+
+<ul>
+<li>Emergency treatment</li>
+<li>Surgery & medication</li>
+<li>Recovery monitoring</li>
+</ul>
+
+<a href="/user/medical-care">
+<button class="btn-green">View Medical Help</button>
+</a>
+
+</div>
+
+</div>
+
+
+<!-- Shelter Card -->
+
+<div class="help-card shelter-card">
+
+<div class="card-content">
+
+<h3>Safe Shelters</h3>
+
+<p>Temporary shelter for rescued animals.</p>
+
+<ul>
+<li>Food & water</li>
+<li>Warm resting areas</li>
+<li>Protection until adoption</li>
+</ul>
+
+<a href="/user/safe-shelters">
+<button class="btn-green">View Shelters</button>
+</a>
+
+</div>
+
+</div>
+
+
+<!-- Adoption Card -->
+
+<div class="help-card adoption-card">
+
+<div class="card-content">
+
+<h3>Pet Adoption</h3>
+
+<p>Give rescued animals a loving home.</p>
+
+<ul>
+<li>Browse animals</li>
+<li>Adoption process</li>
+<li>Meet & adopt</li>
+</ul>
+
+<a href="/user/pets">
+<button class="btn-green">Adopt Now</button>
+</a>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+<section class="about-org">
+    <h2 class="about-title">About the Organization</h2>
+
+    <div class="about-container">
+
+        <div class="about-text">
+            <p>
+                Our organization is dedicated to protecting and rescuing animals in need.
+                We focus on helping injured, abandoned, and stray animals by connecting
+                compassionate citizens with rescue teams, volunteers, and NGOs.
+            </p>
+
+            <p>
+                Through this platform, users can easily report animals requiring help.
+                Once reported, nearby volunteers and organizations are notified so they
+                can provide medical care, shelter, and rehabilitation.
+            </p>
+
+            <p>
+                We believe technology can play a powerful role in animal welfare.
+                By creating a digital rescue network, we aim to make the rescue process
+                faster, more organized, and transparent for everyone involved.
+            </p>
+
+            <p>
+                Our mission is to build a caring community where humans and animals
+                coexist with compassion, respect, and responsibility.
+            </p>
+        </div>
+
+        <div class="about-image">
+            <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="Animal Rescue">
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== LATEST UPDATES / NEWS ===== -->
+
+<section class="news-section">
+
+<h2 class="news-title">Latest Updates</h2>
+<p class="news-subtext">
+Stay updated with our latest rescue operations, adoption events, and animal care initiatives.
+</p>
+
+<div class="news-container">
+
+<!-- News Card 1 -->
+<div class="news-card">
+
+<img src="https://i.postimg.cc/brBhtbCw/Chat-GPT-Image-Apr-2-2026-10-37-43-AM.png" alt="Rescue update">
+
+<div class="news-content">
+<h3>Dog Rescue Operation</h3>
+<p>
+Our rescue team successfully saved an injured street dog near the city market.
+The animal is now receiving medical treatment.
+</p>
+
+<span class="news-date">June 10, 2026</span>
+</div>
+
+</div>
+
+
+<!-- News Card 2 -->
+<div class="news-card">
+
+<img src="https://i.postimg.cc/QN9s2YHh/hy28Shelter.jpg" alt="Adoption event">
+
+<div class="news-content">
+<h3>Adoption Camp Success</h3>
+<p>
+More than 20 rescued animals found loving homes during our weekend adoption camp.
+Thank you to everyone who participated.
+</p>
+
+<span class="news-date">June 7, 2026</span>
+</div>
+
+</div>
+
+
+<!-- News Card 3 -->
+
+<div class="news-card">
+
+<img src="https://i.postimg.cc/t4DLZFYv/Free-Veternary-campus.webp" alt="Medical care">
+
+<div class="news-content">
+<h3>Free Veterinary Camp</h3>
+<p>
+Our veterinary team organized a free treatment camp for injured and sick
+street animals in nearby communities.
+</p>
+
+<span class="news-date">June 5, 2026</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="faq">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      What is the purpose of this platform?
+      <span class="icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>This platform helps people report, rescue, and track animals in need by connecting users with NGOs and volunteers.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      How can I report an injured animal?
+      <span class="icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>You can report an animal by filling the report form and providing location, description, and photos if available.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      Do I need an account to report animals?
+      <span class="icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>NO. There is no need to creating a account to report. you only need account for pet adoption.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      Is this platform free to use?
+      <span class="icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>Yes, the platform is completely free for users, volunteers, and NGOs.</p>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ===== HOW IT WORKS SECTION ===== -->
+<section class="how-it-works">
+
+  <h2>How It Works</h2>
+  <p class="how-subtext">
+    Every small action can save a life. Follow these simple steps to help animals in need.
+  </p>
+
+  <div class="steps-container">
+
+    <!-- Step 1 -->
+    <div class="step-card">
+      <img src="https://i.postimg.cc/hjQbnRkL/Chat-GPT-Image-Apr-2-2026-10-28-37-AM.png" alt="Report Animal">
+      <h3>1. Report</h3>
+      <p>Upload an image and location of the injured animal.</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+      <img src="https://i.postimg.cc/KjFKWXx3/Chat-GPT-Image-Apr-2-2026-10-31-55-AM.png" alt="Rescue">
+      <h3>2. Rescue</h3>
+      <p>Our team quickly reaches the location to rescue the animal.</p>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <img src="https://i.postimg.cc/RVZhJLFx/Chat-GPT-Image-Apr-2-2026-10-34-00-AM.png" alt="Treatment">
+      <h3>3. Treatment</h3>
+      <p>Animals receive proper medical care and recovery support.</p>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card">
+      <img src="https://i.postimg.cc/FRxF7YXH/Chat-GPT-Image-Apr-2-2026-10-35-37-AM.png" alt="Adoption">
+      <h3>4. Adoption</h3>
+      <p>Healthy animals are given a second chance through adoption.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===== QUOTES / ENCOURAGEMENT SECTION ===== -->
+<section class="quotes-section">
+
+  <h2>Be the Voice for the Voiceless 🐾</h2>
+
+  <div class="quotes-container">
+
+    <div class="quote-card">
+      <p>"Saving one animal won’t change the world, but it will change the world for that one animal."</p>
+    </div>
+
+    <div class="quote-card">
+      <p>"The greatness of a nation can be judged by the way its animals are treated."</p>
+    </div>
+
+    <div class="quote-card">
+      <p>"Kindness to animals builds a better world for everyone."</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===== FOOTER ===== -->
+
+<footer>
+
+<div class="footer-container">
+
+<div class="footer-info">
+<p>© 2026 My Project. All rights reserved.</p>
+</div>
+
+</div>
+
+</footer>
+
+
+<script src="/static/User/nav-bar.js"></script>
+<script>
+
+const faq = document.querySelectorAll(".faq-question");
+
+faq.forEach(question => {
+  question.addEventListener("click", () => {
+
+    const answer = question.nextElementSibling;
+    const icon = question.querySelector(".icon");
+
+    if(answer.style.maxHeight){
+      answer.style.maxHeight = null;
+      icon.textContent = "+";
+    }
+    else{
+      answer.style.maxHeight = answer.scrollHeight + "px";
+      icon.textContent = "-";
+    }
+
+  });
+});
+
+</script>
+
+</body>
+</html>

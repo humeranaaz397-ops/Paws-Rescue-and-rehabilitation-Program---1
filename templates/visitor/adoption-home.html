@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program/Pets-for-Adoption</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/visitor/adoption-home.css">
+  <link rel="stylesheet" href="/static/visitor/navbar.css">
+  <link rel="stylesheet" href="/static/visitor/footer.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+</head>
+<body>
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="pets-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Available Pets for Adoption</h1>
+    <p>Give a loving home to animals who need you</p>
+  </div>
+</section>
+
+<!-- ===== INTRO ===== -->
+<section class="pets-info">
+  <h2>Meet Our Lovely Friends</h2>
+  <p>
+    These rescued animals are healthy, vaccinated, and ready to be adopted.
+    Each adoption gives a street animal a second chance at a safe and happy life.
+  </p>
+</section>
+
+<!-- ===== PET CARDS ===== -->
+<section class="pets-list">
+
+  <div class="pet-card">
+    <img src="https://i.postimg.cc/cLdfD6Lc/Dog-image.png" alt="Dog">
+    <h3>Bruno</h3>
+    <p>🐶 Dog • Male</p>
+    <p>🎂 Age: 2 Years</p>
+    <p>🏠 Location: <b>Green Park Animal Shelter</b>, Banjara Hills, Hyderabad, Telangana</p>
+    <p class="status available">Available</p>
+    <a href="/login"><button>View</button></a>
+  </div>
+
+  <div class="pet-card">
+    <img src="https://i.postimg.cc/c4n31wrX/cat1.png" alt="Cat">
+    <h3>Luna</h3>
+    <p>🐱 Cat • Female</p>
+    <p>🎂 Age: 1.5 Years</p>
+    <p>🏠 Location: Shelter Rescue Center</p>
+    <p class="status available">Available</p>
+    <a href="/login"><button>View</button></a>
+  </div>
+
+  <div class="pet-card">
+    <img src="https://i.postimg.cc/BbgntZfq/parrot1.png" alt="Dog">
+    <h3>Rocky</h3>
+    <p>🐶 Dog • Male</p>
+    <p>🎂 Age: 3 Years</p>
+    <p>🏠 Location: Shelter Rescue Center</p>
+    <p class="status pending">Pending</p>
+    <button disabled>Request Sent</button>
+  </div>
+
+  <div class="pet-card">
+    <img src="https://i.postimg.cc/6QmR50fB/dog2.png" alt="Cat">
+    <h3>Milo</h3>
+    <p>🐱 Cat • Male</p>
+    <p>🎂 Age: 1 Year</p>
+    <p>🏠 Location: Shelter Rescue Center</p>
+    <p class="status available">Available</p>
+    <a href="/login"><button>View</button></a>
+  </div>
+
+  <div class="pet-card">
+    <img src="https://i.postimg.cc/gkmwpQb6/Rabbit.png" alt="Puppy">
+    <h3>Bella</h3>
+    <p>🐶 Puppy • Female</p>
+    <p>🎂 Age: 6 Months</p>
+    <p>🏠 Location: Shelter Rescue Center</p>
+    <p class="status available">Available</p>
+    <a href="/login"><button>View</button></a>
+  </div>
+
+  <div class="pet-card">
+    <img src="https://i.postimg.cc/dVFjz44n/cat2.png
+    " alt="Cat">
+    <h3>Snowy</h3>
+    <p>🐱 Cat • Female</p>
+    <p>🎂 Age: 2 Years</p>
+    <p>🏠 Location: Shelter Rescue Center</p>
+    <p class="status adopted">Adopted</p>
+    <button disabled>Adopted</button>
+  </div>
+
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/visitor/nav-bar.js"></script>
+
+</body>
+</html>

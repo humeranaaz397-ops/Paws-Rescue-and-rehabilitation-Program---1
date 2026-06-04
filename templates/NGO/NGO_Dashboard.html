@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paws Rescue Dashboard</title>
+  <link rel="stylesheet" href="/static/NGO/nav and header.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e4fa1, #4b7bec);
+      min-height: 100vh;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      padding: 20px;
+      margin-left: 260px;
+      /* push when sidebar open */
+      width: calc(100% - 260px);
+      transition: all 0.3s ease;
+    }
+
+    /* Full width when sidebar closed */
+    .main.full {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      padding: 18px;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .card h1 {
+      font-size: 24px;
+      margin-top: 8px;
+    }
+
+    .blue {
+      background: #2c6ed5;
+    }
+
+    .red {
+      background: #e74c3c;
+    }
+
+    .green {
+      background: #16a085;
+    }
+
+    /* ===== GRID ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width:1000px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== BOX ===== */
+    .box {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+
+    .box:hover {
+      transform: translateY(-4px);
+    }
+
+    /* ===== CHART ===== */
+    .chart-box {
+      height: 400px;
+    }
+
+    .chart-box canvas {
+      height: 100% !important;
+    }
+
+    /* ===== SIDE ===== */
+    .side {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:768px) {
+
+      .sidebar {
+        width: 220px;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .notification {
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    @keyframes ring {
+      0% {
+        transform: rotate(0);
+      }
+
+      10% {
+        transform: rotate(15deg);
+      }
+
+      20% {
+        transform: rotate(-15deg);
+      }
+
+      30% {
+        transform: rotate(10deg);
+      }
+
+      40% {
+        transform: rotate(-10deg);
+      }
+
+      50% {
+        transform: rotate(0);
+      }
+    }
+
+    .sidebar {
+      transition: all 0.4s ease;
+    }
+
+    .sidebar.closed {
+      transform: translateX(-100%);
+    }
+
+    .welcome {
+      margin: 20px 0;
+      color: white;
+    }
+
+    .welcome h1 {
+      font-size: 32px;
+    }
+
+    .welcome p {
+      opacity: 0.9;
+    }
+
+    #clock {
+      color: #333;
+      font-weight: bold;
+    }
+
+    .card,
+    .box {
+      animation: fadeUp 0.6s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2 class="logo">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      PAWS
+    </h2>
+
+    <a href="#" class="active">Dashboard</a>
+    <a href="/ngo/rescue">Rescue Cases</a>
+    <a href="/ngo/medical-care">Medical care</a>
+    <a href="/ngo/adoption">Adoption</a>
+    <a href="/ngo/shelters">Shelters</a>
+    <a href="/ngo/add-rescue-member">Manage Rescue Members</a>
+    <div class="sidebar-bottom">
+
+      <a href="/logout">
+        <button class="logout-btn" id="logoutBtn">
+          🚪 Logout
+        </button>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Header -->
+
+    <div class="header">
+      <div class="header-left">
+        <span class="menu" id="menu">☰</span>
+
+        <div class="logo-image">
+          <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+          PAWS RESCUE
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div id="clock"></div>
+        <!-- <div class="notification">🔔</div> -->
+
+        <img
+          src="{{ session.user_profile_img or 'https://img.magnific.com/free-vector/young-man-with-glasses-avatar_1308-175763.jpg?semt=ais_hybrid&w=740&q=80' }}"
+          class="profile-img">
+      </div>
+    </div>
+
+    <div class="welcome">
+      <h1>Welcome Back, {{ session.user_name or 'NGO' }} 👋</h1>
+      <p>Monitor rescue operations in real time.</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div class="card blue">🐾 Total Rescue Requests <h1>{{ rescue_count }}</h1>
+      </div>
+      <div class="card red">🏠 Shelters <h1>{{ shelters_count }}</h1>
+      </div>
+      <div class="card green">🏠 Adoption Applications <h1>{{ adoption_count }}</h1>
+      </div>
+      <div class="card blue">💊 Medical Cases <h1>{{ medical_count }}</h1>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="grid">
+
+      <!-- Left -->
+      <div>
+
+        <div class="box">
+          <h3>Recent Rescue Reports</h3>
+          {% for r in recent_rescues %}
+          <a href="/ngo/rescue?case={{ r.id }}">
+            <p>🐾 {{ r.description }} <span style="float:right;">{{ r.status }}</span></p>
+          </a>
+          {% else %}
+          <p>No recent rescues reported.</p>
+          {% endfor %}
+        </div>
+
+        <div class="box chart-box" style="margin-top:15px;">
+          <h3>Daily Animal Rescues</h3>
+          <canvas id="chart"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Right -->
+      <div class="side">
+        <a href="/ngo/adoption">
+          <div class="box">
+            <h3>Adoption Requests</h3>
+            <p>Click here to review pending applications.</p>
+          </div>
+        </a>
+        <div class="box">
+          <h3>System Notifications</h3>
+          <p>🐾 Monitor live rescue requests</p>
+          <p>❤️ Manage adoption submissions</p>
+        </div>
+        <a href="/ngo/medical-care">
+          <div class="box">
+            <h3>Medical Care Status</h3>
+            <p>Click here to view medical logs.</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Get elements
+
+    const menu = document.getElementById("menu");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.querySelector(".main");
+
+    // Toggle sidebar
+    menu.onclick = (e) => {
+      e.stopPropagation();
+
+      sidebar.classList.toggle("closed");
+      main.classList.toggle("full");
+    };
+
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      const insideSidebar = sidebar.contains(e.target);
+      const isMenu = menu.contains(e.target);
+
+      if (!insideSidebar && !isMenu) {
+        sidebar.classList.add("closed");
+        main.classList.add("full");
+      }
+    });
+
+    // Prevent closing when clicking inside sidebar
+    sidebar.onclick = (e) => {
+      e.stopPropagation();
+    };
+
+
+    // 🔥 Chart (your existing code - keep it)
+    new Chart(document.getElementById("chart"), {
+      type: "line",
+      data: {
+        labels: ["Apr 17", "Apr 18", "Apr 19", "Apr 20", "Apr 21", "Apr 22", "Apr 23"],
+        datasets: [{
+          data: [5, 12, 9, 13, 10, 20, 30],
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Date",
+              font: { size: 14, weight: "bold" }
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Rescues",
+              font: { size: 14, weight: "bold" }
+            }
+          }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    function updateClock() {
+      const now = new Date();
+
+      document.getElementById("clock").innerHTML =
+        now.toLocaleTimeString();
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    const params = new URLSearchParams(window.location.search);
+
+    const caseId = params.get("case");
+
+    if (caseId) {
+
+      const targetRow = document.getElementById(caseId);
+
+      if (targetRow) {
+
+        // Scroll to row
+        targetRow.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+        // Highlight row
+        targetRow.classList.add("highlight");
+
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>

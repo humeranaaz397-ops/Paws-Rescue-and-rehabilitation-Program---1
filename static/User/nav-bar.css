@@ -1,0 +1,230 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #dbe9f8;
+}
+
+/* ===== NAVBAR ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #0f172a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+/* ===== BRAND (LOGO + TITLE) ===== */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.brand h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ===== DESKTOP NAV LINKS ===== */
+.nav-links {
+  display: flex;
+  gap: 25px;
+  margin-left: auto;
+  align-items: center;
+}
+
+.nav-links a {
+  position: relative;
+  text-decoration: none;
+  color: #cbd5e1;
+  font-size: 15px;
+  padding: 5px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background: #38bdf8;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Profile image */
+.nav-links img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, #020617, #020617);
+  padding: 20px;
+  transition: left 0.4s ease;
+  z-index: 1100;
+}
+
+.mobile-menu.open {
+  left: 0;
+}
+
+/* ===== MOBILE HEADER (LOGO + EMAIL SIDE BY SIDE) ===== */
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+/* LOGO + EMAIL ROW */
+.mobile-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-profile img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mobile-profile .email {
+  font-size: 14px;
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  font-size: 22px;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* ===== MOBILE LINKS ===== */
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobile-links a {
+  text-decoration: none;
+  color: #cbd5e1;
+  font-size: 16px;
+  position: relative;
+  padding-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.mobile-links a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 0;
+  background: #38bdf8;
+  transition: height 0.3s ease;
+}
+
+.mobile-links a:hover {
+  color: #fff;
+}
+
+.mobile-links a:hover::before {
+  height: 100%;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+  z-index: 1050;
+}
+
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+/* ===== ICONS ===== */
+.nav-links i,
+.mobile-links i {
+  margin-right: 8px;
+  color: #38bdf8;
+}
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .brand h1 {
+    font-size: 16px;
+  }
+}

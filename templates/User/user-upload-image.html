@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program/Upload-Injured-Animal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/visitor/upload-image-home.css">
+  <link rel="stylesheet" href="/static/User/nav-bar.css">
+  <link rel="stylesheet" href="/static/User/footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    body {
+      margin-top: 65px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== HEADER / NAVBAR ===== -->
+  <header>
+    <!-- Hamburger (left) -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Logo + Title -->
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+
+    <!-- Desktop Menu -->
+    <nav class="nav-links">
+      <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+      <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+      <a href="/user/notifications" class="notification-icon">
+        <i class="fa-solid fa-bell"></i>
+        <span class="notif-dot"></span>
+      </a>
+      <a href="/user/profile"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt=""
+          width="10%"></a>
+    </nav>
+    <!-- Mobile Slide Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-header">
+        <div class="brand">
+          <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+          <h1>Paws Rescue & Rehabilitation Program</h1>
+        </div>
+        <div class="close-btn" id="closeBtn">&times;</div>
+      </div>
+
+      <div class="mobile-links">
+        <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+        <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+        <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+        <a href="/user/notifications" class="notification-icon">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notif-dot">notifications</span>
+        </a>
+        <a href="/user/profile" style="display: flex;"><img
+            src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%">{{
+          session.user_email }}</a>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+  </header>
+  <main>
+    <section class="upload-section">
+
+      <!-- Page Heading -->
+      <div class="upload-header">
+        <h1>Upload Injured Animal</h1>
+        <p>
+          Help us rescue injured animals by uploading an image and sharing basic details.
+          Your small action can save a life.
+        </p>
+      </div>
+
+      <!-- Upload Card -->
+      <div class="upload-card" id="uploadCard">
+
+        <!-- Image Preview -->
+        <div class="upload-image-box">
+          <img id="previewImage" src="https://i.postimg.cc/PxDcM8By/Chat-GPT-Image-Mar-15-2026-12-35-08-PM.png"
+            alt="Upload Preview">
+        </div>
+
+        <!-- Form -->
+        <form class="upload-form" id="reportForm">
+
+          <label>Animal Image</label>
+
+          <input type="file" id="imageInput" accept="image/*" capture="environment" required>
+
+          <!-- User sees address -->
+
+          <label>Location</label>
+
+          <div class="location-wrapper">
+
+            <input type="text" id="locationInput" placeholder="Click below to get current location" readonly required>
+
+            <button type="button" id="getLocationBtn">
+              <i class="fa-solid fa-location-crosshairs"></i>
+              Get Current Location
+            </button>
+
+          </div>
+
+          <!-- Hidden Fields -->
+          <input type="hidden" id="latitude" name="latitude">
+
+          <input type="hidden" id="longitude" name="longitude">
+
+          <input type="hidden" id="mapLink" name="mapLink">
+
+          <label>Description</label>
+          <textarea placeholder="Briefly describe the animal's condition..." required></textarea>
+
+          <button type="submit">Submit Report</button>
+
+        </form>
+
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-info">
+        <p>© 2026 My Project. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById("reportForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("image", document.getElementById("imageInput").files[0]);
+      formData.append("location", document.getElementById("locationInput").value);
+      formData.append("latitude", document.getElementById("latitude").value);
+      formData.append("longitude", document.getElementById("longitude").value);
+      formData.append("mapLink", document.getElementById("mapLink").value);
+      formData.append("description", document.querySelector("textarea").value);
+
+      fetch("/user/report-injured", {
+        method: "POST",
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const card = document.getElementById("uploadCard");
+            card.innerHTML = `
+                <div style="text-align:center; padding:50px;">
+                    <h2 style="color:#000000;">Report Submitted Successfully!</h2>
+                    <p style="margin-top:10px; color:#000000;">
+                        Thank you for helping animals in need 🐾
+                    </p>
+                </div>
+            `;
+          } else {
+            alert("Error submitting report. Please try again.");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again.");
+        });
+    });
+  </script>
+  <script>
+
+    const getLocationBtn = document.getElementById("getLocationBtn");
+
+    const locationInput = document.getElementById("locationInput");
+
+    const latitudeInput = document.getElementById("latitude");
+
+    const longitudeInput = document.getElementById("longitude");
+
+    const mapLinkInput = document.getElementById("mapLink");
+
+
+    getLocationBtn.addEventListener("click", () => {
+
+      if (!navigator.geolocation) {
+
+        locationInput.value = "Geolocation not supported";
+
+        return;
+
+      }
+
+      getLocationBtn.innerHTML = "Detecting...";
+
+      navigator.geolocation.getCurrentPosition(
+
+        async (position) => {
+
+          const lat = position.coords.latitude;
+
+          const lon = position.coords.longitude;
+
+          // Save coordinates
+          latitudeInput.value = lat;
+
+          longitudeInput.value = lon;
+
+          // Save Google Maps link
+          mapLinkInput.value =
+            `https://www.google.com/maps?q=${lat},${lon}`;
+
+          try {
+
+            // Convert coordinates to address
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+            );
+
+            const data = await response.json();
+
+            // Show address
+            locationInput.value = data.display_name;
+
+            getLocationBtn.innerHTML =
+              `<i class="fa-solid fa-circle-check"></i> Location Added`;
+
+          } catch (error) {
+
+            locationInput.value = `${lat}, ${lon}`;
+
+          }
+
+        },
+
+        () => {
+
+          locationInput.value =
+            "Please allow location access";
+
+          getLocationBtn.innerHTML =
+            `<i class="fa-solid fa-location-crosshairs"></i> Get Current Location`;
+
+        },
+
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+
+      );
+
+    });
+  </script>
+  <script>
+
+    const imageInput = document.getElementById("imageInput");
+
+    const previewImage = document.getElementById("previewImage");
+
+    imageInput.addEventListener("change", function () {
+
+      const file = this.files[0];
+
+      if (file) {
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+
+          previewImage.src = e.target.result;
+
+        };
+
+        reader.readAsDataURL(file);
+
+      }
+
+    });
+
+  </script>
+  <script src="/static/User/nav-bar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Notifications</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/static/User/nav-bar.css">
+<link rel="stylesheet" href="/static/User/footer.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #dbe9f8;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  margin: 3%;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 22px;
+  color: #1e2a3b;
+}
+
+.header p {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.actions button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.mark-read {
+  background: #eef2ff;
+  color: #2b4eff;
+}
+
+.clear-all {
+  background: #2b4eff;
+  color: #fff;
+}
+.unread {
+  border-left: 4px solid #2b4eff;
+}
+
+.tabs {
+  margin-bottom: 15px;
+}
+
+.tabs button {
+  padding: 8px 14px;
+  margin-right: 10px;
+  border-radius: 20px;
+  border: none;
+  background: #e9edf5;
+}
+
+.tabs .active {
+  background: #2b4eff;
+  color: #fff;
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 15px;
+}
+
+.content {
+  flex: 1;
+}
+
+.content h4 {
+  font-size: 15px;
+  color: #1e2a3b;
+}
+
+.content p {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.time {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+/* UNREAD MAIL STYLE DOT */
+.unread-dot{
+  width:8px;
+  height:8px;
+  background:#2b4eff;
+  border-radius:50%;
+  display:inline-block;
+  margin-right:8px;
+}
+
+.notification-item.read .unread-dot{
+  display:none;
+}
+
+/* Colors */
+.success .icon { background: #d4f5e9; color: #2ecc71; }
+.update .icon { background: #e6ecff; color: #4c6fff; }
+.adoption .icon { background: #f0e6ff; color: #8e44ad; }
+.medical .icon { background: #e6f7f3; color: #1abc9c; }
+.alert .icon { background: #fff3e6; color: #e67e22; }
+.approved .icon { background: #ffe6e6; color: #e74c3c; }
+.message .icon { background: #e6f0ff; color: #3498db; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 30px 15px;
+  text-align:center;
+}
+
+/* CHAT VIEW */
+#chatView {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.msg {
+  padding: 8px 12px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.user {
+  background: #2b4eff;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.bot {
+  background: #e9edf5;
+  align-self: flex-start;
+}
+
+/* ===== CHAT BOX DESIGN ===== */
+
+#chatView{
+  background:#ffffff;
+  border-radius:16px;
+  padding:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.notification-item:not(.read) h4{
+  font-weight:700;
+}
+
+
+/* Chat Header */
+.chat-header{
+  background:#2b4eff;
+  color:#fff;
+  padding:10px 15px;
+  border-radius:10px;
+}
+
+.chat-header h3{
+  font-size:16px;
+}
+
+#backBtn{
+  background:#fff;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+/* Chat Body */
+.chat-body{
+  height:300px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:10px;
+  background:#f5f7fb;
+  border-radius:10px;
+}
+
+/* Message bubbles */
+.msg{
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:14px;
+  line-height:1.4;
+  max-width:70%;
+  animation:fadeIn 0.25s ease;
+}
+
+/* User message */
+.msg.user{
+  background:#2b4eff;
+  color:#fff;
+  align-self:flex-end;
+  border-bottom-right-radius:4px;
+}
+
+/* Bot message */
+.msg.bot{
+  background:#e9edf5;
+  color:#1e2a3b;
+  align-self:flex-start;
+  border-bottom-left-radius:4px;
+}
+
+/* Chat input area */
+.chat-input{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.chat-input input{
+  flex:1;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  outline:none;
+}
+
+.chat-input input:focus{
+  border-color:#2b4eff;
+}
+
+.chat-input button{
+  background:#2b4eff;
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.chat-input button:hover{
+  background:#1e36d8;
+}
+
+/* Smooth transition */
+#chatView {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+/* Chat spacing */
+.chat-body {
+  background: #f9fafc;
+  border-radius: 12px;
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot"></span>
+    </a>
+    <a href="/user/profile"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%"></a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot">notifications</span>
+    </a>
+    <a href="/user/profile" style="display: flex;"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%" >{{ session.user_email }}</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<main>
+
+<section class="notifications-section">
+
+  <!-- LIST VIEW -->
+  <div id="listView">
+
+    <div class="header">
+      <div>
+        <h2>Notifications</h2>
+        <p>Stay updated with the latest updates and alerts.</p>
+      </div>
+
+      <div class="actions">
+        <button class="mark-read">Mark all as read</button>
+        <button class="clear-all">Clear All</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="active">All</button>
+      <button>Rescue</button>
+      <button>Adoption</button>
+      <button>Medical</button>
+      <button>General</button>
+    </div>
+
+    <div class="notifications-list">
+      <!-- 1. Render Adoption Applications -->
+      {% for app in applications %}
+        {% if app.status == 'Pending' %}
+          <div class="notification-item unread" data-title="Adoption: {{ app.pet_name }}" data-type="adoption">
+            <div class="icon" style="background: #f0e6ff; color: #8e44ad;"><i class="fa-solid fa-paw"></i></div>
+            <div class="content">
+              <h4><span class="unread-dot"></span>Adoption Request Submitted</h4>
+              <p>Your request to adopt "{{ app.pet_name }}" has been successfully submitted and is under review.</p>
+              <span class="meta">{{ app.formatted_date }}</span>
+            </div>
+          </div>
+        {% elif app.status == 'Approved' %}
+          <div class="notification-item" data-title="Adoption: {{ app.pet_name }}" data-type="adoption">
+            <div class="icon" style="background: #d4f5e9; color: #2ecc71;"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="content">
+              <h4>Adoption Approved 🎉</h4>
+              <p>Congratulations! Your adoption request for "{{ app.pet_name }}" has been approved successfully. Meeting time: {{ app.meeting_time or 'TBD' }}.</p>
+              <span class="meta">{{ app.formatted_date }}</span>
+            </div>
+          </div>
+        {% elif app.status == 'Rejected' %}
+          <div class="notification-item" data-title="Adoption: {{ app.pet_name }}" data-type="adoption">
+            <div class="icon" style="background: #ffe6e6; color: #e74c3c;"><i class="fa-solid fa-circle-xmark"></i></div>
+            <div class="content">
+              <h4>Adoption Request Rejected</h4>
+              <p>We regret to inform you that your adoption request for "{{ app.pet_name }}" was not approved. Reason: {{ app.rejection_reason or 'None' }}.</p>
+              <span class="meta">{{ app.formatted_date }}</span>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <!-- 2. Render Injured Animal Reports -->
+      {% for rep in reports %}
+        {% if rep.status == 'Pending' %}
+          <div class="notification-item unread" data-title="Rescue: {{ rep.animal_type }}" data-type="rescue">
+            <div class="icon" style="background: #fff3e6; color: #e67e22;"><i class="fa-solid fa-bell"></i></div>
+            <div class="content">
+              <h4><span class="unread-dot"></span>Rescue Report Submitted</h4>
+              <p>Your reported injured {{ rep.animal_type or 'Stray Animal' }} at {{ rep.location }} has been successfully submitted and is under review.</p>
+              <span class="meta">{{ rep.formatted_date }}</span>
+            </div>
+          </div>
+        {% elif rep.status == 'Assigned' or rep.status == 'Accepted' or rep.status == 'Ongoing' %}
+          <div class="notification-item" data-title="Rescue: {{ rep.animal_type }}" data-type="rescue">
+            <div class="icon" style="background: #e6ecff; color: #4c6fff;"><i class="fa-solid fa-truck-medical"></i></div>
+            <div class="content">
+              <h4>Rescue Team Dispatched</h4>
+              <p>Your reported case at {{ rep.location }} has been assigned to a rescue member for immediate action.</p>
+              <span class="meta">{{ rep.formatted_date }}</span>
+            </div>
+          </div>
+        {% elif rep.status == 'Completed' %}
+          <div class="notification-item" data-title="Rescue: {{ rep.animal_type }}" data-type="rescue">
+            <div class="icon" style="background: #d4f5e9; color: #2ecc71;"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="content">
+              <h4>Rescue Completed Successfully</h4>
+              <p>The injured {{ rep.animal_type or 'Stray Animal' }} you reported at {{ rep.location }} has been safely rescued by our team.</p>
+              <span class="meta">{{ rep.formatted_date }}</span>
+            </div>
+          </div>
+        {% elif rep.status == 'Rejected' %}
+          <div class="notification-item" data-title="Rescue: {{ rep.animal_type }}" data-type="rescue">
+            <div class="icon" style="background: #ffe6e6; color: #e74c3c;"><i class="fa-solid fa-circle-xmark"></i></div>
+            <div class="content">
+              <h4>Rescue Report Rejected</h4>
+              <p>Your rescue report at {{ rep.location }} was not approved. Reason: {{ rep.rejection_reason or 'None' }}.</p>
+              <span class="meta">{{ rep.formatted_date }}</span>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <!-- 3. Render Uploaded Pets for Adoption -->
+      {% for pet in uploaded_pets %}
+        {% if pet.status == 'Available' %}
+          <div class="notification-item" data-title="Adoption List: {{ pet.name }}" data-type="adoption">
+            <div class="icon" style="background: #f0e6ff; color: #8e44ad;"><i class="fa-solid fa-paw"></i></div>
+            <div class="content">
+              <h4>Pet Listed for Adoption</h4>
+              <p>Your uploaded pet "{{ pet.name }}" is now listed and available for adoption!</p>
+              <span class="meta">Adoption Listing</span>
+            </div>
+          </div>
+        {% elif pet.status == 'Pending' %}
+          <div class="notification-item unread" data-title="Adoption List: {{ pet.name }}" data-type="adoption">
+            <div class="icon" style="background: #e6ecff; color: #4c6fff;"><i class="fa-solid fa-file-invoice"></i></div>
+            <div class="content">
+              <h4><span class="unread-dot"></span>Adoption Request Received</h4>
+              <p>Someone has submitted an adoption application for your uploaded pet "{{ pet.name }}".</p>
+              <span class="meta">Adoption Pending</span>
+            </div>
+          </div>
+        {% elif pet.status == 'Adopted' %}
+          <div class="notification-item" data-title="Adoption List: {{ pet.name }}" data-type="adoption">
+            <div class="icon" style="background: #d4f5e9; color: #2ecc71;"><i class="fa-solid fa-heart"></i></div>
+            <div class="content">
+              <h4>Pet Adopted! 🎉</h4>
+              <p>Congratulations! Your uploaded pet "{{ pet.name }}" has been successfully adopted!</p>
+              <span class="meta">Adoption Completed</span>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {% if not applications and not reports and not uploaded_pets %}
+        <p style="text-align: center; color: #777; padding: 20px;">No notifications found.</p>
+      {% endif %}
+    </div>
+
+  </div>
+
+
+  <!-- CHAT VIEW (SAME AREA) -->
+  <div id="chatView" style="display:none;">
+
+    <div class="chat-header">
+      <button id="backBtn">← Back</button>
+      <h3 id="chatTitle"></h3>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <!-- messages will come here -->
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type message...">
+      <button id="sendMsg">Send</button>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  © 2026 Paws Rescue & Rehabilitation Program
+</footer>
+
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
+
+hamburger.onclick = () => {
+  mobileMenu.classList.toggle('open');
+  overlay.classList.toggle('show');
+};
+
+overlay.onclick = () => {
+  mobileMenu.classList.remove('open');
+  overlay.classList.remove('show');
+};
+
+// MARK ALL AS READ
+document.querySelector(".mark-read").onclick = () => {
+  document.querySelectorAll(".notification-item").forEach(n => {
+    n.classList.remove("unread");
+    n.classList.add("read");
+    const dot = n.querySelector(".unread-dot");
+    if(dot) dot.style.display = "none";
+  });
+};
+
+// CLEAR ALL
+document.querySelector(".clear-all").onclick = () => {
+  document.querySelector(".notifications-list").innerHTML = "<p>No notifications</p>";
+};
+
+// FILTER TABS
+const tabs = document.querySelectorAll(".tabs button");
+const items = document.querySelectorAll(".notification-item");
+
+tabs.forEach(tab => {
+  tab.onclick = () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    let type = tab.innerText.toLowerCase();
+
+    items.forEach(item => {
+      if(type.includes("all")){
+        item.style.display = "flex";
+      } else if(type.includes("rescue") && item.dataset.type === "rescue"){
+        item.style.display = "flex";
+      } else if(type.includes("adoption") && item.dataset.type === "adoption"){
+        item.style.display = "flex";
+      } else if(type.includes("medical") && item.dataset.type === "medical"){
+        item.style.display = "flex";
+      } else if(type.includes("general") && item.dataset.type === "general"){
+        item.style.display = "flex";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  };
+});
+
+// BACK
+document.getElementById("backBtn").onclick = () => {
+  document.getElementById("listView").style.display = "block";
+  document.getElementById("chatView").style.display = "none";
+};
+
+// SEND MESSAGE
+document.getElementById("sendMsg").onclick = () => {
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const chatBody = document.getElementById("chatBody");
+
+  const userMsg = document.createElement("div");
+  userMsg.className = "msg user";
+  userMsg.innerText = text;
+  chatBody.appendChild(userMsg);
+
+  input.value = "";
+
+  setTimeout(() => {
+    const botMsg = document.createElement("div");
+    botMsg.className = "msg bot";
+    botMsg.innerText = "We will respond shortly 👍";
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 500);
+};
+// CHAT DATA WITH FULL DETAILS
+const chatData = {
+  "Rescue Completed": [
+    { type: "bot", text: "Your reported case has been successfully resolved." },
+    { type: "bot", text: "Location: Green Park" },
+    { type: "bot", text: "Time: Today, 10:30 AM" },
+    { type: "bot", text: "The animal is now safe and under observation." }
+  ],
+
+  "Treatment Update": [
+    { type: "bot", text: "Your Adoption Request Acccepted." },
+    { type: "bot", text: "come to Bluecross Hydrabad To adopt on 12 April 2026 11:00AM." },
+    { type: "bot", text: "Next update will be shared soon." }
+  ],
+
+  "Adoption Request": [
+    { type: "bot", text: "Your adoption request has been received." },
+    { type: "bot", text: "Our team is reviewing your details." },
+    { type: "bot", text: "We will notify you once approved." }
+  ],
+
+  "NGO Assigned": [
+    { type: "bot", text: "Your case has been assigned to Hope Shelter NGO." },
+    { type: "bot", text: "They will reach the location shortly." }
+  ],
+
+  "Adoption Approved": [
+    { type: "bot", text: "Congratulations! 🎉" },
+    { type: "bot", text: "Your adoption request has been approved." },
+    { type: "bot", text: "You can now proceed with the next steps." }
+  ]
+};
+
+// OPEN CHAT
+document.querySelectorAll(".notification-item").forEach(item => {
+  item.onclick = () => {
+    item.classList.remove("unread");
+    item.classList.add("read");
+    const title = item.getAttribute("data-title");
+
+    document.getElementById("listView").style.display = "none";
+    document.getElementById("chatView").style.display = "flex";
+    document.getElementById("chatTitle").innerText = title;   
+    
+    const chatBody = document.getElementById("chatBody");   
+    chatBody.innerHTML = "";
+
+    const messages = chatData[title] || [
+      { type: "bot", text: item.querySelector("p") ? item.querySelector("p").innerText : "" }
+    ];
+
+    messages.forEach(msg => {
+      const div = document.createElement("div");
+      div.className = "msg " + msg.type;
+      div.innerText = msg.text;
+      chatBody.appendChild(div);
+    });
+  };
+  });
+  </script>
+
+
+</body>
+</html>

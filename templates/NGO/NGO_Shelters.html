@@ -1,0 +1,1613 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Registered Shelters</title>
+
+  <link rel="stylesheet" href="/static/NGO/nav and header.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e4fa1, #4b7bec);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      padding: 20px;
+      margin-left: 260px;
+      width: calc(100% - 260px);
+      transition: 0.3s ease;
+    }
+
+    .main.full {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    /* ================= TOP ================= */
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .top h1 {
+      color: white;
+      font-size: 32px;
+    }
+
+    /* ================= BUTTONS ================= */
+
+    .add-btn {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .add-btn:hover {
+      background: #219150;
+      transform: translateY(-2px);
+    }
+
+    .status-btn {
+      border: none;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 2px;
+      font-size: 14px;
+      transition: 0.3s ease;
+    }
+
+    .status-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .view-btn {
+      background: #3498db;
+    }
+
+    .view-btn:hover {
+      background: #217dbb;
+    }
+
+    .edit {
+      background: #2ecc71;
+    }
+
+    .edit:hover {
+      background: #27ae60;
+    }
+
+    .delete {
+      background: #e74c3c;
+    }
+
+    .delete:hover {
+      background: #c0392b;
+    }
+
+    .restore-btn {
+      background: #9b59b6;
+    }
+
+    .restore-btn:hover {
+      background: #7d3c98;
+    }
+
+    .btn-submit {
+      background: #27ae60;
+    }
+
+    .btn-submit:hover {
+      background: #219150;
+    }
+
+    .btn-cancel {
+      background: #95a5a6;
+    }
+
+    .btn-cancel:hover {
+      background: #7f8c8d;
+    }
+
+    /* ================= CARDS ================= */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      color: white;
+      padding: 22px;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      margin-top: 12px;
+      font-size: 28px;
+    }
+
+    .blue {
+      background: #3498db;
+    }
+
+    .red {
+      background: #e74c3c;
+    }
+
+    .teal {
+      background: #16a085;
+    }
+
+    .purple {
+      background: #9b59b6;
+    }
+
+    /* ================= FILTERS ================= */
+
+    .filters {
+      background: white;
+      padding: 18px;
+      border-radius: 18px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .filters input,
+    .filters select {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      outline: none;
+      min-width: 200px;
+      transition: 0.3s ease;
+    }
+
+    .filters input:focus,
+    .filters select:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    /* ================= TABLE ================= */
+
+    .table {
+      margin-top: 25px;
+      background: white;
+      border-radius: 18px;
+      overflow: auto;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: #f4f7fb;
+    }
+
+    th {
+      color: #1e4fa1;
+      font-weight: 700;
+    }
+
+    th,
+    td {
+      padding: 16px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+    }
+
+    tbody tr {
+      transition: 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background: #f9fbff;
+    }
+
+    /* ================= DELETED SECTION ================= */
+
+    .deleted-section {
+      margin-top: 35px;
+    }
+
+    .deleted-title {
+      padding: 20px;
+      color: #e74c3c;
+      font-size: 24px;
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 5000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 22px;
+      padding: 28px;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .modal-header {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1e4fa1;
+      margin-bottom: 22px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    /* ================= VIEW MODAL ================= */
+
+    .view-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 6000;
+      padding: 20px;
+      backdrop-filter: blur(5px);
+    }
+
+    .view-box {
+      width: 100%;
+      max-width: 760px;
+      background: white;
+      border-radius: 25px;
+      overflow: hidden;
+      position: relative;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .close-view {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 10;
+      transition: 0.3s ease;
+    }
+
+    .close-view:hover {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .view-image-box {
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .view-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .view-content {
+      padding: 28px;
+    }
+
+    .view-content h2 {
+      color: #1e4fa1;
+      margin-bottom: 22px;
+      font-size: 30px;
+    }
+
+    .view-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .view-card {
+      background: #f8fbff;
+      border: 1px solid #e5edf7;
+      border-radius: 16px;
+      padding: 20px;
+      transition: 0.3s ease;
+    }
+
+    .view-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .view-card span {
+      font-size: 13px;
+      color: #777;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .view-card h4 {
+      color: #1e4fa1;
+      font-size: 20px;
+    }
+
+    /* ================= HEADER ITEMS ================= */
+
+    .notification {
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    #clock {
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      transition: 0.4s ease;
+    }
+
+    .sidebar.closed {
+      transform: translateX(-100%);
+    }
+
+    /* ================= ANIMATION ================= */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 768px) {
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+      }
+
+      .top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top h1 {
+        font-size: 26px;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
+
+      .filters input,
+      .filters select {
+        width: 100%;
+        min-width: 100%;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+
+      .view-content {
+        padding: 20px;
+      }
+
+      .view-content h2 {
+        font-size: 24px;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        font-size: 14px;
+      }
+    }
+
+    /* ================= COMPACT PREMIUM MODAL ================= */
+
+    .modal-content {
+      width: 92%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      animation: fadeUp 0.3s ease;
+      position: relative;
+      overflow-x: hidden;
+      box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    /* TOP GRADIENT */
+
+    .modal-content::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background:
+        linear-gradient(90deg,
+          #1e4fa1,
+          #4b7bec,
+          #27ae60);
+    }
+
+    /* HEADER */
+
+    .modal-header {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1e4fa1;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* FORM GROUP */
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    /* LABEL */
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 700;
+      color: #333;
+      font-size: 14px;
+    }
+
+    /* INPUTS */
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e4eaf3;
+      border-radius: 12px;
+      outline: none;
+      transition: 0.3s ease;
+      font-size: 14px;
+      background: #fafcff;
+    }
+
+    /* INPUT FOCUS */
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #3498db;
+      background: white;
+      box-shadow:
+        0 0 0 4px rgba(52, 152, 219, 0.12);
+    }
+
+    /* IMAGE PREVIEW */
+
+    .image-preview {
+      border: 2px dashed #cfd9ea;
+      border-radius: 14px;
+      padding: 10px;
+      background: #f8fbff;
+    }
+
+    /* IMAGE */
+
+    .preview-img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* SMALL TEXT */
+
+    .hint-text {
+      color: #777;
+      font-size: 11px;
+      margin-top: 5px;
+      display: block;
+    }
+
+    /* BUTTONS */
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-buttons button {
+      min-width: 120px;
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* MOBILE */
+
+    @media(max-width:768px) {
+
+      .modal-content {
+        width: 95%;
+        max-height: 88vh;
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .modal-header {
+        font-size: 21px;
+      }
+
+      .modal-buttons {
+        flex-direction: column;
+      }
+
+      .modal-buttons button {
+        width: 100%;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ================= SIDEBAR ================= -->
+
+  <div class="sidebar" id="sidebar">
+    <!-- LOGO -->
+
+    <h2 class="logo">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo" />
+
+      PAWS
+    </h2>
+
+    <!-- NAVIGATION -->
+    <a href="/ngo/dashboard">Dashboard</a>
+    <a href="/ngo/rescue">Rescue Cases</a>
+    <a href="/ngo/medical-care">Medical care</a>
+    <a href="/ngo/adoption">Adoption</a>
+    <a href="#" class="active">Shelters</a>
+    <a href="/ngo/add-rescue-member">Manage Rescue Members</a>
+    <div class="sidebar-bottom">
+      <a href="/logout">
+        <button class="logout-btn" id="logoutBtn">
+          🚪 Logout
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ================= -->
+
+  <div class="main">
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+      <!-- LEFT -->
+
+      <div class="header-left">
+        <span class="menu" id="menu"> ☰ </span>
+
+        <div class="logo-image">
+          <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo" />
+
+          PAWS RESCUE
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="header-right">
+        <div id="clock"></div>
+
+        <!-- <div class="notification">🔔</div> -->
+
+        <img
+          src="{{ session.user_profile_img or 'https://img.magnific.com/free-vector/young-man-with-glasses-avatar_1308-175763.jpg?semt=ais_hybrid&w=740&q=80' }}"
+          class="profile-img" alt="profile" />
+      </div>
+    </header>
+
+    <!-- ================= PAGE TOP ================= -->
+
+    <section class="top">
+      <h1>Registered Shelters</h1>
+
+      <button class="add-btn" id="addShelterBtn">+ Add Shelter</button>
+    </section>
+
+    <!-- ================= DASHBOARD CARDS ================= -->
+
+    <section class="cards">
+      <div class="card blue">
+        Total Shelters
+
+        <h2>12</h2>
+      </div>
+
+      <div class="card red">
+        Active Capacity
+
+        <h2>456</h2>
+      </div>
+
+      <div class="card teal">
+        Total Capacity
+
+        <h2>234</h2>
+      </div>
+
+      <div class="card purple">
+        Adoption Ready
+
+        <h2>67</h2>
+      </div>
+    </section>
+
+    <!-- ================= FILTERS ================= -->
+
+    <section class="filters">
+      <!-- SEARCH -->
+
+      <input type="text" id="searchShelter" placeholder="Search shelters..." />
+
+      <!-- LOCATION FILTER -->
+
+      <select id="locationFilter">
+        <option value="">All Locations</option>
+
+        <option>Hyderabad</option>
+
+        <option>LB Nagar</option>
+
+        <option>Kukatpally</option>
+      </select>
+
+      <!-- STATUS FILTER -->
+
+      <select id="statusFilter">
+        <option value="">All Status</option>
+
+        <option>Active</option>
+
+        <option>Maintenance</option>
+
+        <option>Closed</option>
+      </select>
+    </section>
+
+    <!-- ================= MAIN SHELTER TABLE ================= -->
+
+    <section class="table">
+      <table id="shelterTable">
+        <!-- ===== HEADER ===== -->
+
+        <thead>
+          <tr>
+            <th>ID</th>
+
+            <th>Name</th>
+
+            <th>Location</th>
+
+            <th>Capacity</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <!-- ===== BODY ===== -->
+
+        <tbody id="shelterTableBody">
+          {% for s in shelters %}
+          <tr
+            data-image="{% if s.image_filename and (s.image_filename[:4] == 'http' or s.image_filename[0] == '/') %}{{ s.image_filename }}{% else %}{{ url_for('static', filename='uploads/' + s.image_filename) if s.image_filename else 'https://images.unsplash.com/photo-1548767797-d8c844163c4c' }}{% endif %}">
+            <td>{{ s.id }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.location }}</td>
+            <td>{{ s.capacity }}</td>
+            <td style="color: green; font-weight: 600">Active</td>
+            <td>
+              <button class="status-btn view-btn">View</button>
+              <button class="status-btn edit">Edit</button>
+              <button class="status-btn delete">Delete</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================= DELETED SHELTERS ================= -->
+
+    <section class="table deleted-section">
+      <h2 class="deleted-title">Deleted Shelters</h2>
+
+      <table id="deletedTable">
+        <!-- ===== HEADER ===== -->
+
+        <thead>
+          <tr>
+            <th>ID</th>
+
+            <th>Name</th>
+
+            <th>Reason</th>
+
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <!-- ===== BODY ===== -->
+
+        <tbody id="deletedTableBody">
+          <!-- DYNAMIC DATA -->
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- ================= ADD SHELTER MODAL ================= -->
+
+  <div class="modal" id="addShelterModal">
+    <div class="modal-content">
+      <div class="modal-header">Add Shelter</div>
+
+      <form id="shelterForm">
+        <!-- NAME -->
+
+        <div class="form-group">
+          <label> Shelter Name </label>
+
+          <input type="text" id="shelterName" required />
+        </div>
+
+        <!-- LOCATION -->
+
+        <div class="form-group">
+          <label> Location </label>
+
+          <input type="text" id="shelterLocation" required />
+        </div>
+
+        <!-- CAPACITY -->
+
+        <div class="form-group">
+          <label> Capacity </label>
+
+          <input type="number" id="shelterCapacity" required />
+        </div>
+
+        <!-- STATUS -->
+
+        <div class="form-group">
+          <label> Status </label>
+
+          <select id="shelterStatus">
+            <option>Active</option>
+
+            <option>Maintenance</option>
+
+            <option>Closed</option>
+          </select>
+        </div>
+
+        <!-- IMAGE -->
+
+        <div class="form-group">
+          <label> Upload New Shelter Image (optional) </label>
+
+          <input type="file" id="shelterImage" accept="image/*" />
+
+          <small class="hint-text">Leave empty to keep the current image</small>
+        </div>
+
+        <!-- CURRENT IMAGE PREVIEW -->
+
+        <div class="form-group" id="currentImageGroup" style="display:none;">
+          <label>Current Image</label>
+          <div class="image-preview">
+            <img id="currentImage" src="" alt="Current Image" class="preview-img">
+          </div>
+        </div>
+
+        <!-- BUTTONS -->
+
+        <div class="modal-buttons">
+          <button type="button" class="status-btn btn-cancel" id="cancelBtn">
+            Cancel
+          </button>
+
+          <button type="submit" class="status-btn btn-submit">
+            Add Shelter
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= VIEW MODAL ================= -->
+
+  <div class="view-modal" id="viewModal">
+    <div class="view-box">
+      <!-- CLOSE BUTTON -->
+
+      <button class="close-view" id="closeViewModal">✕</button>
+
+      <!-- IMAGE -->
+
+      <div class="view-image-box">
+        <img id="viewImage" src="" alt="Shelter Image" />
+      </div>
+
+      <!-- CONTENT -->
+
+      <div class="view-content">
+        <h2 id="viewName">Shelter Name</h2>
+
+        <div class="view-grid">
+          <!-- LOCATION -->
+
+          <div class="view-card">
+            <span> Location </span>
+
+            <h4 id="viewLocation">Hyderabad</h4>
+          </div>
+
+          <!-- CAPACITY -->
+
+          <div class="view-card">
+            <span> Capacity </span>
+
+            <h4 id="viewCapacity">45</h4>
+          </div>
+
+          <!-- STATUS -->
+
+          <div class="view-card">
+            <span> Status </span>
+
+            <h4 id="viewStatus">Active</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================= SIDEBAR ================= */
+
+    const menu = document.getElementById("menu");
+
+    const sidebar = document.getElementById("sidebar");
+
+    const main = document.querySelector(".main");
+
+    menu.onclick = (e) => {
+      e.stopPropagation();
+
+      sidebar.classList.toggle("closed");
+
+      main.classList.toggle("full");
+    };
+
+    document.addEventListener("click", (e) => {
+      if (!sidebar.contains(e.target) && !menu.contains(e.target)) {
+        sidebar.classList.add("closed");
+
+        main.classList.add("full");
+      }
+    });
+
+    sidebar.onclick = (e) => {
+      e.stopPropagation();
+    };
+
+    /* ================= CLOCK ================= */
+
+    function updateClock() {
+      const now = new Date();
+
+      document.getElementById("clock").innerHTML = now.toLocaleTimeString();
+    }
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+
+    /* ================= MODAL ================= */
+
+    const addBtn = document.getElementById("addShelterBtn");
+
+    const modal = document.getElementById("addShelterModal");
+
+    const cancelBtn = document.getElementById("cancelBtn");
+
+    const shelterForm = document.getElementById("shelterForm");
+
+    let isEditMode = false;
+
+    let editingRow = null;
+
+    addBtn.onclick = () => {
+      modal.style.display = "flex";
+    };
+
+    cancelBtn.onclick = () => {
+      modal.style.display = "none";
+
+      shelterForm.reset();
+
+      isEditMode = false;
+
+      editingRow = null;
+
+      document.querySelector(".modal-header").textContent = "Add Shelter";
+
+      document.querySelector(".btn-submit").textContent = "Add Shelter";
+
+      document.getElementById("currentImageGroup").style.display = "none";
+    };
+
+    modal.onclick = (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+
+        shelterForm.reset();
+
+        isEditMode = false;
+
+        editingRow = null;
+
+        document.querySelector(".modal-header").textContent = "Add Shelter";
+
+        document.querySelector(".btn-submit").textContent = "Add Shelter";
+
+        document.getElementById("currentImageGroup").style.display = "none";
+      }
+    };
+
+    /* ================= VIEW MODAL ================= */
+
+    const viewModal = document.getElementById("viewModal");
+
+    const closeViewModal = document.getElementById("closeViewModal");
+
+    closeViewModal.onclick = () => {
+      viewModal.style.display = "none";
+    };
+
+    viewModal.onclick = (e) => {
+      if (e.target === viewModal) {
+        viewModal.style.display = "none";
+      }
+    };
+
+    /* ================= CHECK DELETED SECTION ================= */
+
+    function checkDeletedSection() {
+      const deletedSection = document.querySelector(".deleted-section");
+
+      const deletedRows = document.querySelectorAll("#deletedTableBody tr");
+
+      if (deletedRows.length === 0) {
+        deletedSection.style.display = "none";
+      } else {
+        deletedSection.style.display = "block";
+      }
+    }
+
+    /* ================= VIEW BUTTONS ================= */
+
+    function setupViewButtons() {
+      const viewButtons = document.querySelectorAll(".view-btn");
+
+      viewButtons.forEach((btn) => {
+        btn.onclick = () => {
+          const row = btn.closest("tr");
+
+          const isDeletedTable = row.parentElement.id === "deletedTableBody";
+
+          const id = row.cells[0].textContent;
+
+          const name = row.cells[1].textContent;
+
+          let location = "";
+          let capacity = "";
+          let status = "";
+          let badgeColor = "";
+
+          if (isDeletedTable) {
+            location = row.dataset.location || "Unknown";
+
+            capacity = row.dataset.capacity || "0";
+
+            status = "Deleted Shelter";
+
+            badgeColor = "#e74c3c";
+          } else {
+            location = row.cells[2].textContent;
+
+            capacity = row.cells[3].textContent;
+
+            status = row.cells[4].textContent;
+
+            if (status.includes("Active")) {
+              badgeColor = "#27ae60";
+            } else if (status.includes("Maintenance")) {
+              badgeColor = "#f39c12";
+            } else {
+              badgeColor = "#e74c3c";
+            }
+          }
+
+          const image =
+            row.dataset.image ||
+            "https://images.unsplash.com/photo-1548199973-03cce0bbc87b";
+
+          document.getElementById("viewName").innerText = name;
+
+          document.getElementById("viewLocation").innerText = location;
+
+          document.getElementById("viewCapacity").innerText = capacity;
+
+          document.getElementById("viewStatus").innerHTML = `
+
+        <span style="
+          background:${badgeColor};
+          color:white;
+          padding:8px 16px;
+          border-radius:30px;
+          font-size:15px;
+          display:inline-block;
+          min-width:120px;
+          text-align:center;
+          box-shadow:0 4px 10px rgba(0,0,0,0.15);
+        ">
+          ${status}
+        </span>
+
+      `;
+
+          document.getElementById("viewImage").src = image;
+
+          /* SPECIAL UI FOR DELETED */
+
+          if (isDeletedTable) {
+            document.querySelector(".view-box").style.border =
+              "4px solid #e74c3c";
+          } else {
+            document.querySelector(".view-box").style.border = "none";
+          }
+
+          viewModal.style.display = "flex";
+        };
+      });
+    }
+
+    /* ================= EDIT BUTTONS ================= */
+
+    function setupEditButtons() {
+      const editButtons = document.querySelectorAll(".edit");
+
+      editButtons.forEach((btn) => {
+        btn.onclick = () => {
+          const row = btn.closest("tr");
+
+          isEditMode = true;
+
+          editingRow = row;
+
+          // Populate form
+
+          document.getElementById("shelterName").value = row.cells[1].textContent;
+
+          document.getElementById("shelterLocation").value = row.cells[2].textContent;
+
+          document.getElementById("shelterCapacity").value = row.cells[3].textContent;
+
+          document.getElementById("shelterStatus").value = row.cells[4].textContent.trim();
+
+          // Show current image
+
+          const currentImage = row.dataset.image || "https://images.unsplash.com/photo-1548199973-03cce0bbc87b";
+
+          document.getElementById("currentImage").src = currentImage;
+
+          document.getElementById("currentImageGroup").style.display = "block";
+
+          // Change modal header and button
+
+          document.querySelector(".modal-header").textContent = "Edit Shelter";
+
+          document.querySelector(".btn-submit").textContent = "Update Shelter";
+
+          modal.style.display = "flex";
+        };
+      });
+    }
+
+    /* ================= DELETE BUTTONS ================= */
+
+    function setupDeleteButtons() {
+      const deleteButtons = document.querySelectorAll(".delete");
+
+      deleteButtons.forEach((btn) => {
+        btn.onclick = () => {
+          const row = btn.closest("tr");
+
+          const reason = prompt("Enter delete reason");
+
+          if (!reason || reason.trim() === "") {
+            return;
+          }
+
+          const id = row.cells[0].textContent;
+
+          const name = row.cells[1].textContent;
+
+          const location = row.cells[2].textContent;
+
+          const capacity = row.cells[3].textContent;
+
+          const status = row.cells[4].textContent;
+
+          const image = row.dataset.image;
+
+          const deletedTable = document.getElementById("deletedTableBody");
+
+          const deletedRow = document.createElement("tr");
+
+          deletedRow.setAttribute("data-image", image);
+
+          deletedRow.innerHTML = `
+
+        <td>${id}</td>
+
+        <td>${name}</td>
+
+        <td>${reason}</td>
+
+        <td>
+
+          <button class="status-btn restore-btn">
+            Add Again
+          </button>
+
+          <button class="status-btn view-btn">
+            View
+          </button>
+
+        </td>
+
+      `;
+
+          deletedRow.dataset.location = location;
+
+          deletedRow.dataset.capacity = capacity;
+
+          deletedRow.dataset.status = status;
+
+          deletedTable.appendChild(deletedRow);
+
+          row.remove();
+
+          checkDeletedSection();
+
+          setupViewButtons();
+
+          setupRestoreButtons();
+        };
+      });
+    }
+
+    /* ================= RESTORE BUTTONS ================= */
+
+    function setupRestoreButtons() {
+      const restoreButtons = document.querySelectorAll(".restore-btn");
+
+      restoreButtons.forEach((btn) => {
+        btn.onclick = () => {
+          const row = btn.closest("tr");
+
+          const id = row.cells[0].textContent;
+
+          const name = row.cells[1].textContent;
+
+          const image = row.dataset.image;
+
+          const location = row.dataset.location;
+
+          const capacity = row.dataset.capacity;
+
+          const status = row.dataset.status;
+
+          let color = "green";
+
+          if (status.includes("Maintenance")) {
+            color = "orange";
+          } else if (status.includes("Closed")) {
+            color = "red";
+          }
+
+          const mainTable = document.getElementById("shelterTableBody");
+
+          const newRow = document.createElement("tr");
+
+          newRow.setAttribute("data-image", image);
+
+          newRow.innerHTML = `
+
+        <td>${id}</td>
+
+        <td>${name}</td>
+
+        <td>${location}</td>
+
+        <td>${capacity}</td>
+
+        <td style="color:${color}; font-weight:600;">
+          ${status}
+        </td>
+
+        <td>
+
+          <button class="status-btn view-btn">
+            View
+          </button>
+
+          <button class="status-btn edit">
+            Edit
+          </button>
+
+          <button class="status-btn delete">
+            Delete
+          </button>
+
+        </td>
+
+      `;
+
+          mainTable.appendChild(newRow);
+
+          row.remove();
+
+          checkDeletedSection();
+
+          setupViewButtons();
+
+          setupDeleteButtons();
+
+          setupEditButtons();
+        };
+      });
+    }
+
+    /* ================= FILTERS ================= */
+
+    function setupFilters() {
+      const searchInput = document.getElementById("searchShelter");
+
+      const locationFilter = document.getElementById("locationFilter");
+
+      const statusFilter = document.getElementById("statusFilter");
+
+      function filterRows() {
+        const searchValue = searchInput.value.toLowerCase().trim();
+
+        const locationValue = locationFilter.value.toLowerCase().trim();
+
+        const statusValue = statusFilter.value.toLowerCase().trim();
+
+        const rows = document.querySelectorAll("#shelterTableBody tr");
+
+        rows.forEach((row) => {
+          const id = row.cells[0].textContent.toLowerCase();
+
+          const name = row.cells[1].textContent.toLowerCase();
+
+          const location = row.cells[2].textContent.toLowerCase();
+
+          const capacity = row.cells[3].textContent.toLowerCase();
+
+          const status = row.cells[4].textContent.toLowerCase();
+
+          const fullText = `${id} ${name} ${location} ${capacity} ${status}`;
+
+          const matchSearch = fullText.includes(searchValue);
+
+          const matchLocation =
+            locationValue === "" || location === locationValue;
+
+          const matchStatus = statusValue === "" || status === statusValue;
+
+          if (matchSearch && matchLocation && matchStatus) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+
+      searchInput.addEventListener("keyup", filterRows);
+
+      locationFilter.addEventListener("change", filterRows);
+
+      statusFilter.addEventListener("change", filterRows);
+    }
+
+    /* ================= AUTO ID GENERATOR ================= */
+
+    function generateShelterId() {
+      const rows = document.querySelectorAll("#shelterTableBody tr");
+
+      let maxId = 100;
+
+      rows.forEach((row) => {
+        const currentId = parseInt(row.cells[0].textContent);
+
+        if (currentId > maxId) {
+          maxId = currentId;
+        }
+      });
+
+      return maxId + 1;
+    }
+
+    /* ================= ADD SHELTER ================= */
+
+    shelterForm.onsubmit = (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("shelterName").value;
+
+      const location = document.getElementById("shelterLocation").value;
+
+      const capacity = document.getElementById("shelterCapacity").value;
+
+      const status = document.getElementById("shelterStatus").value;
+
+      const imageInput = document.getElementById("shelterImage");
+
+      let image = "";
+
+      if (imageInput.files[0]) {
+        image = URL.createObjectURL(imageInput.files[0]);
+      }
+
+      let color = "green";
+
+      if (status === "Maintenance") {
+        color = "orange";
+      } else if (status === "Closed") {
+        color = "red";
+      }
+
+      if (isEditMode) {
+        // Update existing row
+        editingRow.cells[1].textContent = name;
+        editingRow.cells[2].textContent = location;
+        editingRow.cells[3].textContent = capacity;
+        editingRow.cells[4].textContent = status;
+        editingRow.cells[4].style.color = color;
+        editingRow.cells[4].style.fontWeight = "600";
+        if (image) {
+          editingRow.setAttribute("data-image", image);
+        }
+        isEditMode = false;
+        editingRow = null;
+      } else {
+        // Add new row
+        const id = generateShelterId();
+
+        const row = document.createElement("tr");
+
+        row.setAttribute("data-image", image || "https://images.unsplash.com/photo-1548199973-03cce0bbc87b");
+
+        row.innerHTML = `
+
+    <td>${id}</td>
+
+    <td>${name}</td>
+
+    <td>${location}</td>
+
+    <td>${capacity}</td>
+
+    <td style="color:${color}; font-weight:600;">
+      ${status}
+    </td>
+
+    <td>
+
+      <button class="status-btn view-btn">
+        View
+      </button>
+
+      <button class="status-btn edit">
+        Edit
+      </button>
+
+      <button class="status-btn delete">
+        Delete
+      </button>
+
+    </td>
+
+  `;
+
+        document.querySelector("#shelterTable tbody").appendChild(row);
+      }
+
+      modal.style.display = "none";
+
+      shelterForm.reset();
+
+      document.getElementById("currentImageGroup").style.display = "none";
+
+      document.querySelector(".modal-header").textContent = "Add Shelter";
+
+      document.querySelector(".btn-submit").textContent = "Add Shelter";
+
+      setupViewButtons();
+
+      setupDeleteButtons();
+
+      setupEditButtons();
+    };
+
+    /* ================= CARD COUNTS ================= */
+
+    function updateCardCounts() {
+      const rows = document.querySelectorAll("#shelterTableBody tr");
+      const totalShelters = rows.length;
+      let totalCapacity = 0;
+      let activeCapacity = 0;
+
+      rows.forEach(row => {
+        const cap = parseInt(row.cells[3]?.textContent || "0");
+        totalCapacity += cap;
+        const status = row.cells[4]?.textContent.trim();
+        if (status === 'Active') {
+          activeCapacity += cap;
+        }
+      });
+
+      const cardsSection = document.querySelector(".cards");
+      if (cardsSection) {
+        const cardElements = cardsSection.querySelectorAll(".card h2");
+        if (cardElements.length >= 4) {
+          cardElements[0].textContent = totalShelters;
+          cardElements[1].textContent = activeCapacity;
+          cardElements[2].textContent = totalCapacity;
+          cardElements[3].textContent = Math.round(activeCapacity * 0.2);
+        }
+      }
+    }
+
+    /* ================= INIT ================= */
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setupViewButtons();
+
+      setupRestoreButtons();
+
+      setupDeleteButtons();
+
+      setupEditButtons();
+
+      checkDeletedSection();
+
+      setupFilters();
+
+      updateCardCounts();
+    });
+  </script>
+</body>
+
+</html>

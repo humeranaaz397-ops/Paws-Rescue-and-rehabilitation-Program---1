@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rescue Cases</title>
+
+<link rel="stylesheet" href="/static/New-admin/Header and nav.css">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#1e4fa1,#4b7bec);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ===== MAIN ===== */
+
+.main{
+  padding:20px;
+  margin-left:260px;
+  width:calc(100% - 260px);
+  transition:0.3s;
+}
+
+.main.full{
+  margin-left:0;
+  width:100%;
+}
+
+
+
+.logo-image{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  font-weight:bold;
+  color:#1e4fa1;
+}
+
+.logo-image img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.profile-img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.notification{
+  font-size:22px;
+  cursor:pointer;
+}
+
+#clock{
+  font-weight:bold;
+}
+
+/* ===== CARDS ===== */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.card{
+  color:white;
+  padding:20px;
+  border-radius:15px;
+}
+
+.card h2{
+  margin-top:10px;
+}
+
+.orange{
+  background:#f39c12;
+}
+
+.red{
+  background:#e74c3c;
+}
+
+.blue{
+  background:#3498db;
+}
+
+.green{
+  background:#16a085;
+}
+
+/* ===== FILTERS ===== */
+
+.filters{
+  background:white;
+  padding:15px;
+  border-radius:15px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.filters input,
+.filters select{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  outline:none;
+}
+
+/* ===== TABLE ===== */
+
+.table{
+  margin-top:20px;
+  background:white;
+  border-radius:15px;
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#1e4fa1;
+  color:white;
+}
+
+th,td{
+  padding:15px;
+  text-align:left;
+  border-bottom:1px solid #eee;
+}
+
+/* ===== STATUS ===== */
+
+.status{
+  padding:6px 12px;
+  border-radius:20px;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.pending{
+  background:#f39c12;
+}
+
+.progress{
+  background:#3498db;
+}
+
+.done{
+  background:#2ecc71;
+}
+
+.rejected {
+  background: #e74c3c;
+  color: white;
+}
+
+/* ===== PRIORITY ===== */
+
+.priority{
+  padding:5px 10px;
+  border-radius:20px;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.high{
+  background:#e74c3c;
+}
+
+.medium{
+  background:#f39c12;
+}
+
+.low{
+  background:#2ecc71;
+}
+
+/* ===== BUTTON ===== */
+
+button{
+  padding:8px 14px;
+  border:none;
+  border-radius:10px;
+  background:#3498db;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* ===== MODAL ===== */
+
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.modal-content{
+  background:white;
+  width:100%;
+  max-width:750px;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.modal-header{
+  background:#1e4fa1;
+  color:white;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close{
+  font-size:30px;
+  cursor:pointer;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.image-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.image-grid img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:15px;
+}
+
+.info-box{
+  background:#f5f7ff;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+.info-box h3{
+  color:#1e4fa1;
+  margin-bottom:10px;
+}
+
+.info-box p{
+  margin:6px 0;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar{
+  transition:0.3s;
+}
+
+.sidebar.closed{
+  transform:translateX(-100%);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .filters{
+    flex-direction:column;
+  }
+
+  .filters input,
+  .filters select{
+    width:100%;
+  }
+
+  .image-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+/* ===== MODAL ===== */
+
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.65);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:20px;
+  overflow-y:auto;
+}
+
+.modal-content{
+  background:white;
+  width:100%;
+  max-width:850px;
+  border-radius:22px;
+  overflow:hidden;
+  animation:popup 0.3s ease;
+  max-height:95vh;
+  display:flex;
+  flex-direction:column;
+}
+
+@keyframes popup{
+
+  from{
+    transform:scale(0.9);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+.modal-header{
+  background:linear-gradient(135deg,#1e4fa1,#4b7bec);
+  color:white;
+  padding:18px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.modal-header h2{
+  font-size:24px;
+}
+
+.close{
+  font-size:32px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.close:hover{
+  transform:rotate(90deg);
+}
+
+.modal-body{
+  padding:25px;
+  overflow-y:auto;
+}
+
+/* ===== IMAGES ===== */
+
+.image-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-bottom:25px;
+}
+
+.image-grid img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  border-radius:18px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.12);
+}
+
+/* ===== INFO BOX ===== */
+
+.info-box{
+  background:#f7f9ff;
+  padding:18px;
+  border-radius:16px;
+  margin-bottom:18px;
+  border-left:5px solid #1e4fa1;
+}
+
+.info-box h3{
+  color:#1e4fa1;
+  margin-bottom:14px;
+  font-size:19px;
+}
+
+.info-box p{
+  margin:10px 0;
+  font-size:15px;
+  color:#333;
+  line-height:1.5;
+}
+
+.info-box strong{
+  color:#111;
+}
+
+/* ===== CUSTOM SCROLL ===== */
+
+.modal-body::-webkit-scrollbar{
+  width:8px;
+}
+
+.modal-body::-webkit-scrollbar-thumb{
+  background:#1e4fa1;
+  border-radius:10px;
+}
+
+.modal-body::-webkit-scrollbar-track{
+  background:#eee;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+  .modal{
+    padding:10px;
+  }
+
+  .modal-content{
+    max-height:98vh;
+    border-radius:18px;
+  }
+
+  .modal-header{
+    padding:15px;
+  }
+
+  .modal-header h2{
+    font-size:20px;
+  }
+
+  .modal-body{
+    padding:15px;
+  }
+
+  .image-grid{
+    grid-template-columns:1fr;
+  }
+
+  .image-grid img{
+    height:220px;
+  }
+
+}
+
+/* ===== ASSIGN MODAL & MEMBERS ===== */
+.assign-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  backdrop-filter: blur(3px);
+}
+.assign-box {
+  background: white;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 24px;
+  overflow: hidden;
+  animation: popup 0.3s ease;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+.assign-header {
+  background: linear-gradient(135deg, #1e4fa1, #4b7bec);
+  color: white;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.assign-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+.member-card {
+  background: #f8faff;
+  padding: 16px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid #dfe8ff;
+}
+.member-info h4 {
+  color: #1e4fa1;
+  margin-bottom: 5px;
+}
+.assign-member-btn {
+  padding: 6px 14px;
+  background: #16a085;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.assign-member-btn:hover {
+  background: #0e6b58;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<h2 class="logo">
+<img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+PAWS
+</h2>
+
+<a href="/admin/dashboard">Dashboard</a>
+<a href="/admin/rescue" class="active">Rescue Cases</a>
+<a href="/admin/add-ngo">NGOs</a>
+<a href="/admin/medical-care">Medical Care</a>
+<a href="/admin/adoption">Adoption</a>
+<a href="/admin/shelters">Shelters</a>
+<a href="/admin/users">Manage Users</a>
+
+<div class="sidebar-bottom">
+
+<a href="/logout">
+      <button class="logout-btn" id="logoutBtn">
+        🚪 Logout
+      </button>
+    </a>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="header-left">
+
+<span class="menu" id="menu">☰</span>
+
+<div class="logo-image">
+<img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg">
+PAWS RESCUE
+</div>
+
+</div>
+
+<div class="header-right">
+
+<div id="clock"></div>
+
+<!-- <div class="notification">🔔</div> -->
+
+<img src="https://i.postimg.cc/13R6TS5d/4th-hokage-PNG.webp" class="profile-img">
+
+</div>
+
+</div>
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card orange">
+Pending
+<h2>{{ pending_count }}</h2>
+</div>
+
+<div class="card red">
+In Progress
+<h2>{{ in_progress_count }}</h2>
+</div>
+
+<div class="card blue">
+Rescued
+<h2>{{ rescued_count }}</h2>
+</div>
+
+<div class="card green">
+Adoption
+<h2>{{ adoption_count }}</h2>
+</div>
+
+</div>
+
+<!-- FILTERS -->
+
+<div class="filters">
+
+<input type="text" id="searchInput" placeholder="Search cases...">
+
+<select id="statusSelect">
+<option value="">All Status</option>
+<option value="Pending">Pending</option>
+<option value="Assigned">Assigned</option>
+<option value="Accepted">Accepted</option>
+<option value="Rejected">Rejected</option>
+<option value="Completed">Completed</option>
+</select>
+
+<select id="locationSelect">
+<option value="">All Locations</option>
+<option value="Downtown">Downtown</option>
+<option value="Park">Park</option>
+<option value="City Market">City Market</option>
+<option value="Highway Road">Highway Road</option>
+</select>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table">
+
+<table id="rescueTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>Case</th>
+<th>Location</th>
+<th>Reporter</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Time</th>
+<th>Action</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody id="tableBody">
+<!-- Populated via Javascript -->
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<!-- CASE DETAIL MODAL -->
+<div class="modal" id="caseModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Case Details</h2>
+      <span class="close" onclick="closeModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="image-grid">
+        <img id="petImage" src="" alt="Pet Image">
+        <img id="injuryImage" src="" alt="Injury Image">
+      </div>
+      <div class="info-box">
+        <h3>Animal Information</h3>
+        <p><strong>Animal:</strong> <span id="animalType"></span></p>
+        <p><strong>Condition:</strong> <span id="condition"></span></p>
+        <p><strong>Status:</strong> <span id="status"></span></p>
+        <p><strong>Priority:</strong> <span id="priority"></span></p>
+      </div>
+      <div class="info-box">
+        <h3>Location Details</h3>
+        <p><strong>City:</strong> <span id="city"></span></p>
+        <p><strong>Area:</strong> <span id="area"></span></p>
+        <p><strong>Landmark:</strong> <span id="landmark"></span></p>
+      </div>
+      <div class="info-box">
+        <h3>Reporter Information</h3>
+        <p><strong>Name:</strong> <span id="reporter"></span></p>
+        <p><strong>Phone:</strong> <span id="phone"></span></p>
+        <p><strong>Reported Time:</strong> <span id="reportedTime"></span></p>
+      </div>
+      <div class="info-box">
+        <h3>Medical Information</h3>
+        <p><strong>Assigned NGO:</strong> <span id="ngo"></span></p>
+        <p><strong>Medical Team:</strong> <span id="doctor"></span></p>
+        <p><strong>Emergency Level:</strong> <span id="emergency"></span></p>
+      </div>
+      <div class="info-box" id="assignedMemberInfoBox" style="display: none;">
+        <h3>Assigned Rescue Member Details</h3>
+        <p><strong>Name:</strong> <span id="assignedMemberName"></span></p>
+        <p><strong>Email:</strong> <span id="assignedMemberEmail"></span></p>
+        <p><strong>Phone:</strong> <span id="assignedMemberPhone"></span></p>
+      </div>
+      <div class="info-box" id="rejectionInfoBox" style="display: none; border-left-color: #e74c3c;">
+        <h3 style="color: #e74c3c;">Rejection Details</h3>
+        <p><strong>Reason:</strong> <span id="rejectionReasonText" style="color: #e74c3c; font-weight: bold;"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ASSIGN MODAL -->
+<div class="assign-modal" id="assignModal">
+  <div class="assign-box">
+    <div class="assign-header">
+      <h2 id="assignCaseTitle">Assign Rescue Member</h2>
+      <span class="close" onclick="closeAssignModal()">&times;</span>
+    </div>
+    <div class="assign-body" id="assignMembersList">
+      <!-- Loaded dynamically -->
+    </div>
+  </div>
+</div>
+
+<script>
+
+/* ===== SIDEBAR ===== */
+
+const menu = document.getElementById("menu");
+const sidebar = document.getElementById("sidebar");
+const main = document.querySelector(".main");
+
+menu.onclick = (e)=>{
+  e.stopPropagation();
+  sidebar.classList.toggle("closed");
+  main.classList.toggle("full");
+};
+
+document.addEventListener("click",(e)=>{
+  const insideSidebar = sidebar.contains(e.target);
+  const isMenu = menu.contains(e.target);
+  if(!insideSidebar && !isMenu){
+    sidebar.classList.add("closed");
+    main.classList.add("full");
+  }
+});
+
+sidebar.onclick = (e)=>{
+  e.stopPropagation();
+};
+
+/* ===== CLOCK ===== */
+
+function updateClock(){
+  const now = new Date();
+  document.getElementById("clock").innerHTML = now.toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
+
+// ---------- RESCUE CASES DATA ----------
+const rescueData = [
+  {% for c in cases %}
+  {
+    id: "{{ c.id }}",
+    caseName: "Case #{{ c.id }}",
+    location: "{{ c.location | replace('"', '\\"') }}",
+    reporter: "{{ c.reported_by_name or 'Anonymous' }}",
+    priority: "High",
+    status: "{{ c.status }}",
+    time: "{{ c.reported_at }}",
+    animal: "Stray Animal",
+    condition: "{{ c.description | replace('"', '\\"') | replace('\r', '') | replace('\n', ' ') }}",
+    city: "{{ c.location | replace('"', '\\"') }}",
+    area: "",
+    landmark: "",
+    phone: "{{ c.reported_by_phone or '' }}",
+    ngo: "PAWS Rescue",
+    doctor: "",
+    emergency: "High",
+    assignedName: "{{ c.assigned_name | replace('"', '\\"') if c.assigned_name else '' }}",
+    assignedEmail: "{{ c.assigned_email | replace('"', '\\"') if c.assigned_email else '' }}",
+    assignedPhone: "{{ c.assigned_phone | replace('"', '\\"') if c.assigned_phone else '' }}",
+    rejectionReason: "{{ c.rejection_reason | replace('"', '\\"') | replace('\r', '') | replace('\n', ' ') if c.rejection_reason else '' }}",
+    petImg: "{% if c.image_filename and (c.image_filename[:4] == 'http' or c.image_filename[0] == '/') %}{{ c.image_filename }}{% else %}{{ url_for('static', filename='uploads/' + (c.image_filename or 'default_pet.png')) }}{% endif %}",
+    injuryImg: "{% if c.image_filename and (c.image_filename[:4] == 'http' or c.image_filename[0] == '/') %}{{ c.image_filename }}{% else %}{{ url_for('static', filename='uploads/' + (c.image_filename or 'default_injured.png')) }}{% endif %}"
+  },
+  {% endfor %}
+];
+
+// Members list
+const teamMembers = [
+  {% for m in members %}
+  {
+    id: "{{ m.user_id }}",
+    name: "{{ m.name | replace('"', '\\"') }}",
+    location: "Near {{ m.role | replace('"', '\\"') }}",
+    status: "Available"
+  },
+  {% endfor %}
+];
+
+let currentAssignRow = null;
+let currentAssignId = null;
+
+// Render table
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  rescueData.forEach(c => {
+    const row = tbody.insertRow();
+    row.setAttribute('data-id', c.id);
+    // ID
+    row.insertCell(0).innerText = c.id;
+    // Case
+    row.insertCell(1).innerText = c.caseName;
+    // Location
+    row.insertCell(2).innerText = c.location;
+    // Reporter
+    row.insertCell(3).innerText = c.reporter;
+    // Priority
+    const prioritySpan = document.createElement('span');
+    prioritySpan.className = `priority ${c.priority.toLowerCase()}`;
+    prioritySpan.innerText = c.priority;
+    row.insertCell(4).appendChild(prioritySpan);
+    // Status
+    const statusSpan = document.createElement('span');
+    let statusClass = '';
+    if(c.status === 'Pending') statusClass = 'pending';
+    else if(c.status === 'Assigned') statusClass = 'progress';
+    else if(c.status === 'Accepted' || c.status === 'Ongoing' || c.status === 'In Progress') statusClass = 'progress';
+    else if(c.status === 'Rejected') statusClass = 'rejected';
+    else if(c.status === 'Completed' || c.status === 'Resolved') statusClass = 'done';
+    statusSpan.className = `status ${statusClass}`;
+    statusSpan.innerText = c.status;
+    row.insertCell(5).appendChild(statusSpan);
+    // Time
+    row.insertCell(6).innerText = c.time;
+    // Action button
+    const actionCell = row.insertCell(7);
+    if(c.status === 'Pending') {
+      const actionBtn = document.createElement('button');
+      actionBtn.innerText = 'Assign Member';
+      actionBtn.className = 'assign-btn';
+      actionBtn.onclick = (function(caseId, caseName, btnElement) {
+        return function() { openAssignModal(caseId, caseName, btnElement); };
+      })(c.id, c.caseName, actionBtn);
+      actionCell.appendChild(actionBtn);
+    } else if(c.status === 'Rejected') {
+      const actionBtn = document.createElement('button');
+      actionBtn.innerText = 'Re-assign';
+      actionBtn.className = 'assign-btn';
+      actionBtn.style.background = '#e67e22';
+      actionBtn.onclick = (function(caseId, caseName, btnElement) {
+        return function() { openAssignModal(caseId, caseName, btnElement); };
+      })(c.id, c.caseName, actionBtn);
+      actionCell.appendChild(actionBtn);
+    } else if(c.status === 'Assigned') {
+      const actionBtn = document.createElement('button');
+      actionBtn.innerText = 'Assigned';
+      actionBtn.style.background = '#3498db';
+      actionBtn.style.cursor = 'default';
+      actionBtn.disabled = true;
+      actionCell.appendChild(actionBtn);
+    } else if(c.status === 'Accepted' || c.status === 'Ongoing' || c.status === 'In Progress') {
+      const actionBtn = document.createElement('button');
+      actionBtn.innerText = 'Accepted';
+      actionBtn.style.background = '#2980b9';
+      actionBtn.style.cursor = 'default';
+      actionBtn.disabled = true;
+      actionCell.appendChild(actionBtn);
+    } else {
+      const actionBtn = document.createElement('button');
+      actionBtn.innerText = 'Completed';
+      actionBtn.style.background = '#2ecc71';
+      actionBtn.style.cursor = 'default';
+      actionBtn.disabled = true;
+      actionCell.appendChild(actionBtn);
+    }
+    // View button
+    const viewBtn = document.createElement('button');
+    viewBtn.innerText = 'View';
+    viewBtn.style.background = '#1e4fa1';
+    viewBtn.onclick = (function(data) { return function() { openModalWithData(data); }; })(c);
+    row.insertCell(8).appendChild(viewBtn);
+  });
+}
+
+function openModalWithData(c) {
+  document.getElementById('modalTitle').innerText = c.caseName;
+  document.getElementById('petImage').src = c.petImg;
+  document.getElementById('injuryImage').src = c.injuryImg;
+  document.getElementById('animalType').innerText = c.animal;
+  document.getElementById('condition').innerText = c.condition;
+  document.getElementById('status').innerText = c.status;
+  document.getElementById('priority').innerText = c.priority;
+  document.getElementById('city').innerText = c.city;
+  document.getElementById('area').innerText = c.area;
+  document.getElementById('landmark').innerText = c.landmark;
+  document.getElementById('reporter').innerText = c.reporter;
+  document.getElementById('phone').innerText = c.phone;
+  document.getElementById('reportedTime').innerText = c.time;
+  document.getElementById('ngo').innerText = c.ngo;
+  document.getElementById('doctor').innerText = c.doctor;
+  document.getElementById('emergency').innerText = c.emergency;
+
+  const assignedBox = document.getElementById('assignedMemberInfoBox');
+  if (c.assignedName) {
+    assignedBox.style.display = 'block';
+    document.getElementById('assignedMemberName').innerText = c.assignedName;
+    document.getElementById('assignedMemberEmail').innerText = c.assignedEmail;
+    document.getElementById('assignedMemberPhone').innerText = c.assignedPhone;
+  } else {
+    assignedBox.style.display = 'none';
+  }
+
+  const rejectionBox = document.getElementById('rejectionInfoBox');
+  if (c.rejectionReason) {
+    rejectionBox.style.display = 'block';
+    document.getElementById('rejectionReasonText').innerText = c.rejectionReason;
+  } else {
+    rejectionBox.style.display = 'none';
+  }
+
+  document.getElementById('caseModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('caseModal').style.display = 'none';
+}
+
+// Assign modal and logic
+function openAssignModal(caseId, caseName, btnElement) {
+  currentAssignRow = btnElement.closest('tr');
+  currentAssignId = caseId;
+  const assignTitle = document.getElementById('assignCaseTitle');
+  assignTitle.innerHTML = `Assign member for ${caseName} (${caseId})`;
+  const container = document.getElementById('assignMembersList');
+  container.innerHTML = '';
+  teamMembers.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'member-card';
+    card.innerHTML = `
+      <div class="member-info"><h4>${m.name}</h4><p>${m.location} • ${m.status}</p></div>
+      <button class="assign-member-btn" data-id="${m.id}" data-name="${m.name}">Assign</button>
+    `;
+    const assignBtn = card.querySelector('.assign-member-btn');
+    assignBtn.onclick = () => assignMemberToCase(m.id, m.name);
+    container.appendChild(card);
+  });
+  document.getElementById('assignModal').style.display = 'flex';
+}
+
+function assignMemberToCase(memberId, memberName) {
+  if(!currentAssignId) return;
+  
+  // Create and submit a form POST request to assign the member
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '{{ url_for("assign_rescuer") }}';
+  
+  const caseInput = document.createElement('input');
+  caseInput.type = 'hidden';
+  caseInput.name = 'case_id';
+  caseInput.value = currentAssignId;
+  form.appendChild(caseInput);
+  
+  const memberInput = document.createElement('input');
+  memberInput.type = 'hidden';
+  memberInput.name = 'member_id';
+  memberInput.value = memberId;
+  form.appendChild(memberInput);
+  
+  document.body.appendChild(form);
+  form.submit();
+}
+
+function closeAssignModal() {
+  document.getElementById('assignModal').style.display = 'none';
+}
+
+// Filter functionality
+function filterTable() {
+  const searchVal = document.getElementById('searchInput').value.toLowerCase();
+  const statusVal = document.getElementById('statusSelect').value;
+  const locationVal = document.getElementById('locationSelect').value;
+  const rows = document.querySelectorAll('#tableBody tr');
+  rows.forEach(row => {
+    const caseName = row.cells[1]?.innerText.toLowerCase() || '';
+    const location = row.cells[2]?.innerText || '';
+    const statusSpan = row.cells[5]?.querySelector('.status');
+    const statusText = statusSpan ? statusSpan.innerText : '';
+    let match = true;
+    if(searchVal && !caseName.includes(searchVal)) match = false;
+    if(statusVal) {
+      if (statusVal === 'Pending') {
+        if (statusText !== 'Pending') match = false;
+      }
+      else if (statusVal === 'Assigned') {
+        if (statusText !== 'Assigned') match = false;
+      }
+      else if (statusVal === 'Accepted') {
+        if (statusText !== 'Accepted' && statusText !== 'Ongoing' && statusText !== 'In Progress') match = false;
+      }
+      else if (statusVal === 'Rejected') {
+        if (statusText !== 'Rejected') match = false;
+      }
+      else if (statusVal === 'Completed') {
+        if (statusText !== 'Completed' && statusText !== 'Resolved') match = false;
+      }
+    }
+    if(locationVal && location !== locationVal) match = false;
+    row.style.display = match ? '' : 'none';
+  });
+}
+
+// Populate location select dynamically from rescueData
+const locationSelect = document.getElementById('locationSelect');
+const uniqueLocations = [...new Set(rescueData.map(c => c.location))];
+locationSelect.innerHTML = '<option value="">All Locations</option>';
+uniqueLocations.forEach(loc => {
+  if(loc.trim()) {
+    const opt = document.createElement('option');
+    opt.value = loc;
+    opt.innerText = loc;
+    locationSelect.appendChild(opt);
+  }
+});
+
+// Global close modals on outside click/esc
+window.addEventListener('click', (e) => {
+  const modal = document.getElementById('caseModal');
+  const assignMod = document.getElementById('assignModal');
+  if(e.target === modal) closeModal();
+  if(e.target === assignMod) closeAssignModal();
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') { closeModal(); closeAssignModal(); }
+});
+
+// Event listeners for filter
+document.getElementById('searchInput').addEventListener('input', filterTable);
+document.getElementById('statusSelect').addEventListener('change', filterTable);
+document.getElementById('locationSelect').addEventListener('change', filterTable);
+
+// Intelligent Background Auto-refresh (Live Sync) every 10 seconds
+// Will only reload the page if the user is not currently in a modal or actively editing/assigning members
+setInterval(() => {
+  const caseModal = document.getElementById('caseModal');
+  const assignModal = document.getElementById('assignModal');
+  const isCaseModalOpen = caseModal && caseModal.style.display === 'flex';
+  const isAssignModalOpen = assignModal && assignModal.style.display === 'flex';
+  
+  if (!isCaseModalOpen && !isAssignModalOpen) {
+    window.location.reload();
+  }
+}, 10000);
+
+// initial render
+renderTable();
+</script>
+
+</body>
+</html>

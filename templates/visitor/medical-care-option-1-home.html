@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program/Quick-Emergency-Treatment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/visitor/medical-care-option-1-home.css">
+  <link rel="stylesheet" href="/static/visitor/navbar.css">
+  <link rel="stylesheet" href="/static/visitor/footer.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+</head>
+<body>
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/visitor/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/visitor/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/login">Login / Signup</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<!-- HERO -->
+<section class="quick-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Quick Emergency Treatment</h1>
+    <p>Immediate care before reaching a veterinarian can save lives</p>
+    <div class="hero-buttons">
+
+  <a href="/static/visitor/tel:+919999999999" class="call-btn">
+    <i class="fa-solid fa-phone"></i>
+    Emergency Call
+  </a>
+
+</div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="quick-intro">
+  <h2>Why Quick Treatment is Important</h2>
+  <p>
+    When an animal is injured or sick, the first few minutes are critical.
+    Quick and correct action can reduce pain, prevent infection, and sometimes
+    save the animal’s life before professional medical help arrives.
+  </p>
+</section>
+
+<!-- SEARCH SECTION -->
+
+<section class="search-section">
+
+  <h2>Search Emergency Treatment</h2>
+
+  <div class="search-box">
+
+    <input 
+      type="text"
+      id="searchInput"
+      placeholder="Search treatment steps..."
+    >
+
+    <button id="searchBtn">
+
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      Search
+
+    </button>
+
+  </div>
+
+</section>
+
+<!-- ===== ANIMAL TYPES ===== -->
+
+<section class="animal-section">
+
+  <h2>Animals</h2>
+
+  <div class="animal-grid">
+
+    <!-- BOX 1 -->
+    <div class="animal-card" data-animal="dog">
+      <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800" alt="Dog">
+      <h3>Dog</h3>
+    </div>
+
+    <!-- BOX 2 -->
+    <div class="animal-card" data-animal="cat">
+      <img src="https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=800" alt="Cat">
+      <h3>Cat</h3>
+    </div>
+
+    <!-- BOX 3 -->
+    <div class="animal-card" data-animal="cow">
+      <img src="https://media.istockphoto.com/id/1154024367/photo/indian-cows-rural-india.jpg?s=612x612&w=0&k=20&c=nKeCIodxywKqNHnfYXA_iJVqtrskhTWteAnm2f-W_Hc=" alt="Cow">
+      <h3>Cow</h3>
+    </div>
+
+    <!-- BOX 4 -->
+    <div class="animal-card" data-animal="bird">
+      <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?q=80&w=800" alt="Bird">
+      <h3>Bird</h3>
+    </div>
+
+    <!-- BOX 5 -->
+    <div class="animal-card" data-animal="monkey">
+      <img src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?q=80&w=800" alt="Monkey">
+      <h3>Monkey</h3>
+    </div>
+
+    <!-- BOX 6 -->
+    <div class="animal-card" data-animal="goat">
+      <img src="https://images.unsplash.com/photo-1484557985045-edf25e08da73?q=80&w=800" alt="Goat">
+      <h3>Goat</h3>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- TREATMENT STEPS -->
+<section class="quick-steps" id="quickSteps">
+
+  <div class="step-card">
+    <div class="step-info">
+      <h3>1. Stay Calm and Observe</h3>
+      <p>
+        Do not panic. Observe the animal from a safe distance.
+        Look for visible injuries, bleeding, broken bones, or difficulty in breathing.
+        A calm approach prevents further stress to the animal.
+      </p>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-info">
+      <h3>2. Control Bleeding</h3>
+      <p>
+        If bleeding is present, use a clean cloth or bandage and apply gentle pressure.
+        Never pour chemicals or medicines directly into wounds.
+        Continuous pressure helps reduce blood loss.
+      </p>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-info">
+      <h3>3. Keep the Animal Warm</h3>
+      <p>
+        Injured animals can go into shock.
+        Cover them with a blanket or cloth to maintain body temperature.
+        Warmth helps stabilize breathing and heart rate.
+      </p>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-info">
+      <h3>4. Safe Transportation</h3>
+      <p>
+        Move the animal carefully using a box, basket, or stretcher.
+        Avoid unnecessary movement of injured body parts.
+        Transport them to the nearest veterinary hospital immediately.
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<!-- SAFETY -->
+<section class="quick-safety">
+  <h2>Important Safety Tips</h2>
+  <ul>
+    <li>
+      Do not give human medicines to animals.
+      <span>Many human drugs are toxic and can cause serious damage.</span>
+    </li>
+    <li>
+      Avoid sudden movements or loud sounds.
+      <span>This can frighten the animal and lead to bites or escape.</span>
+    </li>
+    <li>
+      Use gloves or cloth when handling.
+      <span>This protects you and prevents infection.</span>
+    </li>
+    <li>
+      Contact a veterinarian immediately.
+      <span>Quick professional help is always necessary.</span>
+    </li>
+  </ul>
+</section>
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script>
+
+// Select animal cards
+const animalCards = document.querySelectorAll(".animal-card");
+
+// Target section
+const quickSteps = document.getElementById("quickSteps");
+
+
+// First Aid Data
+const animalTreatments = {
+
+    dog: `
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>1. Check Breathing</h3>
+
+            <p>
+                Carefully observe whether the dog is breathing normally.
+                If breathing is weak or difficult, keep the airway clear
+                and avoid covering the nose.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>2. Control Bleeding</h3>
+
+            <p>
+                Use a clean cloth or bandage and apply gentle pressure
+                to stop bleeding. Never apply too much force.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>3. Keep the Dog Calm</h3>
+
+            <p>
+                Injured dogs may become frightened or aggressive.
+                Speak softly and avoid sudden movements.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>4. Provide Warmth</h3>
+
+            <p>
+                Cover the dog with a blanket or towel to maintain
+                body temperature and reduce shock.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>5. Check for Broken Bones</h3>
+
+            <p>
+                Avoid touching swollen or painful areas.
+                Do not force the dog to walk if injury is serious.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>6. Give Water Carefully</h3>
+
+            <p>
+                Only provide small amounts of water if the dog is fully conscious
+                and able to swallow safely.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>7. Safe Transportation</h3>
+
+            <p>
+                Use a stretcher, blanket, or box to move the dog carefully
+                to the nearest veterinary clinic.
+            </p>
+
+        </div>
+
+    </div>
+
+`,
+
+
+
+    cat: `
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>1. Approach Slowly</h3>
+
+            <p>
+                Injured cats may become scared and scratch or bite.
+                Approach gently and avoid sudden movements.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>2. Wrap With a Towel</h3>
+
+            <p>
+                Carefully wrap the cat in a soft towel or blanket
+                to keep it warm and prevent sudden movement.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>3. Control Bleeding</h3>
+
+            <p>
+                Apply gentle pressure using a clean cloth
+                if there is visible bleeding.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>4. Keep in Quiet Area</h3>
+
+            <p>
+                Place the cat in a calm and quiet environment
+                away from loud sounds and other animals.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>5. Avoid Giving Human Medicine</h3>
+
+            <p>
+                Human medicines can be extremely dangerous for cats.
+                Never give medicine without veterinary advice.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>6. Check Breathing</h3>
+
+            <p>
+                Observe whether the cat is breathing normally.
+                Difficulty breathing requires immediate veterinary care.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>7. Safe Transportation</h3>
+
+            <p>
+                Transport the cat carefully using a pet carrier
+                or covered box to avoid stress and injury.
+            </p>
+
+        </div>
+
+    </div>
+
+`,
+
+
+
+    cow: `
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>1. Move the Cow to a Safe Place</h3>
+
+            <p>
+                If the cow is near a road, sharp objects, or dangerous area,
+                carefully guide it to a calm and safe location.
+                This helps prevent further injuries and keeps both
+                the animal and people safe.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>2. Check the Cow’s Breathing</h3>
+
+            <p>
+                Observe whether the cow is breathing normally.
+                Look for fast breathing, difficulty breathing,
+                or unusual sounds. Breathing problems can
+                indicate shock, pain, or internal injury.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>3. Stop Bleeding Carefully</h3>
+
+            <p>
+                If there is visible bleeding, use a clean cloth,
+                towel, or bandage and gently press on the wound.
+                Applying steady pressure can reduce blood loss
+                until veterinary help arrives.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>4. Keep the Cow Calm and Comfortable</h3>
+
+            <p>
+                Avoid shouting, loud sounds, or sudden movements.
+                Stress and fear can worsen the cow’s condition.
+                Speak softly and allow the animal to remain calm.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>5. Provide Clean Drinking Water</h3>
+
+            <p>
+                If the cow is conscious and able to stand safely,
+                provide clean drinking water in small amounts.
+                Never force water into the mouth of a weak animal.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>6. Avoid Moving Injured Legs</h3>
+
+            <p>
+                If the cow cannot stand or shows signs of broken bones,
+                do not force it to walk. Unnecessary movement can
+                increase pain and make injuries more severe.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>7. Contact a Veterinarian Immediately</h3>
+
+            <p>
+                Emergency first aid only provides temporary support.
+                A veterinarian should examine the cow as soon as possible
+                for proper treatment and recovery.
+            </p>
+
+        </div>
+
+    </div>
+
+`,
+
+
+
+    bird: `
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>1. Pick Up the Bird Carefully</h3>
+
+            <p>
+                Injured birds become frightened very easily.
+                Use a soft cloth or towel to gently pick up the bird
+                while avoiding pressure on the wings or chest.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>2. Place the Bird in a Safe Box</h3>
+
+            <p>
+                Keep the bird inside a small box with air holes.
+                A dark and quiet environment helps reduce stress
+                and keeps the bird calm until help arrives.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>3. Check for Bleeding or Broken Wings</h3>
+
+            <p>
+                Observe the bird carefully for visible wounds,
+                bleeding, or hanging wings. Avoid touching injured
+                areas too much because bird bones are very delicate.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>4. Keep the Bird Warm</h3>
+
+            <p>
+                Injured birds can quickly lose body heat.
+                Keep the box in a warm place away from wind,
+                rain, or direct sunlight.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>5. Avoid Giving Food or Water Forcefully</h3>
+
+            <p>
+                Do not force food or water into the bird’s mouth.
+                This can cause choking and make the condition worse.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>6. Reduce Noise and Human Contact</h3>
+
+            <p>
+                Loud sounds and too much handling can increase stress.
+                Allow the bird to rest quietly with minimal disturbance.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>7. Contact a Veterinarian or Rescue Center</h3>
+
+            <p>
+                Birds require specialized treatment.
+                Contact a veterinarian or wildlife rescue organization
+                as soon as possible for professional care.
+            </p>
+
+        </div>
+
+    </div>
+
+`,
+
+
+
+   monkey: `
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>1. Maintain a Safe Distance</h3>
+
+            <p>
+                Injured monkeys may become frightened or aggressive.
+                Do not approach suddenly or try to touch the monkey
+                without proper safety precautions.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>2. Observe the Monkey Carefully</h3>
+
+            <p>
+                Watch for visible injuries, bleeding,
+                difficulty moving, or breathing problems.
+                Careful observation helps identify the seriousness
+                of the condition before providing help.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>3. Avoid Loud Sounds and Crowds</h3>
+
+            <p>
+                Loud noises and too many people can increase stress
+                and cause panic. Keep the environment calm
+                and prevent people from surrounding the animal.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>4. Do Not Feed Human Food</h3>
+
+            <p>
+                Avoid giving snacks, spicy food, or processed food.
+                Some human foods can harm monkeys and worsen
+                their health condition.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>5. Control Bleeding Carefully</h3>
+
+            <p>
+                If it is safe to help, use a clean cloth
+                and gently apply pressure to visible wounds
+                to reduce bleeding.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>6. Prevent Further Injury</h3>
+
+            <p>
+                Keep the monkey away from roads, electrical wires,
+                or dangerous objects that may cause additional harm.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>7. Contact Wildlife Rescue or Veterinarian</h3>
+
+            <p>
+                Monkeys require professional treatment and careful handling.
+                Contact a wildlife rescue team or veterinarian immediately
+                for safe rescue and medical care.
+            </p>
+
+        </div>
+
+    </div>
+
+`,
+
+
+
+   goat: `
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>1. Move the Goat to a Safe Area</h3>
+
+            <p>
+                Carefully move the goat away from roads,
+                sharp objects, aggressive animals,
+                or any dangerous surroundings.
+                A safe environment prevents further injuries.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>2. Check for Visible Injuries</h3>
+
+            <p>
+                Observe the goat for cuts, bleeding,
+                swelling, broken horns, or difficulty walking.
+                Identifying injuries early helps provide
+                proper emergency care.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>3. Stop Bleeding Carefully</h3>
+
+            <p>
+                Use a clean cloth or bandage and apply gentle pressure
+                to bleeding wounds. Continuous pressure can help
+                reduce blood loss until medical help arrives.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>4. Keep the Goat Calm</h3>
+
+            <p>
+                Injured goats can become stressed and frightened.
+                Avoid loud sounds and sudden movements,
+                and allow the goat to rest comfortably.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>5. Provide Clean Water</h3>
+
+            <p>
+                If the goat is conscious and stable,
+                provide small amounts of clean drinking water.
+                Never force water into the mouth.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>6. Avoid Forcing the Goat to Walk</h3>
+
+            <p>
+                If the goat shows signs of severe pain
+                or broken legs, avoid unnecessary movement.
+                Forcing movement can worsen the injury.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="step-card">
+
+        <div class="step-info">
+
+            <h3>7. Contact a Veterinarian</h3>
+
+            <p>
+                Emergency first aid is only temporary support.
+                A veterinarian should examine the goat
+                as soon as possible for proper treatment.
+            </p>
+
+        </div>
+
+    </div>
+
+`,
+};
+
+
+// Click Event
+animalCards.forEach((card) => {
+
+    card.addEventListener("click", () => {
+
+    // Remove active class from all cards
+
+    animalCards.forEach((item) => {
+
+        item.classList.remove("active");
+
+    });
+
+    // Add active class to clicked card
+
+    card.classList.add("active");
+
+    const animalName = card.dataset.animal;
+
+    // Replace steps section
+
+    quickSteps.innerHTML =
+
+        animalTreatments[animalName];
+
+    // Scroll smoothly
+
+    quickSteps.scrollIntoView({
+
+        behavior: "smooth"
+
+    });
+
+});
+
+});
+
+// ================================
+// SEARCH FUNCTIONALITY
+// ================================
+
+// Search Elements
+const searchInput =
+    document.getElementById("searchInput");
+
+const searchBtn =
+    document.getElementById("searchBtn");
+
+
+// Search Function
+function searchAnimals(){
+
+    // Get input value
+    const searchValue =
+        searchInput.value
+        .toLowerCase()
+        .trim();
+
+    // Loop through all cards
+    animalCards.forEach((card) => {
+
+        const animalName =
+            card.dataset.animal;
+
+        // Match letters
+        if(animalName.includes(searchValue)){
+
+            // Show matching animal
+            card.style.display = "block";
+
+        }
+        else{
+
+            // Hide non-matching animal
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+// Button Click
+searchBtn.addEventListener("click", searchAnimals);
+
+
+// Live Search While Typing
+searchInput.addEventListener("input", searchAnimals);
+
+
+// Enter Key Support
+searchInput.addEventListener("keypress", (e) => {
+
+    if(e.key === "Enter"){
+
+        searchAnimals();
+
+    }
+
+});
+
+
+</script>
+
+<script src="/static/visitor/nav-bar.js"></script>
+</body>
+</html>

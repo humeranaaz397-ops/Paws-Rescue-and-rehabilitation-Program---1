@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paws Rescue & Rehabilitation Program/About-Us</title>
+  <link rel="stylesheet" href="/static/visitor/aboutus-home.css">
+  <link rel="stylesheet" href="/static/User/nav-bar.css">
+  <link rel="stylesheet" href="/static/User/footer.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+</head>
+<body>
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot"></span>
+    </a>
+    <a href="/user/profile"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%"></a>
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot">notifications</span>
+    </a>
+    <a href="/user/profile" style="display: flex;"><img src="{{ session.user_profile_img or '/static/uploads/default_user.png' }}" alt="" width="10%" >{{ session.user_email }}</a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+<!-- ===== ABOUT US FULL SECTION (DETAILED) ===== -->
+<section class="about-section">
+
+  <div class="about-project">
+  <h1>About Project Paws</h1>
+
+  <p>
+    Project Paws is an initiative dedicated to protecting and supporting injured,
+    abandoned, and homeless street animals. Many animals on the streets suffer
+    from injuries, diseases, and lack of shelter, often without receiving the
+    help they need. Our platform was created to bridge the gap between people
+    who want to help and organizations that can provide rescue and medical care.
+  </p>
+
+  <p>
+    The platform allows users to easily report animals that are injured,
+    sick, or in danger. Once a report is submitted, nearby volunteers,
+    rescue teams, and NGOs are notified so they can respond quickly.
+    This system helps reduce rescue time and ensures animals receive
+    timely treatment and protection.
+  </p>
+
+  <p>
+    In addition to rescue operations, Project Paws also focuses on
+    rehabilitation and adoption programs. Animals that recover from
+    treatment are given the opportunity to find safe and loving homes,
+    allowing them to live better lives.
+  </p>
+
+  <p>
+    Our platform also promotes awareness about animal welfare and
+    encourages communities to participate in protecting street animals.
+    Through technology, collaboration, and compassion, we aim to create
+    a supportive ecosystem where every animal receives the care and
+    respect it deserves.
+  </p>
+
+</div>
+
+  <!-- 2️⃣ MISSION & VISION -->
+  <div class="mission-container">
+    <div class="mission-image">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="Our Mission" class="mission-img">
+    </div>
+    <div class="mission-text">
+
+  <h2>Our Mission</h2>
+
+  <p>
+    Our mission is to provide immediate rescue, medical care,
+    and rehabilitation for injured and vulnerable street animals.
+    We aim to create a strong network of volunteers, NGOs,
+    and veterinary professionals who work together to ensure
+    animals receive the help they need.
+  </p>
+
+  <p>
+    We strive to build an efficient digital platform where
+    citizens can report animal emergencies quickly and
+    rescue teams can respond without delay. By combining
+    technology with compassion, we aim to make rescue
+    operations faster, more organized, and more effective.
+  </p>
+
+  <p>
+    Our mission also includes promoting responsible
+    animal care within communities. Through awareness,
+    volunteer participation, and adoption programs,
+    we aim to reduce animal suffering and provide
+    safer lives for street animals.
+  </p>
+
+  <h2>Our Vision</h2>
+
+  <p>
+    Our vision is to create a world where no animal
+    is left helpless on the streets. We envision a
+    future where communities actively participate
+    in animal welfare and every rescued animal
+    receives proper care, protection, and a chance
+    to live in a loving home.
+  </p>
+
+</div>
+  </div>
+
+  <!-- ===== CORE VALUES ===== -->
+<div class="values-section">
+
+    <h2>Our Core Values</h2>
+
+     <ul>
+  <li>Compassion towards all animals</li>
+  <li>Responsibility in rescue and care</li>
+  <li>Collaboration with volunteers and NGOs</li>
+  <li>Transparency in rescue operations</li>
+  <li>Commitment to animal welfare</li>
+    </ul>
+
+</div>
+
+  <!-- 3️⃣ WHAT WE DO -->
+  <div class="services-section">
+    <h2>What We Do</h2>
+
+    <div class="services-container">
+
+      <div class="service-card">
+        <i class="fa-solid fa-truck-medical"></i>
+        <h3>Rescue Operations</h3>
+        <p>We respond to emergency reports and rescue injured animals as quickly as possible.</p>
+        <a href="/user/report-injured"><button class="service-btn">Learn More</button></a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-kit-medical"></i>
+        <h3>Medical Treatment</h3>
+        <p>Providing first aid, surgeries, and full recovery care for rescued animals.</p>
+       <a href="/user/medical-care/option-1"><button class="service-btn">Learn More</button></a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-house"></i>
+        <h3>Shelter & Protection</h3>
+        <p>Offering safe shelters with proper food, water, and a secure environment.</p>
+        <a href="/user/safe-shelters"><button class="service-btn">Learn More</button></a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-paw"></i>
+        <h3>Adoption Services</h3>
+        <p>Helping animals find loving homes and responsible families.</p>
+        <a href="/user/pet-adoption"><button class="service-btn">Learn More</button></a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 5️⃣ WHY CHOOSE US -->
+  <div class="why-section">
+    <h2>Why Choose Us</h2>
+    <ul>
+      <li>✔ Fast and reliable rescue response</li>
+      <li>✔ Dedicated and passionate team</li>
+      <li>✔ Strong network of volunteers and NGOs</li>
+      <li>✔ Focus on animal safety and long-term care</li>
+      <li>✔ Transparent and community-driven platform</li>
+    </ul>
+  </div>
+
+  <!-- 6️⃣ TEAM -->
+  <div class="team-section">
+    <h2>Meet Our Team</h2>
+
+    <div class="team-container">
+      <div class="team-member">
+        <h3>Ajay</h3>
+        <!-- <p>Team Leader, UI/UX Designer</p> -->
+      </div>
+
+      <div class="team-member">
+        <h3>Karthik</h3>
+        <!-- <p>Co-Team Leader</p> -->
+      </div>
+
+      <div class="team-member">
+        <h3>Srinath</h3>
+        <!-- <p></p> -->
+      </div>
+
+      <div class="team-member">
+        <h3>Rachel</h3>
+        <!-- <p></p> -->
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>© 2026 My Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/User/nav-bar.js"></script>
+
+</body>
+</html>

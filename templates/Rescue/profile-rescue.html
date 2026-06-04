@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paws Rescue & Rehabilitation Program / User Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/static/Rescue/profile_rescue.css">
+  <link rel="stylesheet" href="/static/Rescue/nav-bar.css">
+  <link rel="stylesheet" href="/static/Rescue/footer.css">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+</head>
+
+<body>
+
+    <!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+    <!-- Desktop Menu -->
+    <nav class="nav-links">
+      <a href="/rescue/dashboard"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="/rescue/profile" class="active">
+        <img src="{{ user.profile_img or 'https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-173524.jpg?semt=ais_hybrid&w=740&q=80' }}" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+      </a>
+    </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue &<br>Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/rescue/dashboard"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/rescue/profile" class="active" style="display: flex; align-items: center; gap: 10px;">
+      <img src="{{ user.profile_img or 'https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-173524.jpg?semt=ais_hybrid&w=740&q=80' }}" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+      {{ user.email }}
+    </a>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main>
+  <div class="profile-wrapper">
+
+    <div class="profile-card">
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-image">
+          <img src="{{ user.profile_img or 'https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-173524.jpg?semt=ais_hybrid&w=740&q=80' }}" alt="User Profile" id="profile-img">
+        </div>
+        <h2 id="name">{{ user.name }}</h2>
+        <p class="role">Volunteer • Rescue Team</p>
+      </div>
+
+      <!-- Profile Details -->
+      <div class="profile-details">
+        <div class="detail">
+          <span>Email</span>
+          <p id="Email">{{ user.email }}</p>
+        </div>
+
+        <div class="detail">
+          <span>Phone</span>
+          <p id="Phone-Number">{{ user.phone }}</p>
+        </div>
+
+        <div class="detail">
+          <span>Location</span>
+          <p id="Location">{{ user.location or 'N/A' }}</p>
+        </div>
+
+        <div class="detail">
+          <span>Joined On</span>
+          <p>{{ user.joined_on.strftime('%B %Y') if user.joined_on else 'January 2026' }}</p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="profile-actions">
+        <a href="/logout">
+          <button class="logout-btn">Logout</button>
+        </a>
+        <button class="logout-btn" onclick="EditProfile()">Edit Profile</button>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ===== EDIT PROFILE MODAL ===== -->
+<div id="edit-profile">
+  <div class="form-card">
+    <h1>Edit Profile</h1>
+    <p class="subtitle">Update your information</p>
+
+    <form method="POST" action="/rescue/profile" enctype="multipart/form-data">
+      <div class="input-group">
+        <label>Name</label>
+        <input type="text" name="name" id="Name-input" value="{{ user.name or '' }}" placeholder="Enter your name" required>
+      </div>
+
+      <div class="input-group">
+        <label>Upload Profile Picture</label>
+        <input type="file" name="profile_img" id="Upload-profile-picture-input" accept="image/*">
+      </div>
+
+      <div class="input-group">
+        <label>Phone Number</label>
+        <input type="tel" name="phone" id="phone-number-input" value="{{ user.phone or '' }}" placeholder="Enter phone number" required>
+      </div>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" name="email" id="email-input" value="{{ user.email or '' }}" placeholder="Enter email address" required>
+      </div>
+
+      <div class="input-group">
+        <label>Location</label>
+        <input type="text" name="location" id="location-input" value="{{ user.location or '' }}" placeholder="Enter your location" required>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Update Profile
+      </button>
+      <button type="button" class="submit-btn" onclick="EditProfile()">
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-container">
+    <p>© 2026 My Project. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/static/Rescue/nav-bar.js"></script>
+
+<script>
+  function EditProfile() {
+    const modal = document.getElementById("edit-profile");
+    modal.classList.toggle("active");
+  }
+</script>
+
+</body>
+</html>

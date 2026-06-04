@@ -1,0 +1,637 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:c; /* 60% very light blue */
+}
+
+
+/* HERO */
+
+.hero{
+height:85vh;
+background:url("https://i.postimg.cc/TwkK3Z4X/Hero-img.jpg") center/cover no-repeat;
+display:flex;
+align-items:center;
+padding-left:8%;
+}
+
+.hero-content{
+max-width:500px;
+color:#080a0d;
+}
+
+.hero h1{
+font-size:3rem;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:1.2rem;
+margin-bottom:25px;
+line-height:1.7;
+
+color:#ffffff;
+
+display:inline-block;
+
+padding:12px 18px;
+
+background:rgba(0,0,0,0.35);
+
+backdrop-filter:blur(4px);
+
+border-radius:12px;
+
+text-shadow:
+1px 1px 6px rgba(0,0,0,0.5);
+
+box-shadow:
+0 4px 15px rgba(0,0,0,0.15);
+}
+
+
+.hero-buttons button{
+padding:14px 32px;
+border:none;
+border-radius:30px;
+font-size:1rem;
+cursor:pointer;
+margin-right:10px;
+}
+
+.help-card button{
+width:70%;
+height: 45px;
+padding:8px 0;
+border:none;
+border-radius:30px;
+font-size:0.85rem;
+letter-spacing:0.02em;
+font-weight:600;
+cursor:pointer;
+margin-top:16px;
+box-shadow:0 12px 22px rgba(0,0,0,0.18);
+transition:transform 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+
+.help-card button:hover{
+filter:brightness(1.06);
+transform:translateY(-2px);
+box-shadow:0 14px 28px rgba(0,0,0,0.22);
+}
+
+
+/* BUTTONS */
+
+.btn-green{
+background: linear-gradient(135deg, #1E88E5, #1565C0); /* 10% bright blue */
+color:white;
+border-radius:30px;
+box-shadow:0 8px 18px rgba(0,0,0,0.24);
+transition:transform 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+
+.btn-green:hover{
+filter:brightness(1.05);
+transform:translateY(-2px);
+box-shadow:0 12px 25px rgba(0,0,0,0.28);
+}
+
+.btn-orange{
+
+background: linear-gradient(135deg, #FF8C42, #ff944d);
+color:white;
+border-radius:30px;
+box-shadow:0 8px 18px rgba(0,0,0,0.24);
+transition:transform 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+
+.btn-orange:hover{
+filter:brightness(1.05);
+transform:translateY(-2px);
+box-shadow:0 12px 25px rgba(0,0,0,0.28);
+}
+
+
+/* HELP SECTION */
+
+.help-section{
+padding:80px 8%;
+text-align:center;
+}
+
+.section-title{
+font-size:2.5rem;
+color:#000000;
+margin-bottom:40px;
+}
+
+
+.card-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
+}
+
+
+/* CARD */
+
+.help-card{
+background:#bad9f3; /* 30% soft blue */
+border-radius:18px;
+padding:30px;
+position:relative;
+overflow:hidden;
+min-height:240px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+display:flex;
+align-items:center;
+}
+
+
+.help-card::after{
+content:"";
+position:absolute;
+right:0;
+top:0;
+width:45%;
+height:100%;
+background-size:cover;
+background-position:center;
+}
+
+
+.card-content{
+width:55%;
+z-index:2;
+text-align:left;
+}
+
+.card-content h3{
+font-size:1.6rem;
+color:#0d0d0d;
+margin-bottom:10px;
+}
+
+.card-content p{
+margin-bottom:10px;
+color:#021039;
+}
+
+.card-content ul{
+margin-bottom:18px;
+padding-left:18px;
+}
+
+.card-content li{
+margin-bottom:6px;
+}
+
+
+/* BACKGROUND IMAGE PLACEHOLDERS */
+
+.upload-card::after{
+background-image:url("https://i.postimg.cc/QMmtf2sx/Upload-injured-animal.webp");
+}
+
+.medical-card::after{
+background-image:url("https://i.postimg.cc/5t3x1TPw/medical-care.jpg");
+}
+
+.shelter-card::after{
+background-image:url("https://i.postimg.cc/W4ksqtbG/Charlie-s-Animal-Rescue-Centre-Bengaluru.webp");
+}
+
+.adoption-card::after{
+background-image:url("https://i.postimg.cc/XvHDWg0p/Chat-GPT-Image-Mar-15-2026-12-14-25-PM.png");
+}
+
+
+
+/* Upload image extra info */
+
+/* ===== UPLOAD ANIMAL SECTION ===== */
+
+.upload-animal-section{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:90px 8%;
+margin: 0% 8% 2% 8%;
+border-radius: 25px;
+gap:60px;
+background:#84d7f0;
+}
+
+/* LEFT CONTENT */
+
+.upload-info{
+width:50%;
+}
+
+.upload-info h2{
+font-size:2.4rem;
+color:#070707;
+margin-bottom:15px;
+}
+
+.upload-info .intro{
+font-size:1.1rem;
+color:#000000;
+margin-bottom:25px;
+line-height:1.6;
+}
+
+/* FEATURES */
+
+.features{
+display:flex;
+flex-direction:column;
+gap:12px;
+margin-bottom:30px;
+}
+
+.feature{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:1rem;
+color:#333;
+}
+
+.feature i{
+color:#2688e5;
+font-size:18px;
+}
+
+/* BUTTON */
+
+.upload-btn{
+    /* width: 10px; */
+background: linear-gradient(135deg, #1E88E5, #1565C0);  ;
+color:white;
+border:none;
+padding:14px 32px;
+border-radius:30px;
+font-size:1rem;
+cursor:pointer;
+transition:0.3s;
+}
+
+.upload-btn:hover{
+background:#3f7cd2;
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* IMAGE */
+
+.upload-image{
+width:45%;
+}
+
+.upload-image img{
+width:100%;
+border-radius:18px;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* ===== HOW IT WORKS ===== */
+.how-it-works {
+  padding: 60px 20px;
+  text-align: center;
+  background: #dbe9f8;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.how-subtext {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.step-card {
+  background: #bad9f3;
+  padding: 15px;
+  border-radius: 15px;
+  transition: 0.3s;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+}
+
+.step-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.step-card h3 {
+  margin-top: 10px;
+}
+
+/* ===== QUOTES ===== */
+.quotes-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.quotes-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.quote-card {
+  background: #bad9f3;
+  padding: 20px;
+  border-radius: 15px;
+  font-style: italic;
+}
+.news-section{
+padding:80px 8%;
+text-align:center;
+background:#dbe9f8;
+}
+
+.news-title{
+font-size:2.3rem;
+margin-bottom:10px;
+color:#000;
+}
+
+.news-subtext{
+color:#333;
+margin-bottom:40px;
+}
+
+.news-container{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.news-card{
+background:#bad9f3;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.news-card:hover{
+transform:translateY(-8px);
+}
+
+.news-card img{
+width:100%;
+height:290px;
+object-fit:cover;
+}
+
+.news-content{
+padding:20px;
+text-align:left;
+}
+
+.news-content h3{
+margin-bottom:10px;
+}
+
+.news-content p{
+font-size:0.95rem;
+margin-bottom:12px;
+color:#333;
+}
+
+.news-date{
+font-size:0.85rem;
+color:#555;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.news-container{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+
+.news-container{
+grid-template-columns:1fr;
+}
+
+}
+.faq{
+  width:70%;
+  margin:60px auto;
+}
+
+.faq h2{
+  text-align:center;
+  margin-bottom:30px;
+  color:#333;
+}
+
+.faq-item{
+  margin-bottom:15px;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.faq-question{
+  width:100%;
+  padding:18px;
+  border:none;
+  outline:none;
+  text-align:left;
+  font-size:17px;
+  font-weight:600;
+  background:#3d97e0;
+  color:white;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:0.3s;
+}
+
+.faq-question:hover{
+  background:#3989ca;
+}
+
+.icon{
+  font-size:22px;
+  transition:0.3s;
+}
+
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  background:white;
+  transition:max-height 0.4s ease;
+}
+
+.faq-answer p{
+  padding:18px;
+  margin:0;
+  color:#555;
+  line-height:1.6;
+}
+/* ===== ABOUT ORGANIZATION ===== */
+
+.about-org{
+padding:80px 8%;
+background:#dbe9f8;
+}
+
+.about-title{
+text-align:center;
+font-size:2.4rem;
+margin-bottom:50px;
+color:#0a0a0a;
+}
+
+.about-container{
+display:flex;
+align-items:center;
+/* justify-content:space-between; */
+gap: 30px;
+}
+
+/* TEXT */
+
+.about-text{
+width:55%;
+font-size:1.3rem;
+line-height:1.7;
+color:#333;
+}
+
+.about-text p{
+margin-bottom:18px;
+}
+
+/* IMAGE */
+
+.about-image{
+width:30%;
+}
+
+.about-image img{
+width:100%;
+border-radius:18px;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+transition:0.4s;
+}
+
+.about-image img:hover{
+transform:scale(1.05);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.about-container{
+flex-direction:column;
+text-align:center;
+}
+
+.about-text,
+.about-image{
+width:100%;
+}
+
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .steps-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quotes-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .steps-container,
+  .quotes-container {
+    grid-template-columns: 1fr;
+  }
+}
+/* MOBILE */
+
+@media(max-width:768px){
+
+.upload-animal-section{
+flex-direction:column;
+text-align:center;
+}
+
+.upload-info,
+.upload-image{
+width:100%;
+}
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.card-grid{
+grid-template-columns:1fr;
+}
+
+.help-card::after{
+display:none;
+}
+
+.card-content{
+width:100%;
+}
+
+.upload-process{
+flex-direction:column;
+text-align:center;
+}
+
+.process-text,
+.process-img{
+width:100%;
+}
+
+.process-img img{
+width:100%;
+}
+
+.hero h1{
+font-size:2rem;
+}
+
+}

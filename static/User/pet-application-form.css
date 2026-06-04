@@ -1,0 +1,221 @@
+/* ===============================
+   RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===============================
+   BODY
+================================ */
+body {
+  min-height: 100vh;
+  background-color: #dbe9f8;
+  display: flex;
+  flex-direction: column;
+  color: #000000;
+}
+main{
+  flex: 1;
+  margin-top: 2.5%;
+}
+
+/* ===============================
+   WRAPPER
+================================ */
+.application-wrapper {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===============================
+   CARD
+================================ */
+.application-card {
+  width: 100%;
+  max-width: 700px;
+  background : #bad9f3;
+  padding: 40px;
+  border-radius: 22px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+  animation: slideUp 0.9s ease;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.application-card h2 {
+  text-align: center;
+  color: #000000;
+  font-size: 2.4em;
+}
+
+.subtitle {
+  text-align: center;
+  color: #000000;
+  font-size: 1em;
+  margin: 10px 0 30px;
+}
+
+/* ===============================
+   SECTIONS
+================================ */
+.section {
+  margin-bottom: 35px;
+}
+
+.section h3 {
+  font-size: 1.3em;
+  color: #000000;
+  margin-bottom: 18px;
+}
+
+/* ===============================
+   INPUT GROUP
+================================ */
+.input-group {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+  width: 100%;
+  padding: 14px;
+  background: #e7f8f7;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  color: #000000;
+  outline: none;
+  font-size: 1em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.input-group label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000000;
+  font-size: 0.9em;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.input-group textarea + label {
+  top: 22px;
+  transform: none;
+}
+
+/* FLOAT LABEL */
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group input[readonly] + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group select:focus + label,
+.input-group select:valid + label,
+.input-group textarea:focus + label,
+.input-group textarea:valid + label,
+.input-group textarea:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 10px;
+  background: #ffffff;
+  padding: 0 6px;
+  font-size: 0.75em;
+  color: #000000;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.2);
+}
+.aadhar{
+  color: #000000;
+  margin-bottom: 8px;
+  display: block;
+  font-size: large;
+  
+}
+
+/* ===============================
+   AGREEMENT
+================================ */
+.agreement {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  font-size: 0.9em;
+  color: #000000;
+}
+
+.agreement input {
+  margin-top: 4px;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  font-size: 1.1em;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1E88E5, #1565C0);
+  color: #020617;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-btn:hover {
+
+  background:#3f7cd2;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(56,189,248,0.45);
+}
+
+.submit-btn:active {
+  transform: scale(0.95);
+}
+
+/* ===============================
+   ANIMATION
+================================ */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 500px) {
+  .application-card {
+    padding: 30px 22px;
+  }
+
+  .application-card h2 {
+    font-size: 2em;
+  }
+}

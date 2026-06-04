@@ -1,0 +1,166 @@
+CREATE DATABASE IF NOT EXISTS paws_db;
+USE paws_db;
+
+-- 1. Users Table
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL DEFAULT 'user',
+    location VARCHAR(255) DEFAULT '',
+    profile_img VARCHAR(255) DEFAULT '',
+    capacity INT DEFAULT 50,
+    cases INT DEFAULT 0,
+    status VARCHAR(50) DEFAULT 'Active',
+    delete_reason VARCHAR(255) DEFAULT '',
+    joined_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Pets Table
+CREATE TABLE IF NOT EXISTS pets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    gender VARCHAR(50) NOT NULL,
+    age INT NOT NULL,
+    weight VARCHAR(50) NOT NULL,
+    breed VARCHAR(100) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    health VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    personality VARCHAR(100) DEFAULT '',
+    energy_level VARCHAR(100) DEFAULT '',
+    good_with_kids VARCHAR(50) DEFAULT 'Yes',
+    favorite_food VARCHAR(100) DEFAULT '',
+    favorite_toy VARCHAR(100) DEFAULT '',
+    training VARCHAR(100) DEFAULT '',
+    image_filename VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Available',
+    uploaded_by INT DEFAULT NULL
+);
+
+-- 3. Adoption Applications Table
+CREATE TABLE IF NOT EXISTS adoption_applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    pet_id INT NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    aadhar_path VARCHAR(255) DEFAULT '',
+    home_type VARCHAR(100) NOT NULL,
+    has_pets VARCHAR(50) NOT NULL,
+    reason TEXT NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    meeting_time VARCHAR(100) DEFAULT NULL,
+    rejection_reason TEXT DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE
+);
+
+-- 4. Reports Table (Animal Rescue Cases)
+CREATE TABLE IF NOT EXISTS reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image_filename VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    lat DECIMAL(10, 8) DEFAULT NULL,
+    lng DECIMAL(11, 8) DEFAULT NULL,
+    map_link TEXT DEFAULT NULL,
+    description TEXT NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    reported_by INT DEFAULT NULL,
+    reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    assigned_to INT DEFAULT NULL,
+    rejection_reason TEXT DEFAULT NULL,
+    resolved_image_filename VARCHAR(255) DEFAULT '',
+    animal_type VARCHAR(100) DEFAULT 'Stray Animal',
+    FOREIGN KEY (reported_by) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- 5. Shelters Table
+CREATE TABLE IF NOT EXISTS shelters (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    contact VARCHAR(50) NOT NULL,
+    capacity INT NOT NULL,
+    occupied INT NOT NULL DEFAULT 0,
+    description TEXT,
+    image_filename VARCHAR(255) DEFAULT '',
+    status VARCHAR(50) DEFAULT 'Active',
+    delete_reason VARCHAR(255) DEFAULT ''
+);
+
+-- 6. NGO Members Table (Rescue Members)
+CREATE TABLE IF NOT EXISTS ngo_members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    role VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(20) NOT NULL
+);
+
+-- 7. Medical Care Table
+CREATE TABLE IF NOT EXISTS medical_care (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    case_name VARCHAR(255) NOT NULL,
+    animal_type VARCHAR(100) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    description TEXT,
+    vet_assigned VARCHAR(255) DEFAULT NULL
+);
+
+-- ==================== SEED DATA ====================
+
+-- Seed Users (Passwords stored in plain text as requested for "very simple coding and copy-paste integration")
+INSERT INTO users (name, email, phone, password, role, location, profile_img) VALUES 
+('Ajay User', 'user@gmail.com', '9876543210', 'user123', 'user', 'Hyderabad', 'https://i.postimg.cc/hjWXK1Mv/killuva.jpg'),
+('Admin User', 'admin@gmail.com', '9876543211', 'admin123', 'admin', 'Delhi', 'https://img.magnific.com/free-vector/young-man-with-glasses-avatar_1308-175763.jpg?semt=ais_hybrid&w=740&q=80'),
+('NGO Representative', 'ngo@gmail.com', '9876543212', 'ngo123', 'ngo', 'Mumbai', 'https://img.magnific.com/free-vector/young-man-with-glasses-avatar_1308-175763.jpg?semt=ais_hybrid&w=740&q=80'),
+('Rescue Team Lead', 'rescue@gmail.com', '9876543213', 'rescue123', 'rescue', 'Bangalore', 'https://img.magnific.com/free-vector/young-man-with-glasses-avatar_1308-175763.jpg?semt=ais_hybrid&w=740&q=80'),
+('Ramesh Kumar', 'ramesh@paws.org', '9848012345', 'rescue123', 'rescue', 'Hyderabad', ''),
+('Suresh Raina', 'suresh@paws.org', '9848012346', 'rescue123', 'rescue', 'Hyderabad', ''),
+('Mahesh Babu', 'mahesh@paws.org', '9848012347', 'rescue123', 'rescue', 'Hyderabad', '');
+
+-- Seed Pets
+INSERT INTO pets (id, name, type, gender, age, weight, breed, location, health, description, personality, energy_level, good_with_kids, favorite_food, favorite_toy, training, image_filename, status) VALUES
+(1, 'Bruno', 'Dog', 'Male', 2, '20 kg', 'Australian Shepherd', 'Green Park Animal Shelter, Banjara Hills, Hyderabad, Telangana', 'Vaccinated', 'Bruno is a friendly and energetic dog who loves outdoor activities and playing with people. He is well-trained, healthy, and very social with other pets. Buddy enjoys running, exploring new places, and spending time with his human companions.', 'Friendly', 'High', 'Yes', 'Chicken', 'Tennis Ball', 'Basic Trained', 'https://i.postimg.cc/cLdfD6Lc/Dog-image.png', 'Available'),
+(2, 'Luna', 'Cat', 'Female', 1, '4 kg', 'Domestic Shorthair', 'Shelter Rescue Center, Hyderabad', 'Vaccinated', 'Luna is a quiet, sweet cat who loves to cuddle and nap. She gets along well with other cats.', 'Calm', 'Low', 'Yes', 'Fish', 'Feather Wand', 'Litter Trained', 'https://i.postimg.cc/c4n31wrX/cat1.png', 'Available'),
+(3, 'Rocky', 'Dog', 'Male', 3, '15 kg', 'Indie Breed', 'Shelter Rescue Center, Hyderabad', 'Vaccinated', 'Rocky is a loyal guard dog who is extremely active and protective. Needs an active owner.', 'Protective', 'High', 'No', 'Pedigree', 'Chew Toy', 'None', 'https://i.postimg.cc/BbgntZfq/parrot1.png', 'Pending'),
+(4, 'Milo', 'Cat', 'Male', 1, '5 kg', 'Persian', 'Shelter Rescue Center, Hyderabad', 'Healthy', 'Milo is a beautiful, long-haired Persian cat who loves attention. Very playful.', 'Playful', 'Medium', 'Yes', 'Salmon Cat Food', 'Laser Pointer', 'Litter Trained', 'https://i.postimg.cc/6QmR50fB/dog2.png', 'Available'),
+(5, 'Bella', 'Puppy', 'Female', 1, '8 kg', 'Labrador Retriever', 'Shelter Rescue Center, Hyderabad', 'Vaccinated & De-wormed', 'Bella is a lovable puppy looking for her forever home. She is highly trainable and friendly.', 'Lovable', 'High', 'Yes', 'Milk Biscuits', 'Squeaky Toy', 'Housebroken', 'https://i.postimg.cc/gkmwpQb6/Rabbit.png', 'Available'),
+(6, 'Snowy', 'Cat', 'Female', 2, '4.5 kg', 'Siamese', 'Shelter Rescue Center, Hyderabad', 'Healthy', 'Snowy is an affectionate Siamese cat who has already been successfully adopted.', 'Affectionate', 'Medium', 'Yes', 'Wet Food', 'Ball of Yarn', 'Litter Trained', 'https://i.postimg.cc/dVFjz44n/cat2.png', 'Adopted');
+
+-- Seed Shelters
+INSERT INTO shelters (id, name, location, contact, capacity, occupied, description, image_filename) VALUES
+(1, 'Green Park Animal Shelter', 'Banjara Hills, Hyderabad', '040-12345678', 50, 15, 'A spacious shelter equipped with play areas and vet care.', 'https://images.unsplash.com/photo-1548767797-d8c844163c4c'),
+(2, 'Paws Rescue Home', 'Secunderabad, Hyderabad', '040-87654321', 30, 8, 'Cozy shelter specializing in feline rescue and rehabilitation.', 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba'),
+(3, 'Hope Shelter Rescue Center', 'Gachibowli, Hyderabad', '040-99998888', 40, 20, 'State-of-the-art facility for trauma rehabilitation.', 'https://images.unsplash.com/photo-1570129477492-45c003edd2be');
+
+-- Seed NGO Members (Rescue members)
+INSERT INTO ngo_members (id, name, role, email, phone) VALUES
+(1, 'Ramesh Kumar', 'Rescue Specialist', 'ramesh@paws.org', '9848012345'),
+(2, 'Suresh Raina', 'Medical Coordinator', 'suresh@paws.org', '9848012346'),
+(3, 'Mahesh Babu', 'Shelter Manager', 'mahesh@paws.org', '9848012347');
+
+-- Seed Medical Cases
+INSERT INTO medical_care (id, case_name, animal_type, status, description, vet_assigned) VALUES
+(1, 'Fractured Dog Leg', 'Dog', 'Ongoing', 'Street dog found near Gachibowli with a fractured hind leg.', 'Dr. K. S. Rao'),
+(2, 'Dehydrated Kitten', 'Cat', 'Recovered', 'A 2-month-old kitten found severely dehydrated.', 'Dr. K. S. Rao'),
+(3, 'Injured Eagle', 'Bird', 'Pending', 'Eagle found with wing lacerations.', NULL);
+
+-- Seed Reports (Animal rescue reports)
+INSERT INTO reports (id, image_filename, location, lat, lng, map_link, description, status, reported_by, reported_at, animal_type) VALUES
+(1, 'https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993', 'Kukatpally, Hyderabad', 17.4834, 78.3862, 'https://maps.google.com/?q=17.4834,78.3862', 'Street dog hit by a vehicle, limping badly.', 'Pending', 1, CURRENT_TIMESTAMP, 'Dog'),
+(2, 'https://images.unsplash.com/photo-1573865526739-10659fec78a5', 'Ameerpet, Hyderabad', 17.4375, 78.4482, 'https://maps.google.com/?q=17.4375,78.4482', 'Stray cat trapped in a drain pipe.', 'Pending', NULL, CURRENT_TIMESTAMP, 'Cat');
+
+-- Seed Adoption Applications
+INSERT INTO adoption_applications (id, user_id, pet_id, full_name, email, phone, location, aadhar_path, home_type, has_pets, reason, status) VALUES
+(101, 1, 1, 'Rahul', 'rahul@gmail.com', '9876543210', 'Hyderabad', '/uploads/rahul_aadhar.pdf', 'Apartment', 'Yes', 'I love dogs and want to give Bruno a safe home.', 'Pending'),
+(102, 1, 6, 'Priya', 'priya@gmail.com', '9876543211', 'Secunderabad', '/uploads/priya_aadhar.pdf', 'Independent House', 'No', 'I live alone and want Luna as my companion.', 'Approved'),
+(103, 1, 2, 'Arjun', 'arjun@gmail.com', '9876543212', 'Gachibowli', '/uploads/arjun_aadhar.pdf', 'Farm / Open Space', 'Yes', 'We have a farm and Rocky can run freely here.', 'Rejected');

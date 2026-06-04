@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pet Profile</title>
+
+<link rel="stylesheet" href="/static/User/medical-care-homepage.css">
+<link rel="stylesheet" href="/static/User/nav-bar.css">
+<link rel="stylesheet" href="/static/User/footer.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* BODY LAYOUT */
+
+body{
+background:#d2e5f8;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* MAIN CONTENT */
+
+main{
+flex:1;
+padding:40px 0;
+}
+
+/* MAIN CONTAINER */
+
+.container{
+max-width:1100px;
+margin:auto;
+margin-top: 4%;
+background:#84d7f0;
+border-radius:15px;
+box-shadow:0 8px 25px rgba(0,0,0,0.1);
+padding:40px;
+}
+
+/* LAYOUT */
+
+.pet-layout{
+display:flex;
+gap:40px;
+align-items:flex-start;
+flex-wrap:wrap;
+}
+
+/* PET IMAGE */
+
+.pet-image{
+width:320px;
+height:320px;
+object-fit:cover;
+border-radius:12px;
+}
+
+/* RIGHT CONTENT */
+
+.pet-details{
+flex:1;
+}
+
+/* PET NAME */
+
+.pet-name{
+font-size:34px;
+color:#000;
+margin-bottom:20px;
+}
+
+/* INFO GRID */
+
+.info-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px 30px;
+margin-bottom:25px;
+font-size:16px;
+color:#151515;
+}
+
+/* ABOUT */
+
+.about{
+margin-top:10px;
+line-height:1.6;
+color:#000000;
+}
+
+.about h3{
+margin-bottom:10px;
+}
+
+/* EXTRA INFO */
+
+.extra-info{
+margin-top:25px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:15px;
+font-size:15px;
+color: #000000;
+}
+
+/* ADOPT BUTTON */
+
+.back-btn1{
+margin-top:30px;
+padding:14px 25px;
+border:none;
+background:linear-gradient(135deg,#b8611b,#ee7b0f);
+color:rgb(0, 0, 0);
+font-size:17px;
+font-weight:bold;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.back-btn1:hover{
+background:#c94609;
+}
+.adopt-btn{
+margin-top:30px;
+padding:14px 25px;
+border:none;
+background:linear-gradient(135deg,#1E88E5,#1565C0);
+color:rgb(0, 0, 0);
+font-size:17px;
+font-weight:bold;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.adopt-btn:hover{
+background:#3f7cd2;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.pet-layout{
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.pet-image{
+width:100%;
+max-width:350px;
+}
+
+.info-grid{
+grid-template-columns:1fr;
+}
+
+.extra-info{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ===== HEADER / NAVBAR ===== -->
+<header>
+  <!-- Hamburger (left) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Logo + Title -->
+  <div class="brand">
+    <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+    <h1>Paws Rescue & Rehabilitation Program</h1>
+  </div>
+
+  <!-- Desktop Menu -->
+  <nav class="nav-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot"></span>
+    </a>
+    {% if session.get('user_profile_img') and (session.get('user_profile_img')[:4] == 'http' or session.get('user_profile_img')[0] == '/') %}
+    <a href="/user/profile"><img src="{{ session.user_profile_img }}" alt="" width="10%"></a>
+    {% else %}
+    <a href="/user/profile"><img src="{{ url_for('static', filename='uploads/' + (session.get('user_profile_img') or 'default_user.png')) }}" alt="" width="10%"></a>
+    {% endif %}
+  </nav>
+<!-- Mobile Slide Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-header">
+    <div class="brand">
+      <img src="https://i.postimg.cc/NjDChGWh/Whats-App-Image-2026-03-23-at-12-33-09.jpg" alt="logo">
+      <h1>Paws Rescue & Rehabilitation Program</h1>
+    </div>
+    <div class="close-btn" id="closeBtn">&times;</div>
+  </div>
+
+  <div class="mobile-links">
+    <a href="/user/dashboard" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/user/about-us"><i class="fa-solid fa-circle-info"></i>About Us</a>
+    <a href="/user/contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    <a href="/user/notifications" class="notification-icon">
+    <i class="fa-solid fa-bell"></i>
+    <span class="notif-dot">notifications</span>
+    </a>
+    {% if session.get('user_profile_img') and (session.get('user_profile_img')[:4] == 'http' or session.get('user_profile_img')[0] == '/') %}
+    <a href="/user/profile" style="display: flex;"><img src="{{ session.user_profile_img }}" alt="" width="10%" >{{ session.user_email }}</a>
+    {% else %}
+    <a href="/user/profile" style="display: flex;"><img src="{{ url_for('static', filename='uploads/' + (session.get('user_profile_img') or 'default_user.png')) }}" alt="" width="10%" >{{ session.user_email }}</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+</header>
+
+<!-- MAIN CONTENT -->
+
+<main>
+
+<div class="container">
+
+<div class="pet-layout">
+
+{% if pet.image_filename and (pet.image_filename[:4] == 'http' or pet.image_filename[0] == '/') %}
+<img class="pet-image"
+src="{{ pet.image_filename }}"
+alt="Pet Image">
+{% else %}
+<img class="pet-image"
+src="{{ url_for('static', filename='uploads/' + (pet.image_filename or 'default_pet.png')) }}"
+alt="Pet Image">
+{% endif %}
+
+<div class="pet-details">
+
+<h1 class="pet-name">{{ pet.name }}</h1>
+
+<div class="info-grid">
+
+<div><b>Gender:</b> {{ pet.gender }}</div>
+<div><b>Age:</b> {{ pet.age }} {% if pet.age == 1 %}Year{% else %}Years{% endif %}</div>
+
+<div><b>Weight:</b> {{ pet.weight }}</div>
+<div><b>Breed:</b> {{ pet.breed }}</div>
+
+<div><b>Location:</b> {{ pet.location }}</div>
+<div><b>Health:</b> {{ pet.health }}</div>
+
+</div>
+
+<div class="about">
+
+<h3>About {{ pet.name }}</h3>
+
+<p>
+{{ pet.description }}
+</p>
+
+</div>
+
+<div class="extra-info">
+
+<div><b>Personality:</b> {{ pet.personality }}</div>
+<div><b>Energy Level:</b> {{ pet.energy_level }}</div>
+<div><b>Good with Kids:</b> {{ pet.good_with_kids }}</div>
+
+<div><b>Favorite Food:</b> {{ pet.favorite_food }}</div>
+<div><b>Favorite Toy:</b> {{ pet.favorite_toy }}</div>
+<div><b>Training:</b> {{ pet.training }}</div>
+
+</div>
+
+<a href="/user/pets"><button class="back-btn1">BACK</button></a>
+<a href="/user/pet-application/{{ pet.id }}"><button class="adopt-btn">Adopt Now</button></a>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-container">
+<div class="footer-info">
+<p>© 2026 My Project. All rights reserved.</p>
+</div>
+</div>
+
+</footer>
+
+<script src="/static/User/nav-bar.js"></script>
+
+</body>
+</html>
